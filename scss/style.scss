@@ -103,6 +103,9 @@ p {
     max-width: 40rem;
     text-indent: 2rem;
     > a {
+      &:hover {
+        color: darken($pink, 30%);
+      }
       color: $pink;
     }
   }
