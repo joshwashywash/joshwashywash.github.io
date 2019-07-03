@@ -1,0 +1,139 @@
+@import 'responsive';
+@import url('https://fonts.googleapis.com/css?family=Raleway&display=swap');
+
+/* variables */
+
+$dark-color: #120810;
+$light-color: #ffefe8;
+$pink: #ed5f73;
+
+$font-stack: 'Raleway', sans-serif;
+
+/* mixins */
+
+@mixin header($font-size) {
+  margin: 0.5rem 0;
+  padding: 0.25rem 0;
+  font-size: $font-size;
+  text-align: center;
+  border-radius: $font-size;
+  background: darken($light-color, 5%);
+  @include respond-below('tablet') {
+    font-size: $font-size / 1.5;
+  }
+}
+
+/* reset */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* base */
+
+body {
+  background: $light-color;
+  color: $dark-color;
+  font-family: $font-stack;
+}
+
+ul {
+  list-style: none;
+}
+
+a {
+  color: inherit;
+}
+
+p {
+  font-size: 2rem;
+  @include respond-below('tablet') {
+    font-size: 1.5rem;
+  }
+}
+
+/* classes */
+
+.container {
+  margin: 0 auto;
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.nav {
+  display: flex;
+  justify-content: flex-end;
+  margin: 0.5rem 0;
+  @include respond-below('tablet') {
+    justify-content: center;
+  }
+  &__items {
+    display: flex;
+  }
+  &__item {
+    margin: 0 0.5rem;
+    transition: 0.25s ease-out;
+    &:hover {
+      color: $pink;
+      transform: scale(1.25);
+    }
+  }
+}
+
+.about {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  &__name {
+    @include header(3rem);
+  }
+  &__items {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    @include respond-below('tablet') {
+      flex-direction: column;
+    }
+  }
+  &__para {
+    max-width: 40rem;
+    text-indent: 2rem;
+    > a {
+      color: $pink;
+    }
+  }
+  &__img {
+    border-radius: 50%;
+    @include respond-below('tablet') {
+      margin-top: 0.75rem;
+    }
+  }
+}
+
+.skills {
+  display: flex;
+  flex-direction: column;
+  &__heading {
+    @include header(2.5rem);
+    text-align: center;
+  }
+  &__items {
+    display: flex;
+    @include respond-below('tablet') {
+      flex-direction: column;
+      align-items: center;
+    }
+    justify-content: space-around;
+    font-size: 1.5rem;
+  }
+  &__item {
+    margin: 0.25rem;
+  }
+  &__icon {
+    margin-right: 0.5rem;
+  }
+}
