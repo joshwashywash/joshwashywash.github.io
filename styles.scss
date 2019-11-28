@@ -1,0 +1,39 @@
+$bg-color: #200020;
+$fg-color: #f4c430;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: $bg-color;
+  color: $fg-color;
+  font-size: calc(100vmax / 4);
+  height: 100vh;
+}
+
+main {
+  height: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+a {
+  color: inherit;
+  transition: transform 0.25s, color 0.25s;
+  outline: none;
+  &:hover,
+  &:focus {
+    transform: scale(1.1);
+    color: lighten($fg-color, 10%);
+  }
+}
+
+@media (orientation: portrait) {
+  main {
+    flex-direction: column;
+  }
+}
