@@ -2,14 +2,14 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
-		<link rel="icon" href="./favicon.png" />
+		<link rel="icon" href="../favicon.png" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta http-equiv="content-security-policy" content=""><title>j.o. - blog</title>
 	<link rel="stylesheet" href="/_app/immutable/assets/pages/__layout.svelte-29915754.css">
 	<link rel="modulepreload" href="/_app/immutable/start-077fbb22.js">
 	<link rel="modulepreload" href="/_app/immutable/chunks/index-e3a2ebbf.js">
 	<link rel="modulepreload" href="/_app/immutable/pages/__layout.svelte-68a1e10f.js">
-	<link rel="modulepreload" href="/_app/immutable/pages/blog/index.svelte-e0294372.js">
+	<link rel="modulepreload" href="/_app/immutable/pages/blog/_post_.svelte-e4dfccbe.js">
 	</head>
 	<body>
 		
@@ -18,16 +18,13 @@
 
 
 <nav class="flex justify-end"><ul><li><a class="link-icon" sveltekit:prefetch href="/">home</a></li><li><a class="link-icon" sveltekit:prefetch href="/blog">blog</a></li></ul></nav>
-<main class="grow flex items-center justify-center px-4"><ul><li><a sveltekit:prefetch href="blog/first">first</a>
-		</li><li><a sveltekit:prefetch href="blog/second">second</a>
-		</li><li><a sveltekit:prefetch href="blog/third">third</a>
-		</li></ul></main>
+<main class="grow flex items-center justify-center px-4"><!-- HTML_TAG_START -->third<!-- HTML_TAG_END --></main>
 
 
-		<script type="module" data-sveltekit-hydrate="cxs0in">
+		<script type="module" data-sveltekit-hydrate="l92mhd">
 		import { start } from "/_app/immutable/start-077fbb22.js";
 		start({
-			target: document.querySelector('[data-sveltekit-hydrate="cxs0in"]').parentNode,
+			target: document.querySelector('[data-sveltekit-hydrate="l92mhd"]').parentNode,
 			paths: {"base":"","assets":""},
 			session: {},
 			route: true,
@@ -36,11 +33,11 @@
 			hydrate: {
 				status: 200,
 				error: null,
-				nodes: [0, 3],
-				params: {},
-				routeId: "blog"
+				nodes: [0, 2],
+				params: {post:"third"},
+				routeId: "blog/[post]"
 			}
 		});
-	</script><script type="application/json" sveltekit:data-type="props">{"titles":["first","second","third"]}</script>
+	</script><script type="application/json" sveltekit:data-type="props">{"content":"third"}</script>
 	</body>
 </html>
