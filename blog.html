@@ -5,12 +5,12 @@
 		<link rel="icon" href="./favicon.png" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta http-equiv="content-security-policy" content=""><title>j.o. - blog</title>
-	<link rel="stylesheet" href="/_app/immutable/assets/pages/__layout.svelte-e5d04040.css">
-	<link rel="modulepreload" href="/_app/immutable/start-9a1a9b45.js">
-	<link rel="modulepreload" href="/_app/immutable/chunks/index-e3a2ebbf.js">
-	<link rel="modulepreload" href="/_app/immutable/pages/__layout.svelte-e4e7ea3c.js">
-	<link rel="modulepreload" href="/_app/immutable/pages/blog/__layout.svelte-e112dbcf.js">
-	<link rel="modulepreload" href="/_app/immutable/pages/blog/index.svelte-d6deb389.js">
+	<link rel="stylesheet" href="/_app/immutable/assets/pages/__layout.svelte-6fc0bbf6.css">
+	<link rel="modulepreload" href="/_app/immutable/start-bc0b45c6.js">
+	<link rel="modulepreload" href="/_app/immutable/chunks/index-92808e28.js">
+	<link rel="modulepreload" href="/_app/immutable/pages/__layout.svelte-453cc9a2.js">
+	<link rel="modulepreload" href="/_app/immutable/pages/blog/__layout.svelte-dd534e05.js">
+	<link rel="modulepreload" href="/_app/immutable/pages/blog/index.svelte-2e5f126e.js">
 	</head>
 	<body>
 		
@@ -19,16 +19,22 @@
 
 
 <nav class="flex justify-end"><ul><li><a class="link-icon" sveltekit:prefetch href="/">home</a></li><li><a class="link-icon" sveltekit:prefetch href="/blog">blog</a></li></ul></nav>
-<main class="grow flex justify-center px-4"><article class="prose lg:prose-xl dark:prose-invert"><ul><li><a sveltekit:prefetch href="blog/first">first</a>
-		</li><li><a sveltekit:prefetch href="blog/second">second</a>
-		</li><li><a sveltekit:prefetch href="blog/third">third</a>
+<main class="grow flex justify-center px-4"><article class="prose lg:prose-xl dark:prose-invert"><ul>
+		<li><a sveltekit:prefetch href="blog/2022-05-01-third">third</a>
+			<small>5/1/2022</small>
+		</li>
+		<li><a sveltekit:prefetch href="blog/2022-04-01-second">second</a>
+			<small>4/1/2022</small>
+		</li>
+		<li><a sveltekit:prefetch href="blog/2022-01-01-first-hello">first hello</a>
+			<small>1/1/2022</small>
 		</li></ul></article></main>
 
 
-		<script type="module" data-sveltekit-hydrate="vbyc7d">
-		import { start } from "/_app/immutable/start-9a1a9b45.js";
+		<script type="module" data-sveltekit-hydrate="12qnhf3">
+		import { start } from "/_app/immutable/start-bc0b45c6.js";
 		start({
-			target: document.querySelector('[data-sveltekit-hydrate="vbyc7d"]').parentNode,
+			target: document.querySelector('[data-sveltekit-hydrate="12qnhf3"]').parentNode,
 			paths: {"base":"","assets":""},
 			session: {},
 			route: true,
@@ -42,6 +48,6 @@
 				routeId: "blog"
 			}
 		});
-	</script><script type="application/json" sveltekit:data-type="props">{"posts":["first","second","third"]}</script>
+	</script><script type="application/json" sveltekit:data-type="props">{"posts":[{"date":"2022-05-01","title":"third"},{"date":"2022-04-01","title":"second"},{"date":"2022-01-01","title":"first hello"}]}</script>
 	</body>
 </html>
