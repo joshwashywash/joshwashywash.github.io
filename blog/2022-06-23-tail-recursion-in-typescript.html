@@ -6,12 +6,12 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="description" content="Josh Oertel's personal site" />
 		<meta http-equiv="content-security-policy" content=""><title>j.o. - blog</title>
-	<link rel="stylesheet" href="/_app/immutable/assets/__layout-3618a71e.css">
-	<link rel="modulepreload" href="/_app/immutable/start-5634adfc.js">
+	<link rel="stylesheet" href="/_app/immutable/assets/__layout-25d4ab90.css">
+	<link rel="modulepreload" href="/_app/immutable/start-738dcdd0.js">
 	<link rel="modulepreload" href="/_app/immutable/chunks/index-55204408.js">
-	<link rel="modulepreload" href="/_app/immutable/pages/__layout.svelte-dab9c294.js">
+	<link rel="modulepreload" href="/_app/immutable/pages/__layout.svelte-47084202.js">
 	<link rel="modulepreload" href="/_app/immutable/chunks/Icon-8ec42470.js">
-	<link rel="modulepreload" href="/_app/immutable/pages/blog/_post_.svelte-4650c0b0.js">
+	<link rel="modulepreload" href="/_app/immutable/pages/blog/_post_.svelte-af91fdf6.js">
 	</head>
 	<body>
 		
@@ -19,22 +19,23 @@
 
 
 
-<main class="container flex flex-col items-center justify-center min-h-screen pt-4 pb-20 px-4"><article class="w-full prose lg:prose-xl"><!-- HTML_TAG_START --><h1 id="tail-recursion-examples-in-typescript">tail recursion examples in typescript</h1>
-<p>I recently rewatched a <a href="https://www.youtube.com/watch?v=_JtPhF8MshA&amp;t=765s">computerphile video</a> about a simple way to avoid stack overflows when using recursive functions. The technique is known as tail recursion.</p>
-<p>Let&#39;s look at some examples.</p>
-<p><strong>Just a disclaimer, there are more idiomatic ways to solve these problems in JavaScript and TypeScript using <em>Array.*</em> methods. You can pretty much do anything with <em>Array.reduce</em>. Also, I don&#39;t think NodeJS nor Deno support tail recursive calls at all so there&#39;s that.</strong></p>
-<h2 id="example-1---summing-an-array-of-numbers">example 1 - summing an array of numbers</h2>
-<p>Here&#39;s an implementation of a recursive function that calculates the sum of an array of numbers.</p>
-<pre><code class="language-ts"><span class="hljs-keyword">const</span> sum = (<span class="hljs-attr">ns</span>: <span class="hljs-built_in">number</span>[]): <span class="hljs-function"><span class="hljs-params">number</span> =&gt;</span> {
-    <span class="hljs-keyword">if</span> (ns.<span class="hljs-property">length</span> &gt; <span class="hljs-number">0</span>) {
-        <span class="hljs-keyword">const</span> [n, ...rest] = ns;
-        <span class="hljs-keyword">return</span> n + <span class="hljs-title function_">sum</span>(rest);
-    }
-    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+<main class="container flex flex-col items-center justify-center min-h-screen pt-4 pb-20 px-4"><article class="w-full prose lg:prose-xl prose-pre:bg-overlay"><!-- HTML_TAG_START -->
+<h1>tail recursion examples in typescript</h1>
+<p>I recently rewatched a <a href="https://www.youtube.com/watch?v=_JtPhF8MshA&#x26;t=765s">computerphile video</a> about a simple way to avoid stack overflows when using recursive functions. The technique is known as tail recursion.</p>
+<p>Let's look at some examples.</p>
+<p><strong>Just a disclaimer, there are more idiomatic ways to solve these problems in JavaScript and TypeScript using <em>Array.*</em> methods. You can pretty much do anything with <em>Array.reduce</em>. Also, I don't think NodeJS nor Deno support tail recursive calls at all so there's that.</strong></p>
+<h2>example 1 - summing an array of numbers</h2>
+<p>Here's an implementation of a recursive function that calculates the sum of an array of numbers.</p>
+<pre><code class="hljs language-ts"><span class="hljs-keyword">const</span> sum = (<span class="hljs-attr">ns</span>: <span class="hljs-built_in">number</span>[]): <span class="hljs-function"><span class="hljs-params">number</span> =></span> {
+	<span class="hljs-keyword">if</span> (ns.<span class="hljs-property">length</span> > <span class="hljs-number">0</span>) {
+		<span class="hljs-keyword">const</span> [n, ...rest] = ns;
+		<span class="hljs-keyword">return</span> n + <span class="hljs-title function_">sum</span>(rest);
+	}
+	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
 };
 </code></pre>
 <p>This version is not tail recursive and you can see that by looking at the call stack when calling the function.</p>
-<pre><code class="language-ts"><span class="hljs-comment">// sum([3, 4, 5])</span>
+<pre><code class="hljs language-ts"><span class="hljs-comment">// sum([3, 4, 5])</span>
 <span class="hljs-comment">// 3 + sum([4, 5])</span>
 <span class="hljs-comment">// 3 + 4 + sum([5])</span>
 <span class="hljs-comment">// 3 + 4 + 5 + sum([])</span>
@@ -43,82 +44,82 @@
 <span class="hljs-comment">// 3 + 9</span>
 <span class="hljs-comment">// 12</span>
 </code></pre>
-<p>A kind of triangular shape forms as the actual addition isn&#39;t completed until the recursion has ended. Now imagine that the triangle becomes so big that it can&#39;t all fit on the stack. This is what&#39;s known as a <strong>stack overflow</strong>. Contrast that with a tail recursive version of the same function.</p>
-<pre><code class="language-ts"><span class="hljs-keyword">const</span> sum = (<span class="hljs-attr">ns</span>: <span class="hljs-built_in">number</span>[], total = <span class="hljs-number">0</span>): <span class="hljs-function"><span class="hljs-params">number</span> =&gt;</span> {
-    <span class="hljs-keyword">if</span> (ns.<span class="hljs-property">length</span> &gt; <span class="hljs-number">0</span>) {
-        <span class="hljs-keyword">const</span> [n, ...rest] = ns;
-        <span class="hljs-keyword">return</span> <span class="hljs-title function_">sum</span>(rest, total + n);
-    }
-    <span class="hljs-keyword">return</span> total;
+<p>A kind of triangular shape forms as the actual addition isn't completed until the recursion has ended. Now imagine that the triangle becomes so big that it can't all fit on the stack. This is what's known as a <strong>stack overflow</strong>. Contrast that with a tail recursive version of the same function.</p>
+<pre><code class="hljs language-ts"><span class="hljs-keyword">const</span> sum = (<span class="hljs-attr">ns</span>: <span class="hljs-built_in">number</span>[], total = <span class="hljs-number">0</span>): <span class="hljs-function"><span class="hljs-params">number</span> =></span> {
+	<span class="hljs-keyword">if</span> (ns.<span class="hljs-property">length</span> > <span class="hljs-number">0</span>) {
+		<span class="hljs-keyword">const</span> [n, ...rest] = ns;
+		<span class="hljs-keyword">return</span> <span class="hljs-title function_">sum</span>(rest, total + n);
+	}
+	<span class="hljs-keyword">return</span> total;
 };
 </code></pre>
 <p>The call stack would look something like this.</p>
-<pre><code class="language-ts"><span class="hljs-comment">// sum([3, 4, 5])</span>
+<pre><code class="hljs language-ts"><span class="hljs-comment">// sum([3, 4, 5])</span>
 <span class="hljs-comment">// sum([4, 5], 3)</span>
 <span class="hljs-comment">// sum([5], 7)</span>
 <span class="hljs-comment">// sum([], 12)</span>
 <span class="hljs-comment">// 12</span>
 </code></pre>
-<p>No triangle and the addition happens before the recursive call. Notice how the running total is carried to the next call of <strong>sum</strong>. This is pretty characteristic of tail recursive functions. Let&#39;s check out another example.</p>
-<h2 id="example-2---count-occurences-in-an-array">example 2 - count occurences in an array</h2>
-<p>To do this you just loop through the array and check if the current element is equal to the target. If there&#39;s a match, add one to the count. If not, continue the loop.</p>
-<pre><code class="language-ts"><span class="hljs-keyword">const</span> count = &lt;T&gt;(<span class="hljs-attr">t</span>: T, <span class="hljs-attr">ts</span>: T[]): <span class="hljs-function"><span class="hljs-params">number</span> =&gt;</span> {
-    <span class="hljs-keyword">if</span> (ts.<span class="hljs-property">length</span> &gt; <span class="hljs-number">0</span>) {
-        <span class="hljs-keyword">const</span> [first, ...rest] = ts;
-        <span class="hljs-keyword">const</span> equal = first === t ? <span class="hljs-number">1</span> : <span class="hljs-number">0</span>; <span class="hljs-comment">// sorry for the poor naming :T</span>
-        <span class="hljs-keyword">return</span> equal + <span class="hljs-title function_">count</span>(t, rest);
-    }
-    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+<p>No triangle and the addition happens before the recursive call. Notice how the running total is carried to the next call of <strong>sum</strong>. This is pretty characteristic of tail recursive functions. Let's check out another example.</p>
+<h2>example 2 - count occurences in an array</h2>
+<p>To do this you just loop through the array and check if the current element is equal to the target. If there's a match, add one to the count. If not, continue the loop.</p>
+<pre><code class="hljs language-ts"><span class="hljs-keyword">const</span> count = &#x3C;T>(<span class="hljs-attr">t</span>: T, <span class="hljs-attr">ts</span>: T[]): <span class="hljs-function"><span class="hljs-params">number</span> =></span> {
+	<span class="hljs-keyword">if</span> (ts.<span class="hljs-property">length</span> > <span class="hljs-number">0</span>) {
+		<span class="hljs-keyword">const</span> [first, ...rest] = ts;
+		<span class="hljs-keyword">const</span> equal = first === t ? <span class="hljs-number">1</span> : <span class="hljs-number">0</span>; <span class="hljs-comment">// sorry for the poor naming :T</span>
+		<span class="hljs-keyword">return</span> equal + <span class="hljs-title function_">count</span>(t, rest);
+	}
+	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
 };
 </code></pre>
 <p>We delay the calculation until the recursion is all done.</p>
-<pre><code class="language-ts"><span class="hljs-comment">// count(&#x27;a&#x27;, [&#x27;a&#x27;, &#x27;b&#x27;, &#x27;&#x27;, &#x27;a&#x27;])</span>
-<span class="hljs-comment">// 1 + count(&#x27;a&#x27;, [&#x27;b&#x27;, &#x27;&#x27;, &#x27;a&#x27;])</span>
-<span class="hljs-comment">// 1 + 0 + count(&#x27;a&#x27;, [&#x27;&#x27;, &#x27;a&#x27;])</span>
-<span class="hljs-comment">// 1 + 0 + 0 + count(&#x27;a&#x27;, [&#x27;a&#x27;])</span>
-<span class="hljs-comment">// 1 + 0 + 0 + 1 + count(&#x27;a&#x27;, [])</span>
+<pre><code class="hljs language-ts"><span class="hljs-comment">// count('a', ['a', 'b', '', 'a'])</span>
+<span class="hljs-comment">// 1 + count('a', ['b', '', 'a'])</span>
+<span class="hljs-comment">// 1 + 0 + count('a', ['', 'a'])</span>
+<span class="hljs-comment">// 1 + 0 + 0 + count('a', ['a'])</span>
+<span class="hljs-comment">// 1 + 0 + 0 + 1 + count('a', [])</span>
 <span class="hljs-comment">// 1 + 0 + 0 + 1 + 0</span>
 <span class="hljs-comment">// 1 + 0 + 0 + 1</span>
 <span class="hljs-comment">// 1 + 0 + 1</span>
 <span class="hljs-comment">// 1 + 1</span>
 <span class="hljs-comment">// 2</span>
 </code></pre>
-<p>And version two which doesn&#39;t have the pyramid problem:</p>
-<pre><code class="language-ts"><span class="hljs-keyword">const</span> count = &lt;T&gt;(<span class="hljs-attr">t</span>: T, <span class="hljs-attr">ts</span>: T[], c = <span class="hljs-number">0</span>): <span class="hljs-function"><span class="hljs-params">number</span> =&gt;</span> {
-    <span class="hljs-keyword">if</span> (ts.<span class="hljs-property">length</span> &gt; <span class="hljs-number">0</span>) {
-        <span class="hljs-keyword">const</span> [first, ...rest] = ts;
-        <span class="hljs-keyword">const</span> equal = first === t ? <span class="hljs-number">1</span> : <span class="hljs-number">0</span>;
-        <span class="hljs-keyword">return</span> <span class="hljs-title function_">count</span>(t, rest, c + equal);
-    }
-    <span class="hljs-keyword">return</span> c;
+<p>And version two which doesn't have the pyramid problem:</p>
+<pre><code class="hljs language-ts"><span class="hljs-keyword">const</span> count = &#x3C;T>(<span class="hljs-attr">t</span>: T, <span class="hljs-attr">ts</span>: T[], c = <span class="hljs-number">0</span>): <span class="hljs-function"><span class="hljs-params">number</span> =></span> {
+	<span class="hljs-keyword">if</span> (ts.<span class="hljs-property">length</span> > <span class="hljs-number">0</span>) {
+		<span class="hljs-keyword">const</span> [first, ...rest] = ts;
+		<span class="hljs-keyword">const</span> equal = first === t ? <span class="hljs-number">1</span> : <span class="hljs-number">0</span>;
+		<span class="hljs-keyword">return</span> <span class="hljs-title function_">count</span>(t, rest, c + equal);
+	}
+	<span class="hljs-keyword">return</span> c;
 };
 </code></pre>
 <p>With a call stack similar to this.</p>
-<pre><code class="language-ts"><span class="hljs-comment">// count(&#x27;a&#x27;, [&#x27;a&#x27;, &#x27;b&#x27;, &#x27;&#x27;, &#x27;a&#x27;])</span>
-<span class="hljs-comment">// count(&#x27;a&#x27;, [&#x27;b&#x27;, &#x27;&#x27;, &#x27;a&#x27;], 1)</span>
-<span class="hljs-comment">// count(&#x27;a&#x27;, [&#x27;&#x27;, &#x27;a&#x27;], 1)</span>
-<span class="hljs-comment">// count(&#x27;a&#x27;, [&#x27;a&#x27;], 1)</span>
-<span class="hljs-comment">// count(&#x27;a&#x27;, [], 2)</span>
+<pre><code class="hljs language-ts"><span class="hljs-comment">// count('a', ['a', 'b', '', 'a'])</span>
+<span class="hljs-comment">// count('a', ['b', '', 'a'], 1)</span>
+<span class="hljs-comment">// count('a', ['', 'a'], 1)</span>
+<span class="hljs-comment">// count('a', ['a'], 1)</span>
+<span class="hljs-comment">// count('a', [], 2)</span>
 <span class="hljs-comment">// 2</span>
 </code></pre>
 <p>Just like the second version of the <strong>sum</strong> function above, the calculation is performed before the recursion and gets passed along.</p>
-<h2 id="summary">summary</h2>
-<p>While writing this post I realized that this style of recursion is a lot like performing a <strong>while</strong> loop. In a <strong>while</strong> loop all the work is done in the body of the loop and when you&#39;re done, you jump back to the top of the loop to do it all again. Check out <a href="https://en.wikipedia.org/wiki/Recursion_%28computer_science%29">tail recursion wikipedia article</a> for more details about the similarities between recursion and looping structures.</p>
+<h2>summary</h2>
+<p>While writing this post I realized that this style of recursion is a lot like performing a <strong>while</strong> loop. In a <strong>while</strong> loop all the work is done in the body of the loop and when you're done, you jump back to the top of the loop to do it all again. Check out <a href="https://en.wikipedia.org/wiki/Recursion_%28computer_science%29">tail recursion wikipedia article</a> for more details about the similarities between recursion and looping structures.</p>
 <!-- HTML_TAG_END --></article></main>
-<nav class="fixed bottom-0 w-full py-2 bg-primary opacity-90"><ul class="flex justify-around md:justify-evenly"><li><a class="icon-link" sveltekit:prefetch href="/"><span class="sr-only">home</span>
+<nav class="fixed bottom-0 w-full py-2 bg-primary opacity-95"><ul class="flex justify-around md:justify-evenly"><li><a class="icon-link" sveltekit:prefetch href="/"><span class="sr-only">home</span>
 					<svg class="w-8 sm:w-10 md:w-12" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" stroke="currentColor"><use href="/icons.svg#home"></use></svg></a>
 			</li><li><a class="icon-link" sveltekit:prefetch href="/blog"><span class="sr-only">blog</span>
 					<svg class="w-8 sm:w-10 md:w-12" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" stroke="currentColor"><use href="/icons.svg#blog"></use></svg></a>
 			</li></ul></nav>
 
 
-		<script type="module" data-sveltekit-hydrate="1h0cc54">
-		import { set_public_env, start } from "/_app/immutable/start-5634adfc.js";
+		<script type="module" data-sveltekit-hydrate="1n50qrz">
+		import { set_public_env, start } from "/_app/immutable/start-738dcdd0.js";
 
 		set_public_env({});
 
 		start({
-			target: document.querySelector('[data-sveltekit-hydrate="1h0cc54"]').parentNode,
+			target: document.querySelector('[data-sveltekit-hydrate="1n50qrz"]').parentNode,
 			paths: {"base":"","assets":""},
 			session: {},
 			route: true,
@@ -132,6 +133,6 @@
 				routeId: "blog/[post]"
 			}
 		});
-	</script><script type="application/json" sveltekit:data-type="props">{"content":"\u003Ch1 id=\"tail-recursion-examples-in-typescript\">tail recursion examples in typescript\u003C/h1>\n\u003Cp>I recently rewatched a \u003Ca href=\"https://www.youtube.com/watch?v=_JtPhF8MshA&amp;t=765s\">computerphile video\u003C/a> about a simple way to avoid stack overflows when using recursive functions. The technique is known as tail recursion.\u003C/p>\n\u003Cp>Let&#39;s look at some examples.\u003C/p>\n\u003Cp>\u003Cstrong>Just a disclaimer, there are more idiomatic ways to solve these problems in JavaScript and TypeScript using \u003Cem>Array.*\u003C/em> methods. You can pretty much do anything with \u003Cem>Array.reduce\u003C/em>. Also, I don&#39;t think NodeJS nor Deno support tail recursive calls at all so there&#39;s that.\u003C/strong>\u003C/p>\n\u003Ch2 id=\"example-1---summing-an-array-of-numbers\">example 1 - summing an array of numbers\u003C/h2>\n\u003Cp>Here&#39;s an implementation of a recursive function that calculates the sum of an array of numbers.\u003C/p>\n\u003Cpre>\u003Ccode class=\"language-ts\">\u003Cspan class=\"hljs-keyword\">const\u003C/span> sum = (\u003Cspan class=\"hljs-attr\">ns\u003C/span>: \u003Cspan class=\"hljs-built_in\">number\u003C/span>[]): \u003Cspan class=\"hljs-function\">\u003Cspan class=\"hljs-params\">number\u003C/span> =&gt;\u003C/span> {\n    \u003Cspan class=\"hljs-keyword\">if\u003C/span> (ns.\u003Cspan class=\"hljs-property\">length\u003C/span> &gt; \u003Cspan class=\"hljs-number\">0\u003C/span>) {\n        \u003Cspan class=\"hljs-keyword\">const\u003C/span> [n, ...rest] = ns;\n        \u003Cspan class=\"hljs-keyword\">return\u003C/span> n + \u003Cspan class=\"hljs-title function_\">sum\u003C/span>(rest);\n    }\n    \u003Cspan class=\"hljs-keyword\">return\u003C/span> \u003Cspan class=\"hljs-number\">0\u003C/span>;\n};\n\u003C/code>\u003C/pre>\n\u003Cp>This version is not tail recursive and you can see that by looking at the call stack when calling the function.\u003C/p>\n\u003Cpre>\u003Ccode class=\"language-ts\">\u003Cspan class=\"hljs-comment\">// sum([3, 4, 5])\u003C/span>\n\u003Cspan class=\"hljs-comment\">// 3 + sum([4, 5])\u003C/span>\n\u003Cspan class=\"hljs-comment\">// 3 + 4 + sum([5])\u003C/span>\n\u003Cspan class=\"hljs-comment\">// 3 + 4 + 5 + sum([])\u003C/span>\n\u003Cspan class=\"hljs-comment\">// 3 + 4 + 5 + 0\u003C/span>\n\u003Cspan class=\"hljs-comment\">// 3 + 4 + 5\u003C/span>\n\u003Cspan class=\"hljs-comment\">// 3 + 9\u003C/span>\n\u003Cspan class=\"hljs-comment\">// 12\u003C/span>\n\u003C/code>\u003C/pre>\n\u003Cp>A kind of triangular shape forms as the actual addition isn&#39;t completed until the recursion has ended. Now imagine that the triangle becomes so big that it can&#39;t all fit on the stack. This is what&#39;s known as a \u003Cstrong>stack overflow\u003C/strong>. Contrast that with a tail recursive version of the same function.\u003C/p>\n\u003Cpre>\u003Ccode class=\"language-ts\">\u003Cspan class=\"hljs-keyword\">const\u003C/span> sum = (\u003Cspan class=\"hljs-attr\">ns\u003C/span>: \u003Cspan class=\"hljs-built_in\">number\u003C/span>[], total = \u003Cspan class=\"hljs-number\">0\u003C/span>): \u003Cspan class=\"hljs-function\">\u003Cspan class=\"hljs-params\">number\u003C/span> =&gt;\u003C/span> {\n    \u003Cspan class=\"hljs-keyword\">if\u003C/span> (ns.\u003Cspan class=\"hljs-property\">length\u003C/span> &gt; \u003Cspan class=\"hljs-number\">0\u003C/span>) {\n        \u003Cspan class=\"hljs-keyword\">const\u003C/span> [n, ...rest] = ns;\n        \u003Cspan class=\"hljs-keyword\">return\u003C/span> \u003Cspan class=\"hljs-title function_\">sum\u003C/span>(rest, total + n);\n    }\n    \u003Cspan class=\"hljs-keyword\">return\u003C/span> total;\n};\n\u003C/code>\u003C/pre>\n\u003Cp>The call stack would look something like this.\u003C/p>\n\u003Cpre>\u003Ccode class=\"language-ts\">\u003Cspan class=\"hljs-comment\">// sum([3, 4, 5])\u003C/span>\n\u003Cspan class=\"hljs-comment\">// sum([4, 5], 3)\u003C/span>\n\u003Cspan class=\"hljs-comment\">// sum([5], 7)\u003C/span>\n\u003Cspan class=\"hljs-comment\">// sum([], 12)\u003C/span>\n\u003Cspan class=\"hljs-comment\">// 12\u003C/span>\n\u003C/code>\u003C/pre>\n\u003Cp>No triangle and the addition happens before the recursive call. Notice how the running total is carried to the next call of \u003Cstrong>sum\u003C/strong>. This is pretty characteristic of tail recursive functions. Let&#39;s check out another example.\u003C/p>\n\u003Ch2 id=\"example-2---count-occurences-in-an-array\">example 2 - count occurences in an array\u003C/h2>\n\u003Cp>To do this you just loop through the array and check if the current element is equal to the target. If there&#39;s a match, add one to the count. If not, continue the loop.\u003C/p>\n\u003Cpre>\u003Ccode class=\"language-ts\">\u003Cspan class=\"hljs-keyword\">const\u003C/span> count = &lt;T&gt;(\u003Cspan class=\"hljs-attr\">t\u003C/span>: T, \u003Cspan class=\"hljs-attr\">ts\u003C/span>: T[]): \u003Cspan class=\"hljs-function\">\u003Cspan class=\"hljs-params\">number\u003C/span> =&gt;\u003C/span> {\n    \u003Cspan class=\"hljs-keyword\">if\u003C/span> (ts.\u003Cspan class=\"hljs-property\">length\u003C/span> &gt; \u003Cspan class=\"hljs-number\">0\u003C/span>) {\n        \u003Cspan class=\"hljs-keyword\">const\u003C/span> [first, ...rest] = ts;\n        \u003Cspan class=\"hljs-keyword\">const\u003C/span> equal = first === t ? \u003Cspan class=\"hljs-number\">1\u003C/span> : \u003Cspan class=\"hljs-number\">0\u003C/span>; \u003Cspan class=\"hljs-comment\">// sorry for the poor naming :T\u003C/span>\n        \u003Cspan class=\"hljs-keyword\">return\u003C/span> equal + \u003Cspan class=\"hljs-title function_\">count\u003C/span>(t, rest);\n    }\n    \u003Cspan class=\"hljs-keyword\">return\u003C/span> \u003Cspan class=\"hljs-number\">0\u003C/span>;\n};\n\u003C/code>\u003C/pre>\n\u003Cp>We delay the calculation until the recursion is all done.\u003C/p>\n\u003Cpre>\u003Ccode class=\"language-ts\">\u003Cspan class=\"hljs-comment\">// count(&#x27;a&#x27;, [&#x27;a&#x27;, &#x27;b&#x27;, &#x27;&#x27;, &#x27;a&#x27;])\u003C/span>\n\u003Cspan class=\"hljs-comment\">// 1 + count(&#x27;a&#x27;, [&#x27;b&#x27;, &#x27;&#x27;, &#x27;a&#x27;])\u003C/span>\n\u003Cspan class=\"hljs-comment\">// 1 + 0 + count(&#x27;a&#x27;, [&#x27;&#x27;, &#x27;a&#x27;])\u003C/span>\n\u003Cspan class=\"hljs-comment\">// 1 + 0 + 0 + count(&#x27;a&#x27;, [&#x27;a&#x27;])\u003C/span>\n\u003Cspan class=\"hljs-comment\">// 1 + 0 + 0 + 1 + count(&#x27;a&#x27;, [])\u003C/span>\n\u003Cspan class=\"hljs-comment\">// 1 + 0 + 0 + 1 + 0\u003C/span>\n\u003Cspan class=\"hljs-comment\">// 1 + 0 + 0 + 1\u003C/span>\n\u003Cspan class=\"hljs-comment\">// 1 + 0 + 1\u003C/span>\n\u003Cspan class=\"hljs-comment\">// 1 + 1\u003C/span>\n\u003Cspan class=\"hljs-comment\">// 2\u003C/span>\n\u003C/code>\u003C/pre>\n\u003Cp>And version two which doesn&#39;t have the pyramid problem:\u003C/p>\n\u003Cpre>\u003Ccode class=\"language-ts\">\u003Cspan class=\"hljs-keyword\">const\u003C/span> count = &lt;T&gt;(\u003Cspan class=\"hljs-attr\">t\u003C/span>: T, \u003Cspan class=\"hljs-attr\">ts\u003C/span>: T[], c = \u003Cspan class=\"hljs-number\">0\u003C/span>): \u003Cspan class=\"hljs-function\">\u003Cspan class=\"hljs-params\">number\u003C/span> =&gt;\u003C/span> {\n    \u003Cspan class=\"hljs-keyword\">if\u003C/span> (ts.\u003Cspan class=\"hljs-property\">length\u003C/span> &gt; \u003Cspan class=\"hljs-number\">0\u003C/span>) {\n        \u003Cspan class=\"hljs-keyword\">const\u003C/span> [first, ...rest] = ts;\n        \u003Cspan class=\"hljs-keyword\">const\u003C/span> equal = first === t ? \u003Cspan class=\"hljs-number\">1\u003C/span> : \u003Cspan class=\"hljs-number\">0\u003C/span>;\n        \u003Cspan class=\"hljs-keyword\">return\u003C/span> \u003Cspan class=\"hljs-title function_\">count\u003C/span>(t, rest, c + equal);\n    }\n    \u003Cspan class=\"hljs-keyword\">return\u003C/span> c;\n};\n\u003C/code>\u003C/pre>\n\u003Cp>With a call stack similar to this.\u003C/p>\n\u003Cpre>\u003Ccode class=\"language-ts\">\u003Cspan class=\"hljs-comment\">// count(&#x27;a&#x27;, [&#x27;a&#x27;, &#x27;b&#x27;, &#x27;&#x27;, &#x27;a&#x27;])\u003C/span>\n\u003Cspan class=\"hljs-comment\">// count(&#x27;a&#x27;, [&#x27;b&#x27;, &#x27;&#x27;, &#x27;a&#x27;], 1)\u003C/span>\n\u003Cspan class=\"hljs-comment\">// count(&#x27;a&#x27;, [&#x27;&#x27;, &#x27;a&#x27;], 1)\u003C/span>\n\u003Cspan class=\"hljs-comment\">// count(&#x27;a&#x27;, [&#x27;a&#x27;], 1)\u003C/span>\n\u003Cspan class=\"hljs-comment\">// count(&#x27;a&#x27;, [], 2)\u003C/span>\n\u003Cspan class=\"hljs-comment\">// 2\u003C/span>\n\u003C/code>\u003C/pre>\n\u003Cp>Just like the second version of the \u003Cstrong>sum\u003C/strong> function above, the calculation is performed before the recursion and gets passed along.\u003C/p>\n\u003Ch2 id=\"summary\">summary\u003C/h2>\n\u003Cp>While writing this post I realized that this style of recursion is a lot like performing a \u003Cstrong>while\u003C/strong> loop. In a \u003Cstrong>while\u003C/strong> loop all the work is done in the body of the loop and when you&#39;re done, you jump back to the top of the loop to do it all again. Check out \u003Ca href=\"https://en.wikipedia.org/wiki/Recursion_%28computer_science%29\">tail recursion wikipedia article\u003C/a> for more details about the similarities between recursion and looping structures.\u003C/p>\n"}</script>
+	</script><script type="application/json" sveltekit:data-type="props">{"content":"\n\u003Ch1>tail recursion examples in typescript\u003C/h1>\n\u003Cp>I recently rewatched a \u003Ca href=\"https://www.youtube.com/watch?v=_JtPhF8MshA&#x26;t=765s\">computerphile video\u003C/a> about a simple way to avoid stack overflows when using recursive functions. The technique is known as tail recursion.\u003C/p>\n\u003Cp>Let's look at some examples.\u003C/p>\n\u003Cp>\u003Cstrong>Just a disclaimer, there are more idiomatic ways to solve these problems in JavaScript and TypeScript using \u003Cem>Array.*\u003C/em> methods. You can pretty much do anything with \u003Cem>Array.reduce\u003C/em>. Also, I don't think NodeJS nor Deno support tail recursive calls at all so there's that.\u003C/strong>\u003C/p>\n\u003Ch2>example 1 - summing an array of numbers\u003C/h2>\n\u003Cp>Here's an implementation of a recursive function that calculates the sum of an array of numbers.\u003C/p>\n\u003Cpre>\u003Ccode class=\"hljs language-ts\">\u003Cspan class=\"hljs-keyword\">const\u003C/span> sum = (\u003Cspan class=\"hljs-attr\">ns\u003C/span>: \u003Cspan class=\"hljs-built_in\">number\u003C/span>[]): \u003Cspan class=\"hljs-function\">\u003Cspan class=\"hljs-params\">number\u003C/span> =>\u003C/span> {\n\t\u003Cspan class=\"hljs-keyword\">if\u003C/span> (ns.\u003Cspan class=\"hljs-property\">length\u003C/span> > \u003Cspan class=\"hljs-number\">0\u003C/span>) {\n\t\t\u003Cspan class=\"hljs-keyword\">const\u003C/span> [n, ...rest] = ns;\n\t\t\u003Cspan class=\"hljs-keyword\">return\u003C/span> n + \u003Cspan class=\"hljs-title function_\">sum\u003C/span>(rest);\n\t}\n\t\u003Cspan class=\"hljs-keyword\">return\u003C/span> \u003Cspan class=\"hljs-number\">0\u003C/span>;\n};\n\u003C/code>\u003C/pre>\n\u003Cp>This version is not tail recursive and you can see that by looking at the call stack when calling the function.\u003C/p>\n\u003Cpre>\u003Ccode class=\"hljs language-ts\">\u003Cspan class=\"hljs-comment\">// sum([3, 4, 5])\u003C/span>\n\u003Cspan class=\"hljs-comment\">// 3 + sum([4, 5])\u003C/span>\n\u003Cspan class=\"hljs-comment\">// 3 + 4 + sum([5])\u003C/span>\n\u003Cspan class=\"hljs-comment\">// 3 + 4 + 5 + sum([])\u003C/span>\n\u003Cspan class=\"hljs-comment\">// 3 + 4 + 5 + 0\u003C/span>\n\u003Cspan class=\"hljs-comment\">// 3 + 4 + 5\u003C/span>\n\u003Cspan class=\"hljs-comment\">// 3 + 9\u003C/span>\n\u003Cspan class=\"hljs-comment\">// 12\u003C/span>\n\u003C/code>\u003C/pre>\n\u003Cp>A kind of triangular shape forms as the actual addition isn't completed until the recursion has ended. Now imagine that the triangle becomes so big that it can't all fit on the stack. This is what's known as a \u003Cstrong>stack overflow\u003C/strong>. Contrast that with a tail recursive version of the same function.\u003C/p>\n\u003Cpre>\u003Ccode class=\"hljs language-ts\">\u003Cspan class=\"hljs-keyword\">const\u003C/span> sum = (\u003Cspan class=\"hljs-attr\">ns\u003C/span>: \u003Cspan class=\"hljs-built_in\">number\u003C/span>[], total = \u003Cspan class=\"hljs-number\">0\u003C/span>): \u003Cspan class=\"hljs-function\">\u003Cspan class=\"hljs-params\">number\u003C/span> =>\u003C/span> {\n\t\u003Cspan class=\"hljs-keyword\">if\u003C/span> (ns.\u003Cspan class=\"hljs-property\">length\u003C/span> > \u003Cspan class=\"hljs-number\">0\u003C/span>) {\n\t\t\u003Cspan class=\"hljs-keyword\">const\u003C/span> [n, ...rest] = ns;\n\t\t\u003Cspan class=\"hljs-keyword\">return\u003C/span> \u003Cspan class=\"hljs-title function_\">sum\u003C/span>(rest, total + n);\n\t}\n\t\u003Cspan class=\"hljs-keyword\">return\u003C/span> total;\n};\n\u003C/code>\u003C/pre>\n\u003Cp>The call stack would look something like this.\u003C/p>\n\u003Cpre>\u003Ccode class=\"hljs language-ts\">\u003Cspan class=\"hljs-comment\">// sum([3, 4, 5])\u003C/span>\n\u003Cspan class=\"hljs-comment\">// sum([4, 5], 3)\u003C/span>\n\u003Cspan class=\"hljs-comment\">// sum([5], 7)\u003C/span>\n\u003Cspan class=\"hljs-comment\">// sum([], 12)\u003C/span>\n\u003Cspan class=\"hljs-comment\">// 12\u003C/span>\n\u003C/code>\u003C/pre>\n\u003Cp>No triangle and the addition happens before the recursive call. Notice how the running total is carried to the next call of \u003Cstrong>sum\u003C/strong>. This is pretty characteristic of tail recursive functions. Let's check out another example.\u003C/p>\n\u003Ch2>example 2 - count occurences in an array\u003C/h2>\n\u003Cp>To do this you just loop through the array and check if the current element is equal to the target. If there's a match, add one to the count. If not, continue the loop.\u003C/p>\n\u003Cpre>\u003Ccode class=\"hljs language-ts\">\u003Cspan class=\"hljs-keyword\">const\u003C/span> count = &#x3C;T>(\u003Cspan class=\"hljs-attr\">t\u003C/span>: T, \u003Cspan class=\"hljs-attr\">ts\u003C/span>: T[]): \u003Cspan class=\"hljs-function\">\u003Cspan class=\"hljs-params\">number\u003C/span> =>\u003C/span> {\n\t\u003Cspan class=\"hljs-keyword\">if\u003C/span> (ts.\u003Cspan class=\"hljs-property\">length\u003C/span> > \u003Cspan class=\"hljs-number\">0\u003C/span>) {\n\t\t\u003Cspan class=\"hljs-keyword\">const\u003C/span> [first, ...rest] = ts;\n\t\t\u003Cspan class=\"hljs-keyword\">const\u003C/span> equal = first === t ? \u003Cspan class=\"hljs-number\">1\u003C/span> : \u003Cspan class=\"hljs-number\">0\u003C/span>; \u003Cspan class=\"hljs-comment\">// sorry for the poor naming :T\u003C/span>\n\t\t\u003Cspan class=\"hljs-keyword\">return\u003C/span> equal + \u003Cspan class=\"hljs-title function_\">count\u003C/span>(t, rest);\n\t}\n\t\u003Cspan class=\"hljs-keyword\">return\u003C/span> \u003Cspan class=\"hljs-number\">0\u003C/span>;\n};\n\u003C/code>\u003C/pre>\n\u003Cp>We delay the calculation until the recursion is all done.\u003C/p>\n\u003Cpre>\u003Ccode class=\"hljs language-ts\">\u003Cspan class=\"hljs-comment\">// count('a', ['a', 'b', '', 'a'])\u003C/span>\n\u003Cspan class=\"hljs-comment\">// 1 + count('a', ['b', '', 'a'])\u003C/span>\n\u003Cspan class=\"hljs-comment\">// 1 + 0 + count('a', ['', 'a'])\u003C/span>\n\u003Cspan class=\"hljs-comment\">// 1 + 0 + 0 + count('a', ['a'])\u003C/span>\n\u003Cspan class=\"hljs-comment\">// 1 + 0 + 0 + 1 + count('a', [])\u003C/span>\n\u003Cspan class=\"hljs-comment\">// 1 + 0 + 0 + 1 + 0\u003C/span>\n\u003Cspan class=\"hljs-comment\">// 1 + 0 + 0 + 1\u003C/span>\n\u003Cspan class=\"hljs-comment\">// 1 + 0 + 1\u003C/span>\n\u003Cspan class=\"hljs-comment\">// 1 + 1\u003C/span>\n\u003Cspan class=\"hljs-comment\">// 2\u003C/span>\n\u003C/code>\u003C/pre>\n\u003Cp>And version two which doesn't have the pyramid problem:\u003C/p>\n\u003Cpre>\u003Ccode class=\"hljs language-ts\">\u003Cspan class=\"hljs-keyword\">const\u003C/span> count = &#x3C;T>(\u003Cspan class=\"hljs-attr\">t\u003C/span>: T, \u003Cspan class=\"hljs-attr\">ts\u003C/span>: T[], c = \u003Cspan class=\"hljs-number\">0\u003C/span>): \u003Cspan class=\"hljs-function\">\u003Cspan class=\"hljs-params\">number\u003C/span> =>\u003C/span> {\n\t\u003Cspan class=\"hljs-keyword\">if\u003C/span> (ts.\u003Cspan class=\"hljs-property\">length\u003C/span> > \u003Cspan class=\"hljs-number\">0\u003C/span>) {\n\t\t\u003Cspan class=\"hljs-keyword\">const\u003C/span> [first, ...rest] = ts;\n\t\t\u003Cspan class=\"hljs-keyword\">const\u003C/span> equal = first === t ? \u003Cspan class=\"hljs-number\">1\u003C/span> : \u003Cspan class=\"hljs-number\">0\u003C/span>;\n\t\t\u003Cspan class=\"hljs-keyword\">return\u003C/span> \u003Cspan class=\"hljs-title function_\">count\u003C/span>(t, rest, c + equal);\n\t}\n\t\u003Cspan class=\"hljs-keyword\">return\u003C/span> c;\n};\n\u003C/code>\u003C/pre>\n\u003Cp>With a call stack similar to this.\u003C/p>\n\u003Cpre>\u003Ccode class=\"hljs language-ts\">\u003Cspan class=\"hljs-comment\">// count('a', ['a', 'b', '', 'a'])\u003C/span>\n\u003Cspan class=\"hljs-comment\">// count('a', ['b', '', 'a'], 1)\u003C/span>\n\u003Cspan class=\"hljs-comment\">// count('a', ['', 'a'], 1)\u003C/span>\n\u003Cspan class=\"hljs-comment\">// count('a', ['a'], 1)\u003C/span>\n\u003Cspan class=\"hljs-comment\">// count('a', [], 2)\u003C/span>\n\u003Cspan class=\"hljs-comment\">// 2\u003C/span>\n\u003C/code>\u003C/pre>\n\u003Cp>Just like the second version of the \u003Cstrong>sum\u003C/strong> function above, the calculation is performed before the recursion and gets passed along.\u003C/p>\n\u003Ch2>summary\u003C/h2>\n\u003Cp>While writing this post I realized that this style of recursion is a lot like performing a \u003Cstrong>while\u003C/strong> loop. In a \u003Cstrong>while\u003C/strong> loop all the work is done in the body of the loop and when you're done, you jump back to the top of the loop to do it all again. Check out \u003Ca href=\"https://en.wikipedia.org/wiki/Recursion_%28computer_science%29\">tail recursion wikipedia article\u003C/a> for more details about the similarities between recursion and looping structures.\u003C/p>\n"}</script>
 	</body>
 </html>
