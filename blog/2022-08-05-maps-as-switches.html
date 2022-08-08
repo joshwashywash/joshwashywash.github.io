@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" href="../favicon.png" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="description" content="Josh Oertel's personal site" />
+		<meta http-equiv="content-security-policy" content=""><title>j.o. - blog</title>
+	<link href="/_app/immutable/assets/__layout-dca49d77.css" rel="stylesheet">
+	<link rel="modulepreload" href="/_app/immutable/start-321d980d.js">
+	<link rel="modulepreload" href="/_app/immutable/chunks/index-55204408.js">
+	<link rel="modulepreload" href="/_app/immutable/pages/__layout.svelte-8d36d2fc.js">
+	<link rel="modulepreload" href="/_app/immutable/chunks/Icon-8ec42470.js">
+	<link rel="modulepreload" href="/_app/immutable/pages/blog/_post_.svelte-2749c17c.js">
+	</head>
+	<body>
+		
+
+
+
+
+<main class="container flex flex-col items-center min-h-screen pt-4 pb-20 px-4"><article class="w-full prose lg:prose-xl prose-p:before:content-[''] prose-p:before:after-[''] prose-pre:bg-overlay"><!-- HTML_TAG_START -->
+<h1 id="maps-as-switches">Maps As Switches</h1>
+<p>Imagine you're programming a game and there's a character in the game that says different things depending on what kind of monster you show them. A switch statement can get this job done but first I want to declare some types that will be used throughout the code examples.</p>
+<pre><code class="hljs language-ts"><span class="hljs-keyword">type</span> <span class="hljs-title class_">Handler</span> = <span class="hljs-function">() =></span> <span class="hljs-built_in">void</span>;
+
+<span class="hljs-keyword">type</span> <span class="hljs-title class_">Kind</span> = <span class="hljs-string">'flying'</span> | <span class="hljs-string">'bug'</span> | <span class="hljs-string">'fire'</span> | <span class="hljs-string">'water'</span>;
+</code></pre>
+<p>Okey dokey. Now we're ready.</p>
+<pre><code class="hljs language-ts"><span class="hljs-keyword">const</span> <span class="hljs-title function_">speak</span> = (<span class="hljs-params">kind: Kind</span>) => {
+	<span class="hljs-keyword">switch</span> (kind) {
+		<span class="hljs-keyword">case</span> <span class="hljs-string">'bug'</span>:
+			<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">"Unless you're Cutiefly, I don't want you."</span>);
+			<span class="hljs-keyword">break</span>;
+		<span class="hljs-keyword">case</span> <span class="hljs-string">'flying'</span>:
+			<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'Fly away little moth! Fly away!'</span>);
+			<span class="hljs-keyword">break</span>;
+		<span class="hljs-attr">default</span>:
+			<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`Lol what? That's not even a type!`</span>);
+	}
+};
+
+<span class="hljs-keyword">const</span> <span class="hljs-attr">kind</span>: <span class="hljs-title class_">Kind</span> = <span class="hljs-string">'flying'</span>;
+
+<span class="hljs-title function_">speak</span>(kind);
+</code></pre>
+<p>There's nothing wrong with this code but if you're like me you'll start to see a pattern. Underneath every <strong>case</strong> there is a bit of code that needs to be ran if the case clause matches the evaluated switch expression. What if we think about the statements under each case as a procedure? With that mindset, you can think of a switch as a <em>map</em> from the current state of something to a procedure that immediately handles it. Let's see if we can <em>map</em> <strong>switch</strong> to JavaScript's <strong>Map</strong>. (See what I did there?)</p>
+<blockquote>
+  <p>If you're unfamiliar with Map, it is essentially JavaScript's version of a hash table / dictionary.</p>
+</blockquote>
+<h2 id="switching-to-map">Switching to Map</h2>
+<p>We know we want to map some state to a procedure or function and immediately call it. Let's set up our map first and then we'll see how we can use it like a switch.</p>
+<pre><code class="hljs language-ts"><span class="hljs-keyword">const</span> map = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Map</span>&#x3C;<span class="hljs-title class_">Kind</span>, <span class="hljs-title class_">Handler</span>>([
+	[
+		<span class="hljs-string">'bug'</span>, <span class="hljs-comment">// case 'bug'</span>
+		<span class="hljs-function">() =></span> {
+			<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">"Unless you're Cutiefly, I don't want you."</span>);
+		}
+	],
+	[
+		<span class="hljs-string">'flying'</span>, <span class="hljs-comment">// case 'flying'</span>
+		<span class="hljs-function">() =></span> {
+			<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'Fly away little moth! Fly away!'</span>);
+		}
+	]
+]);
+</code></pre>
+<p>Here we're mapping the value of a string to a function that we can grab hold of and call later on.</p>
+<pre><code class="hljs language-ts"><span class="hljs-keyword">const</span> <span class="hljs-attr">kind</span>: <span class="hljs-title class_">Kind</span> = <span class="hljs-string">'flying'</span>;
+
+<span class="hljs-keyword">if</span> (map.<span class="hljs-title function_">has</span>(kind)) {
+	<span class="hljs-keyword">const</span> handler = map.<span class="hljs-title function_">get</span>(kind)() <span class="hljs-keyword">as</span> <span class="hljs-title class_">Handler</span>;
+	<span class="hljs-comment">// ts will error without the type assertion above</span>
+	<span class="hljs-title function_">handler</span>();
+} <span class="hljs-keyword">else</span> {
+	<span class="hljs-comment">// default</span>
+	<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`Lol what? That's not even a type!`</span>);
+}
+</code></pre>
+<p>And here we check if <em>kind</em> is in the map. If it is, we'll get back a function that we can call; our <em>case</em> in this case. If not, we can run some <em>default</em> code.</p>
+<blockquote>
+  <p>If you're interested in the details of the type assertion you can read more about it at the end of this article in the <a href="#ps">PostScript section</a>.</p>
+</blockquote>
+<p>So are there any benefits to using a map over a switch? Maps have constant lookup time but in small cases I don't think you'll notice any difference. I've heard that in some languages the compiler is smart enough to convert a switch into a lookup table but I'm not sure if the same optimization can be done with interpreted languages like JavaScript or Python.</p>
+<p>I think one place where a map might have an advantage over a switch is its ability to dynamically add and remove keys (<strong>handlers</strong> in this case). As far as I know there's no way to do the same thing with switches.</p>
+<p>Ultimately I'd say it's probably a matter of preference. I prefer the <code>map</code> way of doing things because I like being different for no reason. Let's go over another example.</p>
+<h2 id="keyboard-event-handling">Keyboard Event Handling</h2>
+<p>Imagine (again) that you're developing a game and you want to use key presses to move your character around.</p>
+<pre><code class="hljs language-ts"><span class="hljs-comment">// save the handler in a callback in case it needs to be removed later on.</span>
+<span class="hljs-keyword">const</span> <span class="hljs-title function_">onKeydown</span> = (<span class="hljs-params">event: KeyboardEvent</span>) => {
+	<span class="hljs-keyword">switch</span> (event.<span class="hljs-property">key</span>) {
+		<span class="hljs-keyword">case</span> <span class="hljs-string">'ArrowDown'</span>:
+			<span class="hljs-comment">// move the character down</span>
+			<span class="hljs-keyword">break</span>;
+		<span class="hljs-keyword">case</span> <span class="hljs-string">'ArrowLeft'</span>:
+			<span class="hljs-comment">// move the character left</span>
+			<span class="hljs-keyword">break</span>;
+		<span class="hljs-keyword">case</span> <span class="hljs-string">'ArrowRight'</span>:
+			<span class="hljs-comment">// move the character right</span>
+			<span class="hljs-keyword">break</span>;
+		<span class="hljs-keyword">case</span> <span class="hljs-string">'ArrowUp'</span>:
+			<span class="hljs-comment">// move the character up</span>
+			<span class="hljs-keyword">break</span>;
+	}
+};
+
+<span class="hljs-variable language_">window</span>.<span class="hljs-title function_">addEventListener</span>(<span class="hljs-string">'keydown'</span>, onKeydown);
+
+<span class="hljs-comment">// window.removeEventListener('keydown', onKeydown);</span>
+</code></pre>
+<p>Seems pretty straightforward -- check the key and run the code under the corresponding case clause.</p>
+<p>What does it look like if we use a map? First we'll create the map.</p>
+<pre><code class="hljs language-ts"><span class="hljs-keyword">const</span> map = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Map</span>&#x3C;<span class="hljs-built_in">string</span>, <span class="hljs-title class_">Handler</span>>([
+	[
+		<span class="hljs-string">'ArrowDown'</span>,
+		<span class="hljs-function">() =></span> {
+			<span class="hljs-comment">// move character down</span>
+		}
+	],
+	[
+		<span class="hljs-string">'ArrowLeft'</span>,
+		<span class="hljs-function">() =></span> {
+			<span class="hljs-comment">// move character left</span>
+		}
+	],
+	[
+		<span class="hljs-string">'ArrowRight'</span>,
+		<span class="hljs-function">() =></span> {
+			<span class="hljs-comment">// move character right</span>
+		}
+	],
+	[
+		<span class="hljs-string">'ArrowUp'</span>,
+		<span class="hljs-function">() =></span> {
+			<span class="hljs-comment">// move character up</span>
+		}
+	]
+]);
+</code></pre>
+<p>Seems a lot like the first example. Next, we'll need to create the listener function. I think it might be handy to create a higher order function to do this so that we can create a listener from any map of this shape.</p>
+<pre><code class="hljs language-ts"><span class="hljs-keyword">const</span> <span class="hljs-title function_">createKeyboardListener</span> = (<span class="hljs-params">map: <span class="hljs-built_in">Map</span>&#x3C;<span class="hljs-built_in">string</span>, Handler></span>) => {
+	<span class="hljs-keyword">return</span> <span class="hljs-function">(<span class="hljs-params">event: KeyboardEvent</span>) =></span> {
+		<span class="hljs-keyword">const</span> { key } = event;
+		<span class="hljs-keyword">if</span> (map.<span class="hljs-title function_">has</span>(key)) {
+			<span class="hljs-keyword">const</span> handler = map.<span class="hljs-title function_">get</span>(key) <span class="hljs-keyword">as</span> <span class="hljs-title class_">Handler</span>;
+			<span class="hljs-title function_">handler</span>();
+		}
+		<span class="hljs-comment">// no default</span>
+	};
+};
+</code></pre>
+<p>Then you can create the listener and attach / detach it like so.</p>
+<pre><code class="hljs language-ts"><span class="hljs-keyword">const</span> listener = <span class="hljs-title function_">createKeyboardListener</span>(map);
+
+<span class="hljs-variable language_">window</span>.<span class="hljs-title function_">addEventListener</span>(<span class="hljs-string">'keydown'</span>, listener);
+
+<span class="hljs-comment">// window.removeEventListener('keydown', listener);</span>
+</code></pre>
+<p>I don't want to admit it but this might be a little more complex for no real gain BUT nevertheless I think it is pretty handy to separate everything out like this.</p>
+<h2 id="thats-that">That's That</h2>
+<p>If you made it this far, thanks for sticking around through this hodge-podgy article. Hopefully it was interesting and to be clear, I'm not really advocating the use of maps in place of switches. I think both switches and maps are perfectly fine and just wanted to share something I've been thinking about.</p>
+<h2 id="ps">P.S.</h2>
+<p>In the examples above, you might be wondering why there is an extra check for the existence of the key in the map before getting the corresponding value out of it. <em>Map.get</em> will return <em>undefined</em> if the key is not in the map. This can be problematic in some contexts if <em>undefined</em> is a valid value or in cases where a boolean is expected. Values like <em>undefined</em> and <em>null</em> are converted to <em>false</em> when used as booleans. I could come up with a contrived example but just trust that you shouldn't assume your keys will always be in your map.</p>
+<!-- HTML_TAG_END --></article></main>
+<nav class="fixed bottom-0 w-full py-2 bg-primary opacity-95"><ul class="flex justify-around md:justify-evenly"><li><a class="icon-link" sveltekit:prefetch href="/"><span class="sr-only">home</span>
+					<svg class="w-8 sm:w-10 md:w-12" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" stroke="currentColor"><use href="/icons.svg#home"></use></svg></a>
+			</li><li><a class="icon-link" sveltekit:prefetch href="/blog"><span class="sr-only">blog</span>
+					<svg class="w-8 sm:w-10 md:w-12" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" stroke="currentColor"><use href="/icons.svg#blog"></use></svg></a>
+			</li></ul></nav>
+
+
+		<script type="module" data-sveltekit-hydrate="1m1e1ml">
+		import { set_public_env, start } from "/_app/immutable/start-321d980d.js";
+
+		set_public_env({});
+
+		start({
+			target: document.querySelector('[data-sveltekit-hydrate="1m1e1ml"]').parentNode,
+			paths: {"base":"","assets":""},
+			session: {},
+			route: true,
+			spa: false,
+			trailing_slash: "never",
+			hydrate: {
+				status: 200,
+				error: null,
+				nodes: [0, 2],
+				params: {post:"2022-08-05-maps-as-switches"},
+				routeId: "blog/[post]"
+			}
+		});
+	</script><script type="application/json" sveltekit:data-type="props">{"content":"\n\u003Ch1 id=\"maps-as-switches\">Maps As Switches\u003C/h1>\n\u003Cp>Imagine you're programming a game and there's a character in the game that says different things depending on what kind of monster you show them. A switch statement can get this job done but first I want to declare some types that will be used throughout the code examples.\u003C/p>\n\u003Cpre>\u003Ccode class=\"hljs language-ts\">\u003Cspan class=\"hljs-keyword\">type\u003C/span> \u003Cspan class=\"hljs-title class_\">Handler\u003C/span> = \u003Cspan class=\"hljs-function\">() =>\u003C/span> \u003Cspan class=\"hljs-built_in\">void\u003C/span>;\n\n\u003Cspan class=\"hljs-keyword\">type\u003C/span> \u003Cspan class=\"hljs-title class_\">Kind\u003C/span> = \u003Cspan class=\"hljs-string\">'flying'\u003C/span> | \u003Cspan class=\"hljs-string\">'bug'\u003C/span> | \u003Cspan class=\"hljs-string\">'fire'\u003C/span> | \u003Cspan class=\"hljs-string\">'water'\u003C/span>;\n\u003C/code>\u003C/pre>\n\u003Cp>Okey dokey. Now we're ready.\u003C/p>\n\u003Cpre>\u003Ccode class=\"hljs language-ts\">\u003Cspan class=\"hljs-keyword\">const\u003C/span> \u003Cspan class=\"hljs-title function_\">speak\u003C/span> = (\u003Cspan class=\"hljs-params\">kind: Kind\u003C/span>) => {\n\t\u003Cspan class=\"hljs-keyword\">switch\u003C/span> (kind) {\n\t\t\u003Cspan class=\"hljs-keyword\">case\u003C/span> \u003Cspan class=\"hljs-string\">'bug'\u003C/span>:\n\t\t\t\u003Cspan class=\"hljs-variable language_\">console\u003C/span>.\u003Cspan class=\"hljs-title function_\">log\u003C/span>(\u003Cspan class=\"hljs-string\">\"Unless you're Cutiefly, I don't want you.\"\u003C/span>);\n\t\t\t\u003Cspan class=\"hljs-keyword\">break\u003C/span>;\n\t\t\u003Cspan class=\"hljs-keyword\">case\u003C/span> \u003Cspan class=\"hljs-string\">'flying'\u003C/span>:\n\t\t\t\u003Cspan class=\"hljs-variable language_\">console\u003C/span>.\u003Cspan class=\"hljs-title function_\">log\u003C/span>(\u003Cspan class=\"hljs-string\">'Fly away little moth! Fly away!'\u003C/span>);\n\t\t\t\u003Cspan class=\"hljs-keyword\">break\u003C/span>;\n\t\t\u003Cspan class=\"hljs-attr\">default\u003C/span>:\n\t\t\t\u003Cspan class=\"hljs-variable language_\">console\u003C/span>.\u003Cspan class=\"hljs-title function_\">log\u003C/span>(\u003Cspan class=\"hljs-string\">`Lol what? That's not even a type!`\u003C/span>);\n\t}\n};\n\n\u003Cspan class=\"hljs-keyword\">const\u003C/span> \u003Cspan class=\"hljs-attr\">kind\u003C/span>: \u003Cspan class=\"hljs-title class_\">Kind\u003C/span> = \u003Cspan class=\"hljs-string\">'flying'\u003C/span>;\n\n\u003Cspan class=\"hljs-title function_\">speak\u003C/span>(kind);\n\u003C/code>\u003C/pre>\n\u003Cp>There's nothing wrong with this code but if you're like me you'll start to see a pattern. Underneath every \u003Cstrong>case\u003C/strong> there is a bit of code that needs to be ran if the case clause matches the evaluated switch expression. What if we think about the statements under each case as a procedure? With that mindset, you can think of a switch as a \u003Cem>map\u003C/em> from the current state of something to a procedure that immediately handles it. Let's see if we can \u003Cem>map\u003C/em> \u003Cstrong>switch\u003C/strong> to JavaScript's \u003Cstrong>Map\u003C/strong>. (See what I did there?)\u003C/p>\n\u003Cblockquote>\n  \u003Cp>If you're unfamiliar with Map, it is essentially JavaScript's version of a hash table / dictionary.\u003C/p>\n\u003C/blockquote>\n\u003Ch2 id=\"switching-to-map\">Switching to Map\u003C/h2>\n\u003Cp>We know we want to map some state to a procedure or function and immediately call it. Let's set up our map first and then we'll see how we can use it like a switch.\u003C/p>\n\u003Cpre>\u003Ccode class=\"hljs language-ts\">\u003Cspan class=\"hljs-keyword\">const\u003C/span> map = \u003Cspan class=\"hljs-keyword\">new\u003C/span> \u003Cspan class=\"hljs-title class_\">Map\u003C/span>&#x3C;\u003Cspan class=\"hljs-title class_\">Kind\u003C/span>, \u003Cspan class=\"hljs-title class_\">Handler\u003C/span>>([\n\t[\n\t\t\u003Cspan class=\"hljs-string\">'bug'\u003C/span>, \u003Cspan class=\"hljs-comment\">// case 'bug'\u003C/span>\n\t\t\u003Cspan class=\"hljs-function\">() =>\u003C/span> {\n\t\t\t\u003Cspan class=\"hljs-variable language_\">console\u003C/span>.\u003Cspan class=\"hljs-title function_\">log\u003C/span>(\u003Cspan class=\"hljs-string\">\"Unless you're Cutiefly, I don't want you.\"\u003C/span>);\n\t\t}\n\t],\n\t[\n\t\t\u003Cspan class=\"hljs-string\">'flying'\u003C/span>, \u003Cspan class=\"hljs-comment\">// case 'flying'\u003C/span>\n\t\t\u003Cspan class=\"hljs-function\">() =>\u003C/span> {\n\t\t\t\u003Cspan class=\"hljs-variable language_\">console\u003C/span>.\u003Cspan class=\"hljs-title function_\">log\u003C/span>(\u003Cspan class=\"hljs-string\">'Fly away little moth! Fly away!'\u003C/span>);\n\t\t}\n\t]\n]);\n\u003C/code>\u003C/pre>\n\u003Cp>Here we're mapping the value of a string to a function that we can grab hold of and call later on.\u003C/p>\n\u003Cpre>\u003Ccode class=\"hljs language-ts\">\u003Cspan class=\"hljs-keyword\">const\u003C/span> \u003Cspan class=\"hljs-attr\">kind\u003C/span>: \u003Cspan class=\"hljs-title class_\">Kind\u003C/span> = \u003Cspan class=\"hljs-string\">'flying'\u003C/span>;\n\n\u003Cspan class=\"hljs-keyword\">if\u003C/span> (map.\u003Cspan class=\"hljs-title function_\">has\u003C/span>(kind)) {\n\t\u003Cspan class=\"hljs-keyword\">const\u003C/span> handler = map.\u003Cspan class=\"hljs-title function_\">get\u003C/span>(kind)() \u003Cspan class=\"hljs-keyword\">as\u003C/span> \u003Cspan class=\"hljs-title class_\">Handler\u003C/span>;\n\t\u003Cspan class=\"hljs-comment\">// ts will error without the type assertion above\u003C/span>\n\t\u003Cspan class=\"hljs-title function_\">handler\u003C/span>();\n} \u003Cspan class=\"hljs-keyword\">else\u003C/span> {\n\t\u003Cspan class=\"hljs-comment\">// default\u003C/span>\n\t\u003Cspan class=\"hljs-variable language_\">console\u003C/span>.\u003Cspan class=\"hljs-title function_\">log\u003C/span>(\u003Cspan class=\"hljs-string\">`Lol what? That's not even a type!`\u003C/span>);\n}\n\u003C/code>\u003C/pre>\n\u003Cp>And here we check if \u003Cem>kind\u003C/em> is in the map. If it is, we'll get back a function that we can call; our \u003Cem>case\u003C/em> in this case. If not, we can run some \u003Cem>default\u003C/em> code.\u003C/p>\n\u003Cblockquote>\n  \u003Cp>If you're interested in the details of the type assertion you can read more about it at the end of this article in the \u003Ca href=\"#ps\">PostScript section\u003C/a>.\u003C/p>\n\u003C/blockquote>\n\u003Cp>So are there any benefits to using a map over a switch? Maps have constant lookup time but in small cases I don't think you'll notice any difference. I've heard that in some languages the compiler is smart enough to convert a switch into a lookup table but I'm not sure if the same optimization can be done with interpreted languages like JavaScript or Python.\u003C/p>\n\u003Cp>I think one place where a map might have an advantage over a switch is its ability to dynamically add and remove keys (\u003Cstrong>handlers\u003C/strong> in this case). As far as I know there's no way to do the same thing with switches.\u003C/p>\n\u003Cp>Ultimately I'd say it's probably a matter of preference. I prefer the \u003Ccode>map\u003C/code> way of doing things because I like being different for no reason. Let's go over another example.\u003C/p>\n\u003Ch2 id=\"keyboard-event-handling\">Keyboard Event Handling\u003C/h2>\n\u003Cp>Imagine (again) that you're developing a game and you want to use key presses to move your character around.\u003C/p>\n\u003Cpre>\u003Ccode class=\"hljs language-ts\">\u003Cspan class=\"hljs-comment\">// save the handler in a callback in case it needs to be removed later on.\u003C/span>\n\u003Cspan class=\"hljs-keyword\">const\u003C/span> \u003Cspan class=\"hljs-title function_\">onKeydown\u003C/span> = (\u003Cspan class=\"hljs-params\">event: KeyboardEvent\u003C/span>) => {\n\t\u003Cspan class=\"hljs-keyword\">switch\u003C/span> (event.\u003Cspan class=\"hljs-property\">key\u003C/span>) {\n\t\t\u003Cspan class=\"hljs-keyword\">case\u003C/span> \u003Cspan class=\"hljs-string\">'ArrowDown'\u003C/span>:\n\t\t\t\u003Cspan class=\"hljs-comment\">// move the character down\u003C/span>\n\t\t\t\u003Cspan class=\"hljs-keyword\">break\u003C/span>;\n\t\t\u003Cspan class=\"hljs-keyword\">case\u003C/span> \u003Cspan class=\"hljs-string\">'ArrowLeft'\u003C/span>:\n\t\t\t\u003Cspan class=\"hljs-comment\">// move the character left\u003C/span>\n\t\t\t\u003Cspan class=\"hljs-keyword\">break\u003C/span>;\n\t\t\u003Cspan class=\"hljs-keyword\">case\u003C/span> \u003Cspan class=\"hljs-string\">'ArrowRight'\u003C/span>:\n\t\t\t\u003Cspan class=\"hljs-comment\">// move the character right\u003C/span>\n\t\t\t\u003Cspan class=\"hljs-keyword\">break\u003C/span>;\n\t\t\u003Cspan class=\"hljs-keyword\">case\u003C/span> \u003Cspan class=\"hljs-string\">'ArrowUp'\u003C/span>:\n\t\t\t\u003Cspan class=\"hljs-comment\">// move the character up\u003C/span>\n\t\t\t\u003Cspan class=\"hljs-keyword\">break\u003C/span>;\n\t}\n};\n\n\u003Cspan class=\"hljs-variable language_\">window\u003C/span>.\u003Cspan class=\"hljs-title function_\">addEventListener\u003C/span>(\u003Cspan class=\"hljs-string\">'keydown'\u003C/span>, onKeydown);\n\n\u003Cspan class=\"hljs-comment\">// window.removeEventListener('keydown', onKeydown);\u003C/span>\n\u003C/code>\u003C/pre>\n\u003Cp>Seems pretty straightforward -- check the key and run the code under the corresponding case clause.\u003C/p>\n\u003Cp>What does it look like if we use a map? First we'll create the map.\u003C/p>\n\u003Cpre>\u003Ccode class=\"hljs language-ts\">\u003Cspan class=\"hljs-keyword\">const\u003C/span> map = \u003Cspan class=\"hljs-keyword\">new\u003C/span> \u003Cspan class=\"hljs-title class_\">Map\u003C/span>&#x3C;\u003Cspan class=\"hljs-built_in\">string\u003C/span>, \u003Cspan class=\"hljs-title class_\">Handler\u003C/span>>([\n\t[\n\t\t\u003Cspan class=\"hljs-string\">'ArrowDown'\u003C/span>,\n\t\t\u003Cspan class=\"hljs-function\">() =>\u003C/span> {\n\t\t\t\u003Cspan class=\"hljs-comment\">// move character down\u003C/span>\n\t\t}\n\t],\n\t[\n\t\t\u003Cspan class=\"hljs-string\">'ArrowLeft'\u003C/span>,\n\t\t\u003Cspan class=\"hljs-function\">() =>\u003C/span> {\n\t\t\t\u003Cspan class=\"hljs-comment\">// move character left\u003C/span>\n\t\t}\n\t],\n\t[\n\t\t\u003Cspan class=\"hljs-string\">'ArrowRight'\u003C/span>,\n\t\t\u003Cspan class=\"hljs-function\">() =>\u003C/span> {\n\t\t\t\u003Cspan class=\"hljs-comment\">// move character right\u003C/span>\n\t\t}\n\t],\n\t[\n\t\t\u003Cspan class=\"hljs-string\">'ArrowUp'\u003C/span>,\n\t\t\u003Cspan class=\"hljs-function\">() =>\u003C/span> {\n\t\t\t\u003Cspan class=\"hljs-comment\">// move character up\u003C/span>\n\t\t}\n\t]\n]);\n\u003C/code>\u003C/pre>\n\u003Cp>Seems a lot like the first example. Next, we'll need to create the listener function. I think it might be handy to create a higher order function to do this so that we can create a listener from any map of this shape.\u003C/p>\n\u003Cpre>\u003Ccode class=\"hljs language-ts\">\u003Cspan class=\"hljs-keyword\">const\u003C/span> \u003Cspan class=\"hljs-title function_\">createKeyboardListener\u003C/span> = (\u003Cspan class=\"hljs-params\">map: \u003Cspan class=\"hljs-built_in\">Map\u003C/span>&#x3C;\u003Cspan class=\"hljs-built_in\">string\u003C/span>, Handler>\u003C/span>) => {\n\t\u003Cspan class=\"hljs-keyword\">return\u003C/span> \u003Cspan class=\"hljs-function\">(\u003Cspan class=\"hljs-params\">event: KeyboardEvent\u003C/span>) =>\u003C/span> {\n\t\t\u003Cspan class=\"hljs-keyword\">const\u003C/span> { key } = event;\n\t\t\u003Cspan class=\"hljs-keyword\">if\u003C/span> (map.\u003Cspan class=\"hljs-title function_\">has\u003C/span>(key)) {\n\t\t\t\u003Cspan class=\"hljs-keyword\">const\u003C/span> handler = map.\u003Cspan class=\"hljs-title function_\">get\u003C/span>(key) \u003Cspan class=\"hljs-keyword\">as\u003C/span> \u003Cspan class=\"hljs-title class_\">Handler\u003C/span>;\n\t\t\t\u003Cspan class=\"hljs-title function_\">handler\u003C/span>();\n\t\t}\n\t\t\u003Cspan class=\"hljs-comment\">// no default\u003C/span>\n\t};\n};\n\u003C/code>\u003C/pre>\n\u003Cp>Then you can create the listener and attach / detach it like so.\u003C/p>\n\u003Cpre>\u003Ccode class=\"hljs language-ts\">\u003Cspan class=\"hljs-keyword\">const\u003C/span> listener = \u003Cspan class=\"hljs-title function_\">createKeyboardListener\u003C/span>(map);\n\n\u003Cspan class=\"hljs-variable language_\">window\u003C/span>.\u003Cspan class=\"hljs-title function_\">addEventListener\u003C/span>(\u003Cspan class=\"hljs-string\">'keydown'\u003C/span>, listener);\n\n\u003Cspan class=\"hljs-comment\">// window.removeEventListener('keydown', listener);\u003C/span>\n\u003C/code>\u003C/pre>\n\u003Cp>I don't want to admit it but this might be a little more complex for no real gain BUT nevertheless I think it is pretty handy to separate everything out like this.\u003C/p>\n\u003Ch2 id=\"thats-that\">That's That\u003C/h2>\n\u003Cp>If you made it this far, thanks for sticking around through this hodge-podgy article. Hopefully it was interesting and to be clear, I'm not really advocating the use of maps in place of switches. I think both switches and maps are perfectly fine and just wanted to share something I've been thinking about.\u003C/p>\n\u003Ch2 id=\"ps\">P.S.\u003C/h2>\n\u003Cp>In the examples above, you might be wondering why there is an extra check for the existence of the key in the map before getting the corresponding value out of it. \u003Cem>Map.get\u003C/em> will return \u003Cem>undefined\u003C/em> if the key is not in the map. This can be problematic in some contexts if \u003Cem>undefined\u003C/em> is a valid value or in cases where a boolean is expected. Values like \u003Cem>undefined\u003C/em> and \u003Cem>null\u003C/em> are converted to \u003Cem>false\u003C/em> when used as booleans. I could come up with a contrived example but just trust that you shouldn't assume your keys will always be in your map.\u003C/p>\n"}</script>
+	</body>
+</html>
