@@ -7,11 +7,11 @@
 		<meta name="description" content="Josh Oertel's personal site" />
 		<meta http-equiv="content-security-policy" content=""><title>j.o. - blog</title>
 	<link href="/_app/immutable/assets/__layout-dca49d77.css" rel="stylesheet">
-	<link rel="modulepreload" href="/_app/immutable/start-304f0d5d.js">
+	<link rel="modulepreload" href="/_app/immutable/start-ea65a675.js">
 	<link rel="modulepreload" href="/_app/immutable/chunks/index-55204408.js">
-	<link rel="modulepreload" href="/_app/immutable/pages/__layout.svelte-628a1fd5.js">
+	<link rel="modulepreload" href="/_app/immutable/pages/__layout.svelte-77641636.js">
 	<link rel="modulepreload" href="/_app/immutable/chunks/Icon-ed8b53ae.js">
-	<link rel="modulepreload" href="/_app/immutable/pages/blog/_post_.svelte-2749c17c.js">
+	<link rel="modulepreload" href="/_app/immutable/pages/blog/_post_.svelte-56817aec.js">
 	</head>
 	<body>
 		
@@ -19,7 +19,7 @@
 
 
 
-<main class="container flex flex-col items-center min-h-screen pt-4 pb-20 px-4"><article class="w-full prose lg:prose-xl prose-p:before:content-[''] prose-p:before:after-[''] prose-pre:bg-overlay"><!-- HTML_TAG_START -->
+<main class="container flex min-h-screen flex-col items-center px-4 pt-4 pb-20"><article class="prose-p:before:after-[''] prose w-full prose-p:before:content-[''] prose-pre:bg-overlay lg:prose-xl"><!-- HTML_TAG_START -->
 <h1 id="maps-as-switches">Maps As Switches</h1>
 <p>Imagine you're programming a game and there's a character in the game that says different things depending on what kind of monster you show them. A switch statement can get this job done but first I want to declare some types that will be used throughout the code examples.</p>
 <pre><code class="hljs language-ts"><span class="hljs-keyword">type</span> <span class="hljs-title class_">Handler</span> = <span class="hljs-function">() =></span> <span class="hljs-built_in">void</span>;
@@ -162,20 +162,20 @@
 <h2 id="ps">P.S.</h2>
 <p>In the examples above, you might be wondering why there is an extra check for the existence of the key in the map before getting the corresponding value out of it. <em>Map.get</em> will return <em>undefined</em> if the key is not in the map. This can be problematic in some contexts if <em>undefined</em> is a valid value or in cases where a boolean is expected. Values like <em>undefined</em> and <em>null</em> are converted to <em>false</em> when used as booleans. I could come up with a contrived example but just trust that you shouldn't assume your keys will always be in your map.</p>
 <!-- HTML_TAG_END --></article></main>
-<nav class="fixed bottom-0 w-full py-2 bg-primary opacity-95"><ul class="flex justify-around md:justify-evenly"><li><a class="icon-link" sveltekit:prefetch href="/"><span class="sr-only">home</span>
+<nav class="fixed bottom-0 w-full bg-primary py-2 opacity-95"><ul class="flex justify-around md:justify-evenly"><li><a class="icon-link" sveltekit:prefetch href="/"><span class="sr-only">home</span>
 					<svg aria-hidden="true" class="w-8 sm:w-10 md:w-12" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" stroke="currentColor"><use href="/icons.svg#home"></use></svg></a>
 			</li><li><a class="icon-link" sveltekit:prefetch href="/blog"><span class="sr-only">blog</span>
 					<svg aria-hidden="true" class="w-8 sm:w-10 md:w-12" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" stroke="currentColor"><use href="/icons.svg#blog"></use></svg></a>
 			</li></ul></nav>
 
 
-		<script type="module" data-sveltekit-hydrate="c2xdx4">
-		import { set_public_env, start } from "/_app/immutable/start-304f0d5d.js";
+		<script type="module" data-sveltekit-hydrate="1p6fefs">
+		import { set_public_env, start } from "/_app/immutable/start-ea65a675.js";
 
 		set_public_env({});
 
 		start({
-			target: document.querySelector('[data-sveltekit-hydrate="c2xdx4"]').parentNode,
+			target: document.querySelector('[data-sveltekit-hydrate="1p6fefs"]').parentNode,
 			paths: {"base":"","assets":""},
 			session: {},
 			route: true,
