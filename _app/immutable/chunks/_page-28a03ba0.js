@@ -1,0 +1,1 @@
+const t=()=>({links:[{href:"https://github.com/joshwashywash",to:"github"},{href:"https://twitter.com/joshwashywash",to:"twitter"},{href:"mailto:joshwashywash@gmail.com",to:"email"}]}),e=Object.freeze(Object.defineProperty({__proto__:null,load:t},Symbol.toStringTag,{value:"Module"}));export{e as _,t as l};

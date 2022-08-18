@@ -6,12 +6,14 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="description" content="Josh Oertel's personal site" />
 		<meta http-equiv="content-security-policy" content=""><title>j.o. - blog</title>
-	<link href="/_app/immutable/assets/__layout-b40d6ea0.css" rel="stylesheet">
-	<link rel="modulepreload" href="/_app/immutable/start-3681bff6.js">
-	<link rel="modulepreload" href="/_app/immutable/chunks/index-55204408.js">
-	<link rel="modulepreload" href="/_app/immutable/pages/__layout.svelte-77641636.js">
-	<link rel="modulepreload" href="/_app/immutable/chunks/Icon-ed8b53ae.js">
-	<link rel="modulepreload" href="/_app/immutable/pages/blog/index.svelte-e3e6b428.js">
+	<link href="./_app/immutable/assets/+layout-b40d6ea0.css" rel="stylesheet">
+	<link rel="modulepreload" href="./_app/immutable/start-b540bd66.js">
+	<link rel="modulepreload" href="./_app/immutable/chunks/index-a36e09d1.js">
+	<link rel="modulepreload" href="./_app/immutable/components/pages/_layout.svelte-e796ce53.js">
+	<link rel="modulepreload" href="./_app/immutable/chunks/Icon-af8e3b39.js">
+	<link rel="modulepreload" href="./_app/immutable/modules/pages/_layout.ts-8ca9f3ea.js">
+	<link rel="modulepreload" href="./_app/immutable/chunks/_layout-6442c45e.js">
+	<link rel="modulepreload" href="./_app/immutable/components/pages/blog/_page.svelte-aa91feec.js">
 	</head>
 	<body>
 		
@@ -21,10 +23,12 @@
 
 <main class="container flex min-h-screen flex-col items-center px-4 pt-4 pb-20"><ul>
 		<li><div class="flex flex-col"><a class="text-2xl underline" sveltekit:prefetch href="blog/2022-08-05-maps-as-switches">maps as switches</a>
-				<small>8/5/2022</small></div>
+				<small>8/5/2022
+				</small></div>
 		</li>
 		<li><div class="flex flex-col"><a class="text-2xl underline" sveltekit:prefetch href="blog/2022-06-23-tail-recursion-in-typescript">tail recursion in typescript</a>
-				<small>6/23/2022</small></div>
+				<small>6/23/2022
+				</small></div>
 		</li></ul></main>
 <nav class="fixed bottom-0 w-full bg-primary py-2 opacity-95"><ul class="flex justify-around md:justify-evenly"><li><a class="icon-link" sveltekit:prefetch href="/"><span class="sr-only">home</span>
 					<svg aria-hidden="true" class="w-8 sm:w-10 md:w-12" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" stroke="currentColor"><use href="/icons.svg#home"></use></svg></a>
@@ -33,26 +37,26 @@
 			</li></ul></nav>
 
 
-		<script type="module" data-sveltekit-hydrate="18h9hg5">
-		import { set_public_env, start } from "/_app/immutable/start-3681bff6.js";
+		<script type="module" data-sveltekit-hydrate="1qm25sl">
+		import { set_public_env, start } from "./_app/immutable/start-b540bd66.js";
 
 		set_public_env({});
 
 		start({
-			target: document.querySelector('[data-sveltekit-hydrate="18h9hg5"]').parentNode,
+			target: document.querySelector('[data-sveltekit-hydrate="1qm25sl"]').parentNode,
 			paths: {"base":"","assets":""},
-			session: {},
 			route: true,
 			spa: false,
 			trailing_slash: "never",
 			hydrate: {
 				status: 200,
 				error: null,
-				nodes: [0, 3],
+				node_ids: [0, 3],
 				params: {},
 				routeId: "blog"
 			}
 		});
-	</script><script type="application/json" sveltekit:data-type="props">{"posts":[{"date":"2022-08-05","title":"maps as switches"},{"date":"2022-06-23","title":"tail recursion in typescript"}]}</script>
+	</script>
+	<script type="application/json" sveltekit:data-type="server_data">[null,{"posts":[{"date":"2022-08-05","title":"maps as switches"},{"date":"2022-06-23","title":"tail recursion in typescript"}]}]</script>
 	</body>
 </html>
