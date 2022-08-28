@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" href="../favicon.png" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="description" content="Josh Oertel's personal site" />
+		<meta http-equiv="content-security-policy" content=""><title>j.o. - blog</title>
+	<link href="../_app/immutable/assets/+layout-2e44a77a.css" rel="stylesheet">
+	<link href="../_app/immutable/assets/layout-117bc161.css" rel="stylesheet">
+	<link rel="modulepreload" href="../_app/immutable/start-2bbb0192.js">
+	<link rel="modulepreload" href="../_app/immutable/chunks/index-9d00633e.js">
+	<link rel="modulepreload" href="../_app/immutable/chunks/singletons-6106ce7a.js">
+	<link rel="modulepreload" href="../_app/immutable/components/pages/_layout.svelte-1017d4bd.js">
+	<link rel="modulepreload" href="../_app/immutable/chunks/Icon-64570bea.js">
+	<link rel="modulepreload" href="../_app/immutable/modules/pages/_layout.ts-e73744ac.js">
+	<link rel="modulepreload" href="../_app/immutable/chunks/links-3cfa9e63.js">
+	<link rel="modulepreload" href="../_app/immutable/chunks/_layout-291ead87.js">
+	<link rel="modulepreload" href="../_app/immutable/components/pages/blog/tail-recursion/_page.md-c401d6ee.js">
+	<link rel="modulepreload" href="../_app/immutable/chunks/layout-f348ef7f.js">
+	<link rel="modulepreload" href="../_app/immutable/chunks/date-b51ec11b.js">
+	</head>
+	<body>
+		
+
+
+
+
+<main class="container flex min-h-screen flex-col items-center px-4 pt-8 pb-24"><article class="prose w-full prose-p:before:content-[''] prose-p:after:content-[''] prose-pre:bg-overlay lg:prose-xl"><h1>tail recursion in typescript</h1>
+	<small>6/23/2022</small>
+	<p>I recently rewatched a <a href="https://www.youtube.com/watch?v=_JtPhF8MshA&t=765s" rel="nofollow">computerphile video</a> about a simple way to avoid stack overflows when using recursive functions. The technique is known as tail recursion.</p>
+<blockquote><p>There are more idiomatic ways to solve the following problems in JavaScript and TypeScript using <em>Array.*</em> methods. You can pretty much do anything with <em>Array.reduce</em>. Also, I don’t think NodeJS nor Deno support tail recursive calls at all so there’s that.</p></blockquote>
+<h2>example 1 - summing an array of numbers</h2>
+<p>Here’s an implementation of a recursive function that calculates the sum of an array of numbers.</p>
+<pre class="language-ts"><!-- HTML_TAG_START --><code class="language-ts"><span class="token keyword">const</span> sum <span class="token operator">=</span> <span class="token punctuation">(</span>ns<span class="token operator">:</span> <span class="token builtin">number</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token builtin">number</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span>ns<span class="token punctuation">.</span>length <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+		<span class="token keyword">const</span> <span class="token punctuation">[</span>n<span class="token punctuation">,</span> <span class="token operator">...</span>rest<span class="token punctuation">]</span> <span class="token operator">=</span> ns<span class="token punctuation">;</span>
+		<span class="token keyword">return</span> n <span class="token operator">+</span> <span class="token function">sum</span><span class="token punctuation">(</span>rest<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">&#125;</span>
+	<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span></code><!-- HTML_TAG_END --></pre>
+<p>This version is not tail recursive and you can see that by looking at the call stack when calling the function.</p>
+<pre class="language-ts"><!-- HTML_TAG_START --><code class="language-ts"><span class="token comment">// sum([3, 4, 5])</span>
+<span class="token comment">// 3 + sum([4, 5])</span>
+<span class="token comment">// 3 + 4 + sum([5])</span>
+<span class="token comment">// 3 + 4 + 5 + sum([])</span>
+<span class="token comment">// 3 + 4 + 5 + 0</span>
+<span class="token comment">// 3 + 4 + 5</span>
+<span class="token comment">// 3 + 9</span>
+<span class="token comment">// 12</span></code><!-- HTML_TAG_END --></pre>
+<p>A kind of triangular shape forms as the actual addition isn’t completed until the recursion has ended. Now imagine that the triangle becomes so big that it can’t all fit on the stack. This is what’s known as a <strong>stack overflow</strong>. Contrast that with a tail recursive version of the same function.</p>
+<pre class="language-ts"><!-- HTML_TAG_START --><code class="language-ts"><span class="token keyword">const</span> sum <span class="token operator">=</span> <span class="token punctuation">(</span>ns<span class="token operator">:</span> <span class="token builtin">number</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> total <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token builtin">number</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span>ns<span class="token punctuation">.</span>length <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+		<span class="token keyword">const</span> <span class="token punctuation">[</span>n<span class="token punctuation">,</span> <span class="token operator">...</span>rest<span class="token punctuation">]</span> <span class="token operator">=</span> ns<span class="token punctuation">;</span>
+		<span class="token keyword">return</span> <span class="token function">sum</span><span class="token punctuation">(</span>rest<span class="token punctuation">,</span> total <span class="token operator">+</span> n<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">&#125;</span>
+	<span class="token keyword">return</span> total<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span></code><!-- HTML_TAG_END --></pre>
+<p>The call stack would look something like this.</p>
+<pre class="language-ts"><!-- HTML_TAG_START --><code class="language-ts"><span class="token comment">// sum([3, 4, 5])</span>
+<span class="token comment">// sum([4, 5], 3)</span>
+<span class="token comment">// sum([5], 7)</span>
+<span class="token comment">// sum([], 12)</span>
+<span class="token comment">// 12</span></code><!-- HTML_TAG_END --></pre>
+<p>No triangle and the addition happens before the recursive call. Notice how the running total is carried to the next call of <strong>sum</strong>. This is pretty characteristic of tail recursive functions. Let’s check out another example.</p>
+<h2>example 2 - count occurences in an array</h2>
+<p>To do this you just loop through the array and check if the current element is equal to the target. If there’s a match, add one to the count. If not, continue the loop.</p>
+<pre class="language-ts"><!-- HTML_TAG_START --><code class="language-ts"><span class="token keyword">const</span> count <span class="token operator">=</span> <span class="token operator">&lt;</span><span class="token constant">T</span><span class="token operator">></span><span class="token punctuation">(</span>t<span class="token operator">:</span> <span class="token constant">T</span><span class="token punctuation">,</span> ts<span class="token operator">:</span> <span class="token constant">T</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token builtin">number</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span>ts<span class="token punctuation">.</span>length <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+		<span class="token keyword">const</span> <span class="token punctuation">[</span>first<span class="token punctuation">,</span> <span class="token operator">...</span>rest<span class="token punctuation">]</span> <span class="token operator">=</span> ts<span class="token punctuation">;</span>
+		<span class="token keyword">const</span> equal <span class="token operator">=</span> first <span class="token operator">===</span> t <span class="token operator">?</span> <span class="token number">1</span> <span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">;</span> <span class="token comment">// sorry for the poor naming :T</span>
+		<span class="token keyword">return</span> equal <span class="token operator">+</span> <span class="token function">count</span><span class="token punctuation">(</span>t<span class="token punctuation">,</span> rest<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">&#125;</span>
+	<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span></code><!-- HTML_TAG_END --></pre>
+<p>We delay the calculation until the recursion is all done.</p>
+<pre class="language-ts"><!-- HTML_TAG_START --><code class="language-ts"><span class="token comment">// count('a', ['a', 'b', '', 'a'])</span>
+<span class="token comment">// 1 + count('a', ['b', '', 'a'])</span>
+<span class="token comment">// 1 + 0 + count('a', ['', 'a'])</span>
+<span class="token comment">// 1 + 0 + 0 + count('a', ['a'])</span>
+<span class="token comment">// 1 + 0 + 0 + 1 + count('a', [])</span>
+<span class="token comment">// 1 + 0 + 0 + 1 + 0</span>
+<span class="token comment">// 1 + 0 + 0 + 1</span>
+<span class="token comment">// 1 + 0 + 1</span>
+<span class="token comment">// 1 + 1</span>
+<span class="token comment">// 2</span></code><!-- HTML_TAG_END --></pre>
+<p>And version two which doesn’t have the pyramid problem:</p>
+<pre class="language-ts"><!-- HTML_TAG_START --><code class="language-ts"><span class="token keyword">const</span> count <span class="token operator">=</span> <span class="token operator">&lt;</span><span class="token constant">T</span><span class="token operator">></span><span class="token punctuation">(</span>t<span class="token operator">:</span> <span class="token constant">T</span><span class="token punctuation">,</span> ts<span class="token operator">:</span> <span class="token constant">T</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> c <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token builtin">number</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span>ts<span class="token punctuation">.</span>length <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+		<span class="token keyword">const</span> <span class="token punctuation">[</span>first<span class="token punctuation">,</span> <span class="token operator">...</span>rest<span class="token punctuation">]</span> <span class="token operator">=</span> ts<span class="token punctuation">;</span>
+		<span class="token keyword">const</span> equal <span class="token operator">=</span> first <span class="token operator">===</span> t <span class="token operator">?</span> <span class="token number">1</span> <span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">;</span>
+		<span class="token keyword">return</span> <span class="token function">count</span><span class="token punctuation">(</span>t<span class="token punctuation">,</span> rest<span class="token punctuation">,</span> c <span class="token operator">+</span> equal<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">&#125;</span>
+	<span class="token keyword">return</span> c<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span></code><!-- HTML_TAG_END --></pre>
+<p>With a call stack similar to this.</p>
+<pre class="language-ts"><!-- HTML_TAG_START --><code class="language-ts"><span class="token comment">// count('a', ['a', 'b', '', 'a'])</span>
+<span class="token comment">// count('a', ['b', '', 'a'], 1)</span>
+<span class="token comment">// count('a', ['', 'a'], 1)</span>
+<span class="token comment">// count('a', ['a'], 1)</span>
+<span class="token comment">// count('a', [], 2)</span>
+<span class="token comment">// 2</span></code><!-- HTML_TAG_END --></pre>
+<p>Just like the second version of the <strong>sum</strong> function above, the calculation is performed before the recursion and gets passed along.</p>
+<h2>summary</h2>
+<p>While writing this post I realized that this style of recursion is a lot like performing a <strong>while</strong> loop. In a <strong>while</strong> loop all the work is done in the body of the loop and when you’re done, you jump back to the top of the loop to do it all again. Check out <a href="https://en.wikipedia.org/wiki/Recursion_%28computer_science%29" rel="nofollow">tail recursion wikipedia article</a> for more details about the similarities between recursion and looping structures.</p></article></main>
+<nav class="fixed bottom-0 w-full bg-gold py-2 opacity-95"><ul class="flex justify-around md:justify-evenly"><li><a class="icon-link flex w-10 sm:w-12 md:w-14" sveltekit:prefetch href="/"><span class="sr-only">home</span>
+					<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" stroke="currentColor"><use href="/icons.svg#home"></use></svg></a>
+			</li><li><a class="icon-link flex w-10 sm:w-12 md:w-14" sveltekit:prefetch href="/blog"><span class="sr-only">blog</span>
+					<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" stroke="currentColor"><use href="/icons.svg#blog"></use></svg></a>
+			</li></ul></nav>
+
+
+		<script type="module" data-sveltekit-hydrate="11fkhw0">
+		import { set_public_env, start } from "../_app/immutable/start-2bbb0192.js";
+
+		set_public_env({});
+
+		start({
+			target: document.querySelector('[data-sveltekit-hydrate="11fkhw0"]').parentNode,
+			paths: {"base":"","assets":""},
+			route: true,
+			spa: false,
+			trailing_slash: "never",
+			hydrate: {
+				status: 200,
+				error: null,
+				node_ids: [0, 5],
+				params: {},
+				routeId: "blog/tail-recursion"
+			}
+		});
+	</script>
+	
+	</body>
+</html>

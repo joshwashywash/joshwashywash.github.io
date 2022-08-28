@@ -1,0 +1,1 @@
+import{i as l}from"./links-3cfa9e63.js";const n=({url:e})=>{const[,t]=e.pathname.split("/"),o=`j.o.${t&&` - ${t}`}`;return{links:l,title:o}},a=Object.freeze(Object.defineProperty({__proto__:null,load:n},Symbol.toStringTag,{value:"Module"}));export{a as _,n as l};

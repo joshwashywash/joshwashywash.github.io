@@ -1,0 +1,1 @@
+const t=[{href:"https://github.com/joshwashywash",to:"github"},{href:"https://twitter.com/joshwashywash",to:"twitter"},{href:"mailto:joshwashywash@gmail.com",to:"email"}],h=[{href:"/",to:"home"},{href:"/blog",to:"blog"}];export{t as e,h as i};
