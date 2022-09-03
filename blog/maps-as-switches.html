@@ -6,18 +6,18 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="description" content="Josh Oertel's personal site" />
 		<meta http-equiv="content-security-policy" content=""><title>j.o. - blog</title>
-	<link href="../_app/immutable/assets/+layout-29d0f0fe.css" rel="stylesheet">
+	<link href="../_app/immutable/assets/_layout-b8f1561c.css" rel="stylesheet">
 	<link href="../_app/immutable/assets/layout-117bc161.css" rel="stylesheet">
-	<link rel="modulepreload" href="../_app/immutable/start-7541bf55.js">
-	<link rel="modulepreload" href="../_app/immutable/chunks/index-9d00633e.js">
-	<link rel="modulepreload" href="../_app/immutable/chunks/singletons-59d59cef.js">
-	<link rel="modulepreload" href="../_app/immutable/components/pages/_layout.svelte-a6613ef9.js">
-	<link rel="modulepreload" href="../_app/immutable/chunks/Icon-389d9517.js">
-	<link rel="modulepreload" href="../_app/immutable/modules/pages/_layout.ts-e73744ac.js">
+	<link rel="modulepreload" href="../_app/immutable/start-92a5248d.js">
+	<link rel="modulepreload" href="../_app/immutable/chunks/index-1264cd99.js">
+	<link rel="modulepreload" href="../_app/immutable/chunks/singletons-bb8600da.js">
+	<link rel="modulepreload" href="../_app/immutable/components/pages/_layout.svelte-b87adbcf.js">
+	<link rel="modulepreload" href="../_app/immutable/chunks/Icon-c41368f6.js">
+	<link rel="modulepreload" href="../_app/immutable/modules/pages/_layout.ts-f023b11f.js">
 	<link rel="modulepreload" href="../_app/immutable/chunks/links-3cfa9e63.js">
-	<link rel="modulepreload" href="../_app/immutable/chunks/_layout-291ead87.js">
-	<link rel="modulepreload" href="../_app/immutable/components/pages/blog/maps-as-switches/_page.md-aae8770f.js">
-	<link rel="modulepreload" href="../_app/immutable/chunks/layout-f348ef7f.js">
+	<link rel="modulepreload" href="../_app/immutable/chunks/_layout-8c13935a.js">
+	<link rel="modulepreload" href="../_app/immutable/components/pages/blog/maps-as-switches/_page.md-0cddbd60.js">
+	<link rel="modulepreload" href="../_app/immutable/chunks/layout-e6ea8eab.js">
 	<link rel="modulepreload" href="../_app/immutable/chunks/date-b51ec11b.js">
 	</head>
 	<body>
@@ -26,8 +26,8 @@
 
 
 
-<main class="container flex min-h-screen flex-col items-center px-4 pt-8 pb-24"><article class="prose w-full prose-p:before:content-[''] prose-p:after:content-[''] prose-pre:bg-overlay lg:prose-xl"><h1>maps as switches</h1>
-	<small>8/5/2022</small>
+<main class="container flex min-h-screen flex-col items-center px-4 pt-8 pb-24"><article class="prose w-full prose-p:before:content-[''] prose-p:after:content-[''] prose-pre:bg-overlay lg:prose-xl"><h3>maps as switches</h3>
+	<p>8/5/2022</p>
 	<p>Imagine you’re programming a game and there’s a character in the game that says different things depending on what kind of monster you show them. A switch statement can get this job done but first I want to declare some types that will be used throughout the code examples.</p>
 <pre class="language-ts"><!-- HTML_TAG_START --><code class="language-ts"><span class="token keyword">type</span> <span class="token class-name">Handler</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token keyword">void</span><span class="token punctuation">;</span>
 
@@ -156,33 +156,30 @@ window<span class="token punctuation">.</span><span class="token function">addEv
 <p>If you made it this far, thanks for sticking around through this hodge-podgy article. Hopefully it was interesting and to be clear, I’m not really advocating the use of maps in place of switches. I think both switches and maps are perfectly fine and just wanted to share something I’ve been thinking about.</p>
 <h2>P.S.</h2>
 <p>In the examples above, you might be wondering why there is an extra check for the existence of the key in the map before getting the corresponding value out of it. <em>Map.get</em> will return <em>undefined</em> if the key is not in the map. This can be problematic in some contexts if <em>undefined</em> is a valid value or in cases where a boolean is expected. Values like <em>undefined</em> and <em>null</em> are converted to <strong>false</strong> when used as booleans. I could come up with a contrived example but just trust me that you shouldn’t assume your keys will always be in your map.</p></article></main>
-<nav class="fixed bottom-0 w-full bg-gold py-2 opacity-95"><ul class="flex justify-around md:justify-evenly"><li><a class="icon-link flex w-8 sm:w-10 md:w-12" sveltekit:prefetch href="/"><span class="sr-only">home</span>
-					
+<nav class="fixed bottom-0 w-full bg-gold py-2 opacity-95"><ul class="flex justify-around md:justify-evenly"><li><a class="icon-link flex w-8 sm:w-10 md:w-12" data-sveltekit-prefetch href="/"><span class="sr-only">home</span>
 					<svg width="100%" height="100%" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" stroke="currentColor"><use href="/icons.svg#home"></use></svg></a>
-			</li><li><a class="icon-link flex w-8 sm:w-10 md:w-12" sveltekit:prefetch href="/blog"><span class="sr-only">blog</span>
-					
+			</li><li><a class="icon-link flex w-8 sm:w-10 md:w-12" data-sveltekit-prefetch href="/blog"><span class="sr-only">blog</span>
 					<svg width="100%" height="100%" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" stroke="currentColor"><use href="/icons.svg#blog"></use></svg></a>
 			</li></ul></nav>
 
 
-		<script type="module" data-sveltekit-hydrate="1t808aj">
-		import { set_public_env, start } from "../_app/immutable/start-7541bf55.js";
-
-		set_public_env({});
+		<script type="module" data-sveltekit-hydrate="xal4u3">
+		import { start } from "../_app/immutable/start-92a5248d.js";
 
 		start({
-			target: document.querySelector('[data-sveltekit-hydrate="1t808aj"]').parentNode,
-			paths: {"base":"","assets":""},
-			route: true,
-			spa: false,
-			trailing_slash: "never",
+			env: {},
 			hydrate: {
 				status: 200,
 				error: null,
 				node_ids: [0, 4],
 				params: {},
-				routeId: "blog/maps-as-switches"
-			}
+				routeId: "blog/maps-as-switches",
+				data: (function(a){return [a,a]}(null)),
+				errors: null
+			},
+			paths: {"base":"","assets":""},
+			target: document.querySelector('[data-sveltekit-hydrate="xal4u3"]').parentNode,
+			trailing_slash: "never"
 		});
 	</script>
 	
