@@ -6,18 +6,18 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="description" content="Josh Oertel's personal site" />
 		<meta http-equiv="content-security-policy" content=""><title>j.o. - blog</title>
-	<link href="../_app/immutable/assets/_layout-8b483321.css" rel="stylesheet">
+	<link href="../_app/immutable/assets/_layout-2c7a77ff.css" rel="stylesheet">
 	<link href="../_app/immutable/assets/layout-117bc161.css" rel="stylesheet">
-	<link rel="modulepreload" href="../_app/immutable/start-afafe86e.js">
+	<link rel="modulepreload" href="../_app/immutable/start-dcf70964.js">
 	<link rel="modulepreload" href="../_app/immutable/chunks/index-e7f790b5.js">
-	<link rel="modulepreload" href="../_app/immutable/chunks/singletons-38ceafb6.js">
+	<link rel="modulepreload" href="../_app/immutable/chunks/singletons-bd43fc55.js">
 	<link rel="modulepreload" href="../_app/immutable/chunks/index-74dbdcd5.js">
 	<link rel="modulepreload" href="../_app/immutable/components/pages/_layout.svelte-8c1e2946.js">
 	<link rel="modulepreload" href="../_app/immutable/chunks/Icon-5b85bb9b.js">
 	<link rel="modulepreload" href="../_app/immutable/modules/pages/_layout.ts-f023b11f.js">
 	<link rel="modulepreload" href="../_app/immutable/chunks/links-3cfa9e63.js">
 	<link rel="modulepreload" href="../_app/immutable/chunks/_layout-8c13935a.js">
-	<link rel="modulepreload" href="../_app/immutable/components/pages/blog/polygon-to-blob/_page.md-57067f6a.js">
+	<link rel="modulepreload" href="../_app/immutable/components/pages/blog/polygon-to-blob/_page.md-2279ec7d.js">
 	<link rel="modulepreload" href="../_app/immutable/chunks/layout-165ac018.js">
 	<link rel="modulepreload" href="../_app/immutable/chunks/date-b51ec11b.js">
 	</head>
@@ -31,14 +31,13 @@
 	<p>9/26/2022</p>
 	<blockquote><p>Update: I’m still working on this post. I’m just in the process of trying different animations. You can check back now and then to see its progress.</p></blockquote>
 <p>In this upcoming post I’ll show you how to make blobby shapes out of polygons. Click or tap on the shape below to transform it.</p>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" class="cursor-pointer fill-pine" stroke-linecap="round" stroke-linejoin="round"><path d="M1,3q4,-2,4,-2 4,3,4,3 -2,4,-2,4 -5,-1,-5,-1 -1,-4,-1,-4"></path></svg>
-<p>The points that define the polygon above are 1,3 5,1 9,4 7,8 2,7 1,3.</p>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" class="fill-pine hover:fill-foam" stroke-linecap="round" stroke-linejoin="round"><path class="cursor-pointer" d="M1,3q4,-2,4,-2 4,3,4,3 -2,4,-2,4 -5,-1,-5,-1 -1,-4,-1,-4"></path></svg>
 <p>To transform the polygon into a blob we’ll make use of the <strong>quadratic bezier curve</strong>. Don’t worry though, its a pretty simple concept that I won’t be explaining here. You can refer to the <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths#curve_commands" rel="nofollow">mdn documentation on quadratic beziers</a> for more details.</p>
-<p>Here are some pretty bezier curves for you to look at. If you don’t like one, try clicking or tapping on it.</p>
-<div class="grid grid-cols-3 grid-rows-3"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" class="w-full h-full cursor-pointer stroke-pine hover:stroke-foam" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.25" fill="none"><path d="M1,8 q7,-6 3,-1"></path></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" class="w-full h-full cursor-pointer stroke-pine hover:stroke-foam" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.25" fill="none"><path d="M4,8 q2,-1 1,-3"></path></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" class="w-full h-full cursor-pointer stroke-pine hover:stroke-foam" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.25" fill="none"><path d="M3,5 q2,1 0,3"></path></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" class="w-full h-full cursor-pointer stroke-pine hover:stroke-foam" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.25" fill="none"><path d="M3,9 q6,-3 -1,-6"></path></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" class="w-full h-full cursor-pointer stroke-pine hover:stroke-foam" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.25" fill="none"><path d="M8,1 q-2,6 -4,8"></path></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" class="w-full h-full cursor-pointer stroke-pine hover:stroke-foam" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.25" fill="none"><path d="M8,9 q0,-7 -3,-6"></path></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" class="w-full h-full cursor-pointer stroke-pine hover:stroke-foam" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.25" fill="none"><path d="M9,4 q0,4 -4,5"></path></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" class="w-full h-full cursor-pointer stroke-pine hover:stroke-foam" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.25" fill="none"><path d="M1,7 q6,-1 4,0"></path></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" class="w-full h-full cursor-pointer stroke-pine hover:stroke-foam" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.25" fill="none"><path d="M8,2 q-3,2 -2,5"></path></svg></div>
+<p>Here is a wild bezier curve. If you don’t like the way it looks, click or tap it to get a new one.</p>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" class="h-full w-full stroke-pine" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.25" fill="none"><path class="cursor-pointer hover:stroke-foam " d="M6,6 q1,-5 0,1"></path></svg>
 <p>A quadratic bezier curve is comprised of three parts:</p>
 <ol><li>a start point</li>
-<li>a end point</li>
+<li>an end point</li>
 <li>a control point</li></ol>
 <p>The neat thing about beziers is that if you’re careful, you can string them together to make really curvy shapes.</p></article></main>
 <nav class="fixed bottom-0 w-full bg-gold py-2 opacity-95"><ul class="flex justify-around md:justify-evenly"><li><a class="icon-link flex w-8 sm:w-10 md:w-12" data-sveltekit-prefetch href="/"><span class="sr-only">home</span>
@@ -48,8 +47,8 @@
 			</li></ul></nav>
 
 
-		<script type="module" data-sveltekit-hydrate="dls3ap">
-		import { start } from "../_app/immutable/start-afafe86e.js";
+		<script type="module" data-sveltekit-hydrate="uyb8p0">
+		import { start } from "../_app/immutable/start-dcf70964.js";
 
 		start({
 			env: {},
@@ -63,7 +62,7 @@
 				errors: null
 			},
 			paths: {"base":"","assets":""},
-			target: document.querySelector('[data-sveltekit-hydrate="dls3ap"]').parentNode,
+			target: document.querySelector('[data-sveltekit-hydrate="uyb8p0"]').parentNode,
 			trailing_slash: "never"
 		});
 	</script>
