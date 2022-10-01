@@ -6,18 +6,18 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="description" content="Josh Oertel's personal site" />
 		<meta http-equiv="content-security-policy" content=""><title>j.o. - blog</title>
-	<link href="../_app/immutable/assets/_layout-f8bde86e.css" rel="stylesheet">
+	<link href="../_app/immutable/assets/_layout-8b483321.css" rel="stylesheet">
 	<link href="../_app/immutable/assets/layout-117bc161.css" rel="stylesheet">
-	<link rel="modulepreload" href="../_app/immutable/start-d2f5508a.js">
+	<link rel="modulepreload" href="../_app/immutable/start-afafe86e.js">
 	<link rel="modulepreload" href="../_app/immutable/chunks/index-e7f790b5.js">
-	<link rel="modulepreload" href="../_app/immutable/chunks/singletons-f56c20f8.js">
+	<link rel="modulepreload" href="../_app/immutable/chunks/singletons-38ceafb6.js">
 	<link rel="modulepreload" href="../_app/immutable/chunks/index-74dbdcd5.js">
 	<link rel="modulepreload" href="../_app/immutable/components/pages/_layout.svelte-8c1e2946.js">
 	<link rel="modulepreload" href="../_app/immutable/chunks/Icon-5b85bb9b.js">
 	<link rel="modulepreload" href="../_app/immutable/modules/pages/_layout.ts-f023b11f.js">
 	<link rel="modulepreload" href="../_app/immutable/chunks/links-3cfa9e63.js">
 	<link rel="modulepreload" href="../_app/immutable/chunks/_layout-8c13935a.js">
-	<link rel="modulepreload" href="../_app/immutable/components/pages/blog/polygon-to-blob/_page.md-f3fccb71.js">
+	<link rel="modulepreload" href="../_app/immutable/components/pages/blog/polygon-to-blob/_page.md-57067f6a.js">
 	<link rel="modulepreload" href="../_app/immutable/chunks/layout-165ac018.js">
 	<link rel="modulepreload" href="../_app/immutable/chunks/date-b51ec11b.js">
 	</head>
@@ -34,8 +34,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" class="cursor-pointer fill-pine" stroke-linecap="round" stroke-linejoin="round"><path d="M1,3q4,-2,4,-2 4,3,4,3 -2,4,-2,4 -5,-1,-5,-1 -1,-4,-1,-4"></path></svg>
 <p>The points that define the polygon above are 1,3 5,1 9,4 7,8 2,7 1,3.</p>
 <p>To transform the polygon into a blob we’ll make use of the <strong>quadratic bezier curve</strong>. Don’t worry though, its a pretty simple concept that I won’t be explaining here. You can refer to the <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths#curve_commands" rel="nofollow">mdn documentation on quadratic beziers</a> for more details.</p>
-<p>Here are some pretty bezier curves for you to look at. If you don’t like one, trying clicking or tapping it.</p>
-<div class="grid grid-cols-4 grid-rows-4"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" class="w-full h-full cursor-pointer stroke-pine hover:stroke-foam" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.25" fill="none"><path d="M8,2 q-3,-1 -1,4"></path></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" class="w-full h-full cursor-pointer stroke-pine hover:stroke-foam" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.25" fill="none"><path d="M5,2 q-2,1 -1,7"></path></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" class="w-full h-full cursor-pointer stroke-pine hover:stroke-foam" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.25" fill="none"><path d="M7,8 q-3,0 -5,-5"></path></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" class="w-full h-full cursor-pointer stroke-pine hover:stroke-foam" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.25" fill="none"><path d="M7,6 q-1,-5 2,0"></path></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" class="w-full h-full cursor-pointer stroke-pine hover:stroke-foam" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.25" fill="none"><path d="M2,1 q-1,8 5,4"></path></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" class="w-full h-full cursor-pointer stroke-pine hover:stroke-foam" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.25" fill="none"><path d="M8,5 q-1,3 -3,4"></path></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" class="w-full h-full cursor-pointer stroke-pine hover:stroke-foam" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.25" fill="none"><path d="M6,7 q-4,-5 -1,-1"></path></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" class="w-full h-full cursor-pointer stroke-pine hover:stroke-foam" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.25" fill="none"><path d="M5,4 q2,1 2,1"></path></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" class="w-full h-full cursor-pointer stroke-pine hover:stroke-foam" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.25" fill="none"><path d="M5,6 q-3,-1 -4,-1"></path></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" class="w-full h-full cursor-pointer stroke-pine hover:stroke-foam" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.25" fill="none"><path d="M9,2 q-8,5 -7,7"></path></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" class="w-full h-full cursor-pointer stroke-pine hover:stroke-foam" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.25" fill="none"><path d="M7,3 q2,2 -1,-2"></path></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" class="w-full h-full cursor-pointer stroke-pine hover:stroke-foam" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.25" fill="none"><path d="M4,2 q0,2 -2,5"></path></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" class="w-full h-full cursor-pointer stroke-pine hover:stroke-foam" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.25" fill="none"><path d="M5,4 q1,4 -2,-1"></path></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" class="w-full h-full cursor-pointer stroke-pine hover:stroke-foam" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.25" fill="none"><path d="M4,5 q1,-1 4,-2"></path></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" class="w-full h-full cursor-pointer stroke-pine hover:stroke-foam" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.25" fill="none"><path d="M5,8 q1,-6 -2,-3"></path></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" class="w-full h-full cursor-pointer stroke-pine hover:stroke-foam" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.25" fill="none"><path d="M5,4 q1,-1 1,0"></path></svg></div>
+<p>Here are some pretty bezier curves for you to look at. If you don’t like one, try clicking or tapping on it.</p>
+<div class="grid grid-cols-3 grid-rows-3"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" class="w-full h-full cursor-pointer stroke-pine hover:stroke-foam" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.25" fill="none"><path d="M1,8 q7,-6 3,-1"></path></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" class="w-full h-full cursor-pointer stroke-pine hover:stroke-foam" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.25" fill="none"><path d="M4,8 q2,-1 1,-3"></path></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" class="w-full h-full cursor-pointer stroke-pine hover:stroke-foam" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.25" fill="none"><path d="M3,5 q2,1 0,3"></path></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" class="w-full h-full cursor-pointer stroke-pine hover:stroke-foam" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.25" fill="none"><path d="M3,9 q6,-3 -1,-6"></path></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" class="w-full h-full cursor-pointer stroke-pine hover:stroke-foam" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.25" fill="none"><path d="M8,1 q-2,6 -4,8"></path></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" class="w-full h-full cursor-pointer stroke-pine hover:stroke-foam" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.25" fill="none"><path d="M8,9 q0,-7 -3,-6"></path></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" class="w-full h-full cursor-pointer stroke-pine hover:stroke-foam" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.25" fill="none"><path d="M9,4 q0,4 -4,5"></path></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" class="w-full h-full cursor-pointer stroke-pine hover:stroke-foam" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.25" fill="none"><path d="M1,7 q6,-1 4,0"></path></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" class="w-full h-full cursor-pointer stroke-pine hover:stroke-foam" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.25" fill="none"><path d="M8,2 q-3,2 -2,5"></path></svg></div>
 <p>A quadratic bezier curve is comprised of three parts:</p>
 <ol><li>a start point</li>
 <li>a end point</li>
@@ -48,8 +48,8 @@
 			</li></ul></nav>
 
 
-		<script type="module" data-sveltekit-hydrate="dnpl5z">
-		import { start } from "../_app/immutable/start-d2f5508a.js";
+		<script type="module" data-sveltekit-hydrate="dls3ap">
+		import { start } from "../_app/immutable/start-afafe86e.js";
 
 		start({
 			env: {},
@@ -63,7 +63,7 @@
 				errors: null
 			},
 			paths: {"base":"","assets":""},
-			target: document.querySelector('[data-sveltekit-hydrate="dnpl5z"]').parentNode,
+			target: document.querySelector('[data-sveltekit-hydrate="dls3ap"]').parentNode,
 			trailing_slash: "never"
 		});
 	</script>
