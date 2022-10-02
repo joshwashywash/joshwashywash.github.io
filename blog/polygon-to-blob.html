@@ -6,19 +6,19 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="description" content="Josh Oertel's personal site" />
 		<meta http-equiv="content-security-policy" content=""><title>j.o. - blog</title>
-	<link href="../_app/immutable/assets/_layout-4ae12f38.css" rel="stylesheet">
+	<link href="../_app/immutable/assets/_layout-d4b5264f.css" rel="stylesheet">
 	<link href="../_app/immutable/assets/layout-117bc161.css" rel="stylesheet">
-	<link rel="modulepreload" href="../_app/immutable/start-7ce3e869.js">
-	<link rel="modulepreload" href="../_app/immutable/chunks/index-25e5f4d9.js">
-	<link rel="modulepreload" href="../_app/immutable/chunks/singletons-15d2a7e2.js">
-	<link rel="modulepreload" href="../_app/immutable/chunks/index-6a3e4f17.js">
-	<link rel="modulepreload" href="../_app/immutable/components/pages/_layout.svelte-77896b3e.js">
-	<link rel="modulepreload" href="../_app/immutable/chunks/Icon-94784da5.js">
+	<link rel="modulepreload" href="../_app/immutable/start-f86aef15.js">
+	<link rel="modulepreload" href="../_app/immutable/chunks/index-133ffb9d.js">
+	<link rel="modulepreload" href="../_app/immutable/chunks/singletons-3740400e.js">
+	<link rel="modulepreload" href="../_app/immutable/chunks/index-192957f7.js">
+	<link rel="modulepreload" href="../_app/immutable/components/pages/_layout.svelte-5b7b7083.js">
+	<link rel="modulepreload" href="../_app/immutable/chunks/Icon-1749942d.js">
 	<link rel="modulepreload" href="../_app/immutable/modules/pages/_layout.ts-f023b11f.js">
 	<link rel="modulepreload" href="../_app/immutable/chunks/links-3cfa9e63.js">
 	<link rel="modulepreload" href="../_app/immutable/chunks/_layout-8c13935a.js">
-	<link rel="modulepreload" href="../_app/immutable/components/pages/blog/polygon-to-blob/_page.md-a1581e4b.js">
-	<link rel="modulepreload" href="../_app/immutable/chunks/layout-88b5945c.js">
+	<link rel="modulepreload" href="../_app/immutable/components/pages/blog/polygon-to-blob/_page.md-0a151803.js">
+	<link rel="modulepreload" href="../_app/immutable/chunks/layout-dcfb6143.js">
 	<link rel="modulepreload" href="../_app/immutable/chunks/date-b51ec11b.js">
 	</head>
 	<body>
@@ -27,23 +27,24 @@
 
 
 
-<main class="container flex min-h-screen flex-col items-center px-4 pt-8 pb-24"><article class="prose w-full prose-p:before:content-[''] prose-p:after:content-[''] prose-pre:bg-overlay lg:prose-xl"><h3>polygons to blobs</h3>
+<main class="container flex min-h-screen flex-col items-center px-4 pt-8 pb-24"><article class="prose prose-invert w-full prose-p:before:content-[''] prose-p:after:content-[''] prose-pre:bg-overlay lg:prose-xl"><h3>polygons to blobs</h3>
 	<p>9/26/2022</p>
-	<blockquote><p>Update: I’m still working on this post. I’m in the process of trying different animations. Getting things to work cross-browser and on all devices is surprisingly difficult. You can check back now and then to see the progress but until this notice goes away, expect some bugs. For now, I recommend browsing this post with a device that has a mouse. (touch events are tricky)</p></blockquote>
-<p>In this upcoming post I’ll show you how to make blobby shapes out of polygons. Click or tap on the shape below to transform it.</p>
+	<blockquote><p>Update: I’m still working on this post. I’m in the process of trying different animations / interactions. Getting things to work cross-browser and on all devices is surprisingly difficult. You can check back now and then to see the progress but until this notice goes away, expect some bugs. For now, I recommend browsing this post with a device that has a mouse. (touch events are tricky)</p></blockquote>
+<p>In this upcoming post I’ll show you how to make blobby shapes out of polygons. Click or tap on the shape below to see what I mean.</p>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" class="fill-pine hover:fill-foam" stroke-linecap="round" stroke-linejoin="round"><path class="cursor-pointer" d="M1,3q4,-2,4,-2 4,3,4,3 -2,4,-2,4 -5,-1,-5,-1 -1,-4,-1,-4"></path></svg>
-<p>To transform the polygon into a blob we’ll make use of the <strong>quadratic Bezier curve</strong>. Don’t worry though, its a pretty simple concept that I won’t be explaining here. You can refer to the <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths#curve_commands" rel="nofollow">mdn documentation on quadratic Beziers</a> for more details.</p>
-<p>Here is a wild Bezier curve. If you don’t like the way it looks, click or tap it to get a new one.</p>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" class="h-full w-full stroke-pine" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.25" fill="none"><path class="cursor-pointer hover:stroke-foam " d="M6,4 q2,-1 -5,-2"></path></svg>
+<p>To transform the polygon into a blob we’ll make of <strong>quadratic Bezier curves</strong>. Don’t worry though, you don’t really need to know the math behind Bezier curves in order to use them. If you’re interest in that, you can refer to the <a href="https://en.wikipedia.org/wiki/B%C3%A9zier_curve" rel="nofollow">bezier curve wikipedia article</a> for details.</p>
+<p>Oh look a wild Bezier curve! Try clicking or tapping it to see what happens.</p>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" class="h-full w-full border-4 border-pine stroke-pine" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.5" fill="none"><path class="cursor-pointer hover:stroke-foam " d="M6,9 q-2,-5 3,0"></path></svg>
 <p>A quadratic Bezier curve is comprised of three parts:</p>
 <ol><li>a start point</li>
 <li>an end point</li>
 <li>a control point</li></ol>
-<p>Here’s a Bezier curve where you can drag around the parameters.</p>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" class="h-full w-full border-4 border-pine stroke-pine" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.25" fill="none"><path d="M1.6666666666666667,8.333333333333334 Q5,1.6666666666666667 8.333333333333334,8.333333333333334"></path>;
-		<circle class="cursor-move touch-none fill-love stroke-0" cx="1.6666666666666667" cy="8.333333333333334" r="0.25"></circle>;
-		<circle class="cursor-move touch-none fill-love stroke-0" cx="5" cy="1.6666666666666667" r="0.25"></circle>;
-		<circle class="cursor-move touch-none fill-love stroke-0" cx="8.333333333333334" cy="8.333333333333334" r="0.25"></circle></svg>
+<p>Here’s another Bezier curve where you can drag around these points.</p>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" class="h-full w-full border-4 border-pine stroke-pine" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.5" fill="none"><path d="M1.6666666666666667,8.333333333333334 Q5,1.6666666666666667 8.333333333333334,8.333333333333334"></path>;
+		<circle class="cursor-move fill-rose stroke-0 active:fill-love" cx="1.6666666666666667" cy="8.333333333333334" r="0.25"></circle>;
+		<circle class="cursor-move fill-rose stroke-0 active:fill-love" cx="5" cy="1.6666666666666667" r="0.25"></circle>;
+		<circle class="cursor-move fill-rose stroke-0 active:fill-love" cx="8.333333333333334" cy="8.333333333333334" r="0.25"></circle></svg>
+<p>If you put the start point at the top-left corner, the end point at the bottom-right corner and then move the control point from bottom-left to top-right, it kinda looks like you’re strumming a one-string guitar.</p>
 <p>The neat thing about Beziers is that you can string them together to make really curvy shapes.</p></article></main>
 <nav class="fixed bottom-0 w-full bg-gold py-2 opacity-95"><ul class="flex justify-around md:justify-evenly"><li><a class="icon-link flex w-8 sm:w-10 md:w-12" data-sveltekit-prefetch href="/"><span class="sr-only">home</span>
 					<svg width="100%" height="100%" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" stroke="currentColor"><use href="/icons.svg#home"></use></svg></a>
@@ -52,8 +53,8 @@
 			</li></ul></nav>
 
 
-		<script type="module" data-sveltekit-hydrate="8sp6ld">
-		import { start } from "../_app/immutable/start-7ce3e869.js";
+		<script type="module" data-sveltekit-hydrate="13cxtcg">
+		import { start } from "../_app/immutable/start-f86aef15.js";
 
 		start({
 			env: {},
@@ -67,7 +68,7 @@
 				errors: null
 			},
 			paths: {"base":"","assets":""},
-			target: document.querySelector('[data-sveltekit-hydrate="8sp6ld"]').parentNode,
+			target: document.querySelector('[data-sveltekit-hydrate="13cxtcg"]').parentNode,
 			trailing_slash: "never"
 		});
 	</script>
