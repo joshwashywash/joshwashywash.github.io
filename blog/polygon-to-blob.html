@@ -6,19 +6,19 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="description" content="Josh Oertel's personal site" />
 		<meta http-equiv="content-security-policy" content=""><title>j.o. - blog</title>
-	<link href="../_app/immutable/assets/_layout-f69dd1ce.css" rel="stylesheet">
+	<link href="../_app/immutable/assets/_layout-56e51694.css" rel="stylesheet">
 	<link href="../_app/immutable/assets/layout-117bc161.css" rel="stylesheet">
-	<link rel="modulepreload" href="../_app/immutable/start-ec63eebd.js">
-	<link rel="modulepreload" href="../_app/immutable/chunks/index-7f27aae4.js">
-	<link rel="modulepreload" href="../_app/immutable/chunks/singletons-b864a884.js">
-	<link rel="modulepreload" href="../_app/immutable/chunks/index-3d1a4fe6.js">
-	<link rel="modulepreload" href="../_app/immutable/components/pages/_layout.svelte-1a699fe4.js">
-	<link rel="modulepreload" href="../_app/immutable/chunks/Icon-98473904.js">
+	<link rel="modulepreload" href="../_app/immutable/start-42d1bf25.js">
+	<link rel="modulepreload" href="../_app/immutable/chunks/index-b72614ca.js">
+	<link rel="modulepreload" href="../_app/immutable/chunks/singletons-c7342cfc.js">
+	<link rel="modulepreload" href="../_app/immutable/chunks/index-92ef070c.js">
+	<link rel="modulepreload" href="../_app/immutable/components/pages/_layout.svelte-e1eb08be.js">
+	<link rel="modulepreload" href="../_app/immutable/chunks/Icon-bc7462fd.js">
 	<link rel="modulepreload" href="../_app/immutable/modules/pages/_layout.ts-f023b11f.js">
 	<link rel="modulepreload" href="../_app/immutable/chunks/links-3cfa9e63.js">
 	<link rel="modulepreload" href="../_app/immutable/chunks/_layout-8c13935a.js">
-	<link rel="modulepreload" href="../_app/immutable/components/pages/blog/polygon-to-blob/_page.md-f86f9391.js">
-	<link rel="modulepreload" href="../_app/immutable/chunks/layout-f30f78e8.js">
+	<link rel="modulepreload" href="../_app/immutable/components/pages/blog/polygon-to-blob/_page.md-1d983a49.js">
+	<link rel="modulepreload" href="../_app/immutable/chunks/layout-c3e14eec.js">
 	<link rel="modulepreload" href="../_app/immutable/chunks/date-b51ec11b.js">
 	</head>
 	<body>
@@ -50,9 +50,14 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" class="h-full w-full border-4 border-text" stroke-linecap="round" stroke-linejoin="round"><path class="origin-center cursor-pointer fill-love" d="M5,2.5 q2,-2,4,0 t-4,6 q-6,-4,-4,-6 t4,0"></path></svg>
 <p>So the question is, what’s a good strategy for transforming a pointy polygon into a beautiful blob composed of bezier curves? Well, I thought you’d never ask.</p>
 <p>Here’s a super secret look at what’s really going.</p>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" class="h-full w-full border-4 border-text blur-lg" stroke-linecap="round" stroke-linejoin="round"><polygon class="fill-pine" points="5,1,9,4,7,8,2,7,1,3"></polygon>
-<path fill="none" stroke-width="0.125" class="stroke-gold" d="M3,2q2,-1,4,0.5 2,1.5,1,3.5 -1,2,-3.5,1.5 -2.5,-0.5,-3,-2.5 -0.5,-2,1.5,-3"></path></svg>
-<blockquote><p>MORE EXPLANATION COMING SOON</p></blockquote></article></main>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" class="h-full w-full border-4 border-text" stroke-linecap="round" stroke-linejoin="round"><polygon class="fill-pine" points="5,1,9,4,7,8,2,7,1,3"></polygon>
+<path fill="none" pathLength="1" stroke-width="0.125" stroke-dasharray="1" class="stroke-gold" d="M3,2q2,-1,4,0.5 2,1.5,1,3.5 -1,2,-3.5,1.5 -2.5,-0.5,-3,-2.5 -0.5,-2,1.5,-3"></path></svg>
+<p>This is one of those things that’s easier to describe as an algorithm so that’s what I’m gonna do.</p>
+<blockquote><p>for each pair of consecutive midpoints, m1 and m2, of the lines that define the polygon, draw a quadratic bezier curve from m1 to m2 with the curve’s control point being the vertex of the polygon that lies between m1 and m2</p></blockquote>
+<p>This works cuz each Bezier starts where one leaves off giving a smooth blobby shape in the end. It might be helpful to look at a single piece of the curve.</p>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" class="h-full w-full border-4 border-text" stroke-linecap="round" stroke-linejoin="round"><polygon points="5,1,9,4,7,8,2,7,1,3" class="fill-pine/50"></polygon>
+	<polyline fill="none" class="stroke-love" stroke-width="0.125" points="1,3,5,1,9,4"></polyline></svg>
+<blockquote><p>MORE COMING SOON</p></blockquote></article></main>
 
 <nav class="fixed bottom-0 w-full bg-base/90 py-2"><ul class="flex justify-around md:justify-evenly"><li><a class="icon-link flex w-8 sm:w-10 md:w-12" data-sveltekit-prefetch href="/"><span class="sr-only">home</span>
 						<svg width="100%" height="100%" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" stroke="currentColor"><use href="/icons.svg#home"></use></svg></a>
@@ -61,8 +66,8 @@
 				</li></ul></nav>
 
 
-		<script type="module" data-sveltekit-hydrate="17kh8vl">
-		import { start } from "../_app/immutable/start-ec63eebd.js";
+		<script type="module" data-sveltekit-hydrate="j9vliy">
+		import { start } from "../_app/immutable/start-42d1bf25.js";
 
 		start({
 			env: {},
@@ -76,7 +81,7 @@
 				errors: null
 			},
 			paths: {"base":"","assets":""},
-			target: document.querySelector('[data-sveltekit-hydrate="17kh8vl"]').parentNode,
+			target: document.querySelector('[data-sveltekit-hydrate="j9vliy"]').parentNode,
 			trailing_slash: "never"
 		});
 	</script>
