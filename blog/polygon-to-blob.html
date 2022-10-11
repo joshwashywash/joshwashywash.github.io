@@ -5,20 +5,20 @@
 		<link rel="icon" href="../favicon.png" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="description" content="Josh Oertel's personal site" />
-		<meta http-equiv="content-security-policy" content=""><title>j.o. - blog</title>
-	<link href="../_app/immutable/assets/_layout-6e1f4c18.css" rel="stylesheet">
+		<meta http-equiv="content-security-policy" content=""><title>j.o. - blog</title><!-- HEAD_svelte-1az6e94 --><!-- HEAD_svelte-1az6e94 -->
+	<link href="../_app/immutable/assets/_layout-e75fb2a9.css" rel="stylesheet">
 	<link href="../_app/immutable/assets/layout-117bc161.css" rel="stylesheet">
-	<link rel="modulepreload" href="../_app/immutable/start-dfcdab0d.js">
-	<link rel="modulepreload" href="../_app/immutable/chunks/index-08c97754.js">
-	<link rel="modulepreload" href="../_app/immutable/chunks/singletons-3cb1f49c.js">
-	<link rel="modulepreload" href="../_app/immutable/chunks/index-c0bff3f5.js">
-	<link rel="modulepreload" href="../_app/immutable/components/pages/_layout.svelte-51915b2b.js">
-	<link rel="modulepreload" href="../_app/immutable/chunks/Icon-c873d4a9.js">
+	<link rel="modulepreload" href="../_app/immutable/start-3367573c.js">
+	<link rel="modulepreload" href="../_app/immutable/chunks/index-6b92ccb5.js">
+	<link rel="modulepreload" href="../_app/immutable/chunks/singletons-41f43486.js">
+	<link rel="modulepreload" href="../_app/immutable/chunks/index-a6bdcada.js">
+	<link rel="modulepreload" href="../_app/immutable/components/pages/_layout.svelte-4ebd9b6c.js">
+	<link rel="modulepreload" href="../_app/immutable/chunks/Icon-2d17f2dd.js">
 	<link rel="modulepreload" href="../_app/immutable/modules/pages/_layout.ts-f023b11f.js">
 	<link rel="modulepreload" href="../_app/immutable/chunks/links-3cfa9e63.js">
 	<link rel="modulepreload" href="../_app/immutable/chunks/_layout-8c13935a.js">
-	<link rel="modulepreload" href="../_app/immutable/components/pages/blog/polygon-to-blob/_page.md-87955e55.js">
-	<link rel="modulepreload" href="../_app/immutable/chunks/layout-cacb699b.js">
+	<link rel="modulepreload" href="../_app/immutable/components/pages/blog/polygon-to-blob/_page.md-952508d1.js">
+	<link rel="modulepreload" href="../_app/immutable/chunks/layout-1c2b57b5.js">
 	<link rel="modulepreload" href="../_app/immutable/chunks/date-b51ec11b.js">
 	</head>
 	<body>
@@ -32,24 +32,24 @@
 	<blockquote><p>Update: I’m still working on this post. I’m in the process of trying different animations / interactions. Getting things to work cross-browser and on all devices is surprisingly difficult. You can check back now and then to see the progress but until this notice goes away, expect some bugs. For now, I recommend browsing this post with a device that has a mouse. (touch events are tricky)</p></blockquote>
 <p>In this upcoming post I’ll show you how to make blobby shapes out of polygons. Click or tap on the shape below to see what I mean.</p>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" class="h-full w-full border-4 border-text" stroke-linecap="round" stroke-linejoin="round"><path class="cursor-pointer fill-pine stroke-0 hover:fill-foam" d="M1,3q4,-2,4,-2 4,3,4,3 -2,4,-2,4 -5,-1,-5,-1 -1,-4,-1,-4"></path></svg>
-<p>To transform the polygon into a blob we’ll make of <strong>quadratic Bezier curves</strong>. Don’t worry though, you don’t really need to know the math behind Bezier curves in order to use them. If you’re interested in that, you can refer to the <a href="https://en.wikipedia.org/wiki/B%C3%A9zier_curve" rel="nofollow">bezier curve wikipedia article</a>.</p>
+<p>To transform the polygon into a blob we’ll harness the power of <strong>quadratic Bezier curves</strong>. Don’t worry though, you don’t really need to know the math behind Bezier curves in order to use them. If you’re interested in that, you can refer to the <a href="https://en.wikipedia.org/wiki/B%C3%A9zier_curve" rel="nofollow">bezier curve wikipedia article</a>.</p>
 <p>What’s cool is you only need 3 parts to define a quadratic Bezier curve.</p>
 <ol><li>a start point</li>
 <li>an end point</li>
 <li>a control point</li></ol>
 <p>Woah! Here’s a wild Bezier curve now. If you don’t like the way it looks, it’s cool. You can click/tap it to generate a new one or you can modify it to your liking by dragging around its points.</p>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" class="h-full w-full border-4 border-text" stroke-linecap="round" stroke-linejoin="round"><path fill="none" stroke-width="0.5" class="cursor-pointer stroke-pine" d="M1.6666666666666667,8.333333333333334 q3.333333333333333,-6.666666666666667,6.666666666666667,0"></path>
-<circle class="cursor-move touch-none fill-rose stroke-0 active:fill-love" cx="1.6666666666666667" cy="8.333333333333334" r="0.25"></circle><circle class="cursor-move touch-none fill-rose stroke-0 active:fill-love" cx="8.333333333333334" cy="8.333333333333334" r="0.25"></circle><circle class="cursor-move touch-none fill-rose stroke-0 active:fill-love" cx="5" cy="1.6666666666666667" r="0.25"></circle></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" class="h-full w-full border-4 border-text" stroke-linecap="round" stroke-linejoin="round"><path fill="none" stroke-width="0.5" class="cursor-pointer stroke-pine hover:stroke-foam" d="M1.6666666666666667,8.333333333333334 q3.333333333333333,-6.666666666666667,6.666666666666667,0"></path>
+<circle class="cursor-move touch-none fill-love stroke-0 active:fill-rose" cx="1.6666666666666667" cy="8.333333333333334" r="0.25"></circle><circle class="cursor-move touch-none fill-love stroke-0 active:fill-rose" cx="8.333333333333334" cy="8.333333333333334" r="0.25"></circle><circle class="cursor-move touch-none fill-love stroke-0 active:fill-rose" cx="5" cy="1.6666666666666667" r="0.25"></circle></svg>
 <blockquote><p>If you put the start point and end point on the same line and then drag the control point across the line’s midpoint really fast, it kinda looks like you’re strumming a one-string guitar.</p></blockquote>
 <p>The neat thing about Beziers is that you can string them together to make really curvy shapes. Here’s a heart made up of Bezier curves. It’s so big, that it almost doesn’t fit in the viewport. Click or tap it to make it go <strong>ba-dum ba-dum</strong>.</p>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" class="h-full w-full border-4 border-text" stroke-linecap="round" stroke-linejoin="round"><path class="origin-center cursor-pointer fill-love" d="M5,2.5 q2,-2,4,0 t-4,6 q-6,-4,-4,-6 t4,0"></path></svg>
 <p>So the question is, what’s a good strategy for transforming a pointy polygon into a beautiful blob composed of bezier curves? Well, I thought you’d never ask.</p>
 <p>Here’s a super secret look at what’s really going.</p>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" class="h-full w-full border-4 border-text" stroke-linecap="round" stroke-linejoin="round"><polygon class="fill-pine" points="5,1,9,4,7,8,2,7,1,3"></polygon>
-<path fill="none" pathLength="1" stroke-width="0.125" stroke-dasharray="1" class="stroke-gold" d="M3,2q2,-1,4,0.5 2,1.5,1,3.5 -1,2,-3.5,1.5 -2.5,-0.5,-3,-2.5 -0.5,-2,1.5,-3"></path></svg>
-<p>This is one of those things that’s easier to describe as an algorithm so that’s what I’m gonna do.</p>
-<blockquote><p>for each pair of consecutive midpoints, m1 and m2, of the lines that define the polygon, draw a quadratic bezier curve from m1 to m2 with the curve’s control point being the vertex of the polygon that lies between m1 and m2</p></blockquote>
-<p>This works cuz each Bezier starts where one leaves off giving a smooth blobby shape in the end. It might be helpful to look at a single piece of the curve.</p>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 5" class="h-full w-full border-4 border-text" stroke-linecap="round" stroke-linejoin="round"><polygon points="1,3,5,1,9,4,7,8,2,7,1,3" class="fill-pine/50"></polygon>
+<circle cx="5" cy="1" r="0.125" class="fill-love"></circle>
+<polyline points="1,3,5,1,5,1,9,4" stroke-width="0.125" class="stroke-love/25" fill="none" pathLength="1" stroke-dasharray="0.03125"></polyline>
+<path d="M3,2 q2,-1,4,0.5" class="invisible stroke-gold" fill="none" stroke-width="0.125" pathLength="1" stroke-dashoffset="1" stroke-dasharray="1"></path></svg>
+<p>To put it into words, take two consecutive midpoints, m1 and m2, from the lines that define the polygon and draw a quadratic Bezier curve from m1 to m2 with the curve’s control point being the vertex of the polygon that lies between m1 and m2. To draw the entire blob, just repeat this for each pair of midpoints around the polygon. You should have n curves where n is the number of sides of the polygon. Then just string your curves together and <em>viola</em> you have yourself a good ol’ blob.</p>
 <blockquote><p>MORE COMING SOON</p></blockquote></article></main>
 
 <nav class="fixed bottom-0 w-full bg-base/90 py-2"><ul class="flex justify-around md:justify-evenly"><li><a class="icon-link flex w-8 sm:w-10 md:w-12" data-sveltekit-prefetch href="/"><span class="sr-only">home</span>
@@ -59,8 +59,8 @@
 				</li></ul></nav>
 
 
-		<script type="module" data-sveltekit-hydrate="xmrbge">
-		import { start } from "../_app/immutable/start-dfcdab0d.js";
+		<script type="module" data-sveltekit-hydrate="n2gy8z">
+		import { start } from "../_app/immutable/start-3367573c.js";
 
 		start({
 			env: {},
@@ -74,7 +74,7 @@
 				errors: null
 			},
 			paths: {"base":"","assets":""},
-			target: document.querySelector('[data-sveltekit-hydrate="xmrbge"]').parentNode,
+			target: document.querySelector('[data-sveltekit-hydrate="n2gy8z"]').parentNode,
 			trailing_slash: "never"
 		});
 	</script>
