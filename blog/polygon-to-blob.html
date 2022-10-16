@@ -8,16 +8,16 @@
 		<meta http-equiv="content-security-policy" content=""><title>j.o. - blog</title><!-- HEAD_svelte-1az6e94_START --><!-- HEAD_svelte-1az6e94_END -->
 	<link href="../_app/immutable/assets/_layout-bc14a7b8.css" rel="stylesheet">
 	<link href="../_app/immutable/assets/layout-117bc161.css" rel="stylesheet">
-	<link rel="modulepreload" href="../_app/immutable/start-adb310ed.js">
+	<link rel="modulepreload" href="../_app/immutable/start-3dd081e6.js">
 	<link rel="modulepreload" href="../_app/immutable/chunks/index-7edd8589.js">
-	<link rel="modulepreload" href="../_app/immutable/chunks/singletons-8a1e8f63.js">
+	<link rel="modulepreload" href="../_app/immutable/chunks/singletons-3f91fccb.js">
 	<link rel="modulepreload" href="../_app/immutable/chunks/index-cc0a1a22.js">
 	<link rel="modulepreload" href="../_app/immutable/components/pages/_layout.svelte-df9f4d85.js">
 	<link rel="modulepreload" href="../_app/immutable/chunks/Icon-1a9f3f43.js">
 	<link rel="modulepreload" href="../_app/immutable/modules/pages/_layout.ts-3d58d466.js">
 	<link rel="modulepreload" href="../_app/immutable/chunks/links-430ac3fb.js">
 	<link rel="modulepreload" href="../_app/immutable/chunks/_layout-1417a99b.js">
-	<link rel="modulepreload" href="../_app/immutable/components/pages/blog/polygon-to-blob/_page.md-5cf3004f.js">
+	<link rel="modulepreload" href="../_app/immutable/components/pages/blog/polygon-to-blob/_page.md-8bc82596.js">
 	<link rel="modulepreload" href="../_app/immutable/chunks/layout-578ffd77.js">
 	<link rel="modulepreload" href="../_app/immutable/chunks/date-b51ec11b.js">
 	</head>
@@ -31,6 +31,7 @@
 	<p>10/15/2022</p>
 	<p>In this post I’ll show you how to make blobby shapes out of polygons. Click or tap on the shape below to see what I mean.</p>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" class="h-full w-full border-4 border-text" stroke-linecap="round" stroke-linejoin="round"><path class="cursor-pointer fill-pine stroke-0 hover:fill-foam" d="M1,3q4,-2,4,-2 4,3,4,3 -2,4,-2,4 -5,-1,-5,-1 -1,-4,-1,-4"></path></svg>
+<blockquote><p>I’ll be using the same polygon in all the demos, but the concept will work for any polygon.</p></blockquote>
 <p>To transform the polygon into a blob we’ll harness the power of the <a href="https://en.wikipedia.org/wiki/B%C3%A9zier_curve" rel="nofollow"><strong>quadratic Bezier curve</strong></a>. Don’t worry though. You don’t really need to know the math behind Bezier curves in order to use them. Most vector graphics systems like SVG have support for Bezier curves.</p>
 <p>In fact, in SVG any 3 points can define a quadratic Bezier curve. They are:</p>
 <ol><li>a start point</li>
@@ -69,8 +70,8 @@
 				</li></ul></nav>
 
 
-		<script type="module" data-sveltekit-hydrate="138vbry">
-		import { start } from "../_app/immutable/start-adb310ed.js";
+		<script type="module" data-sveltekit-hydrate="1rixzkz">
+		import { start } from "../_app/immutable/start-3dd081e6.js";
 
 		start({
 			env: {},
@@ -84,7 +85,7 @@
 				errors: null
 			},
 			paths: {"base":"","assets":""},
-			target: document.querySelector('[data-sveltekit-hydrate="138vbry"]').parentNode,
+			target: document.querySelector('[data-sveltekit-hydrate="1rixzkz"]').parentNode,
 			trailing_slash: "never"
 		});
 	</script>
