@@ -1,0 +1,1 @@
+import{i as e}from"./links-430ac3fb.js";const r=!0,t=({url:o})=>({links:e}),n=Object.freeze(Object.defineProperty({__proto__:null,prerender:r,load:t},Symbol.toStringTag,{value:"Module"}));export{n as _,t as l,r as p};
