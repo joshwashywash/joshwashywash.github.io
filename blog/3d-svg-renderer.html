@@ -7,17 +7,17 @@
 		<meta http-equiv="content-security-policy" content=""><title>3d svg renderer</title><!-- HEAD_svelte-fm90m1_START --><meta property="og:image" content="https://josho.dev/favicon.png"><meta property="og:site_name" content="Josh Oertel"><meta property="og:url" content="http://sveltekit-prerender/blog/3d-svg-renderer"><!-- HEAD_svelte-fm90m1_END --><!-- HEAD_svelte-ehml8u_START --><meta property="og:title" content="3d svg renderer"><meta property="og:description" content="a basic implementation of a 3D svg renderer"><meta property="og:type" content="article"><meta name="description" content="a basic implementation of a 3D svg renderer"><!-- HEAD_svelte-ehml8u_END -->
 	<link href="../_app/immutable/assets/_layout-2b65016e.css" rel="stylesheet">
 	<link href="../_app/immutable/assets/layout-ba65e2b2.css" rel="stylesheet">
-	<link rel="modulepreload" href="../_app/immutable/start-9fe38f03.js">
+	<link rel="modulepreload" href="../_app/immutable/start-5c6b80ec.js">
 	<link rel="modulepreload" href="../_app/immutable/chunks/index-c732bbf3.js">
-	<link rel="modulepreload" href="../_app/immutable/chunks/singletons-d94183d3.js">
+	<link rel="modulepreload" href="../_app/immutable/chunks/singletons-b1b4450c.js">
 	<link rel="modulepreload" href="../_app/immutable/chunks/index-8618c9ff.js">
-	<link rel="modulepreload" href="../_app/immutable/components/pages/_layout.svelte-cb8c8816.js">
+	<link rel="modulepreload" href="../_app/immutable/components/pages/_layout.svelte-2dc9189b.js">
 	<link rel="modulepreload" href="../_app/immutable/chunks/Icon-4cd7c759.js">
-	<link rel="modulepreload" href="../_app/immutable/chunks/stores-c3153cd5.js">
+	<link rel="modulepreload" href="../_app/immutable/chunks/stores-f69b3972.js">
 	<link rel="modulepreload" href="../_app/immutable/modules/pages/_layout.ts-34641214.js">
 	<link rel="modulepreload" href="../_app/immutable/chunks/links-430ac3fb.js">
 	<link rel="modulepreload" href="../_app/immutable/chunks/_layout-0605e95a.js">
-	<link rel="modulepreload" href="../_app/immutable/components/pages/blog/3d-svg-renderer/_page.md-656b423e.js">
+	<link rel="modulepreload" href="../_app/immutable/components/pages/blog/3d-svg-renderer/_page.md-0d51be92.js">
 	<link rel="modulepreload" href="../_app/immutable/chunks/layout-c83502ab.js">
 	<link rel="modulepreload" href="../_app/immutable/chunks/date-b51ec11b.js">
 	</head>
@@ -35,7 +35,7 @@
 			kind of notification system for when a post goes live but until then,
 			check back here from time to time.
 		</blockquote>
-	<p>Drag up and down in the frame to rotate the image. The demo uses <strong>quaternions</strong> to rotate the two triangles.</p>
+	<p>Drag up and down in the frame to rotate the svg. The demo uses only <strong>quaternions</strong> to rotate the two triangles.</p>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" stroke-linejoin="round" stroke-linecap="round" class="cursor-move"><rect width="10" height="10" stroke-width="0.1" stroke="white" fill="none" class="stroke-text-dawn dark:stroke-text-moon"></rect><path stroke-width="1.5" stroke="#907aa9" d="M3,7 L5,7 4,5 Z"></path><path stroke-width="1.5" stroke="#f6c177" d="M5,5 L7,5 6,3 Z"></path></svg></article></main>
 
 
@@ -46,8 +46,8 @@
 				</li></ul></nav>
 
 
-		<script type="module" data-sveltekit-hydrate="ouuucv">
-		import { start } from "../_app/immutable/start-9fe38f03.js";
+		<script type="module" data-sveltekit-hydrate="5rtvmm">
+		import { start } from "../_app/immutable/start-5c6b80ec.js";
 
 		start({
 			env: {},
@@ -61,7 +61,7 @@
 				errors: null
 			},
 			paths: {"base":"","assets":""},
-			target: document.querySelector('[data-sveltekit-hydrate="ouuucv"]').parentNode,
+			target: document.querySelector('[data-sveltekit-hydrate="5rtvmm"]').parentNode,
 			trailing_slash: "never"
 		});
 	</script>
