@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" href="../favicon.png" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta http-equiv="content-security-policy" content=""><title>3d svg renderer</title><!-- HEAD_svelte-fm90m1_START --><meta property="og:image" content="https://josho.dev/favicon.png"><meta property="og:site_name" content="Josh Oertel"><meta property="og:url" content="http://sveltekit-prerender/blog/3d-svg-renderer"><!-- HEAD_svelte-fm90m1_END --><!-- HEAD_svelte-ehml8u_START --><meta property="og:title" content="3d svg renderer"><meta property="og:description" content="a basic implementation of a 3D svg renderer"><meta property="og:type" content="article"><meta name="description" content="a basic implementation of a 3D svg renderer"><!-- HEAD_svelte-ehml8u_END -->
+	<link href="../_app/immutable/assets/_layout-2b65016e.css" rel="stylesheet">
+	<link href="../_app/immutable/assets/layout-ba65e2b2.css" rel="stylesheet">
+	<link rel="modulepreload" href="../_app/immutable/start-9fe38f03.js">
+	<link rel="modulepreload" href="../_app/immutable/chunks/index-c732bbf3.js">
+	<link rel="modulepreload" href="../_app/immutable/chunks/singletons-d94183d3.js">
+	<link rel="modulepreload" href="../_app/immutable/chunks/index-8618c9ff.js">
+	<link rel="modulepreload" href="../_app/immutable/components/pages/_layout.svelte-cb8c8816.js">
+	<link rel="modulepreload" href="../_app/immutable/chunks/Icon-4cd7c759.js">
+	<link rel="modulepreload" href="../_app/immutable/chunks/stores-c3153cd5.js">
+	<link rel="modulepreload" href="../_app/immutable/modules/pages/_layout.ts-34641214.js">
+	<link rel="modulepreload" href="../_app/immutable/chunks/links-430ac3fb.js">
+	<link rel="modulepreload" href="../_app/immutable/chunks/_layout-0605e95a.js">
+	<link rel="modulepreload" href="../_app/immutable/components/pages/blog/3d-svg-renderer/_page.md-656b423e.js">
+	<link rel="modulepreload" href="../_app/immutable/chunks/layout-c83502ab.js">
+	<link rel="modulepreload" href="../_app/immutable/chunks/date-b51ec11b.js">
+	</head>
+	<body>
+		<div>
+
+
+
+
+<main class="flex min-h-screen flex-col items-center px-4 pt-8 pb-24">
+
+<article class="prose prose-prosey w-full prose-p:before:content-[''] prose-p:after:content-[''] dark:prose-invert"><h1>3d svg renderer</h1>
+	<blockquote>This post is a draft meaning that it is in an unfinished state. Once it is
+			completed, this notice will go away. Eventually I want to implement some
+			kind of notification system for when a post goes live but until then,
+			check back here from time to time.
+		</blockquote>
+	<p>Drag up and down in the frame to rotate the image. The demo uses <strong>quaternions</strong> to rotate the two triangles.</p>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" stroke-linejoin="round" stroke-linecap="round" class="cursor-move"><rect width="10" height="10" stroke-width="0.1" stroke="white" fill="none" class="stroke-text-dawn dark:stroke-text-moon"></rect><path stroke-width="1.5" stroke="#907aa9" d="M3,7 L5,7 4,5 Z"></path><path stroke-width="1.5" stroke="#f6c177" d="M5,5 L7,5 6,3 Z"></path></svg></article></main>
+
+
+<nav class="fixed bottom-0 w-full py-2 backdrop-blur-sm"><ul class="flex justify-around md:justify-evenly"><li><a class="icon-link flex w-8 sm:w-10 md:w-12" data-sveltekit-prefetch href="/"><span class="sr-only">home</span>
+						<svg width="100%" height="100%" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" stroke="currentColor"><use href="/icons.svg#home"></use></svg></a>
+				</li><li><a class="icon-link flex w-8 sm:w-10 md:w-12" data-sveltekit-prefetch href="/blog"><span class="sr-only">blog</span>
+						<svg width="100%" height="100%" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" stroke="currentColor"><use href="/icons.svg#blog"></use></svg></a>
+				</li></ul></nav>
+
+
+		<script type="module" data-sveltekit-hydrate="ouuucv">
+		import { start } from "../_app/immutable/start-9fe38f03.js";
+
+		start({
+			env: {},
+			hydrate: {
+				status: 200,
+				error: null,
+				node_ids: [0, 4],
+				params: {},
+				routeId: "blog/3d-svg-renderer",
+				data: (function(a){return [a,a]}(null)),
+				errors: null
+			},
+			paths: {"base":"","assets":""},
+			target: document.querySelector('[data-sveltekit-hydrate="ouuucv"]').parentNode,
+			trailing_slash: "never"
+		});
+	</script>
+	</div>
+	</body>
+</html>
