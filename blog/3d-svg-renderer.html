@@ -5,19 +5,19 @@
 		<link rel="icon" href="../favicon.png" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta http-equiv="content-security-policy" content=""><title>3d svg renderer</title><!-- HEAD_svelte-fm90m1_START --><meta property="og:image" content="https://josho.dev/favicon.png"><meta property="og:site_name" content="Josh Oertel"><meta property="og:url" content="http://sveltekit-prerender/blog/3d-svg-renderer"><!-- HEAD_svelte-fm90m1_END --><!-- HEAD_svelte-ehml8u_START --><meta property="og:title" content="3d svg renderer"><meta property="og:description" content="a basic implementation of a 3D svg renderer"><meta property="og:type" content="article"><meta name="description" content="a basic implementation of a 3D svg renderer"><!-- HEAD_svelte-ehml8u_END -->
-	<link href="../_app/immutable/assets/_layout-2b65016e.css" rel="stylesheet">
+	<link href="../_app/immutable/assets/_layout-91e7cb26.css" rel="stylesheet">
 	<link href="../_app/immutable/assets/layout-ba65e2b2.css" rel="stylesheet">
-	<link rel="modulepreload" href="../_app/immutable/start-da6233c0.js">
+	<link rel="modulepreload" href="../_app/immutable/start-ac32e9bf.js">
 	<link rel="modulepreload" href="../_app/immutable/chunks/index-115b88e7.js">
-	<link rel="modulepreload" href="../_app/immutable/chunks/singletons-257ce651.js">
+	<link rel="modulepreload" href="../_app/immutable/chunks/singletons-5351f601.js">
 	<link rel="modulepreload" href="../_app/immutable/chunks/index-3c9e0400.js">
-	<link rel="modulepreload" href="../_app/immutable/components/pages/_layout.svelte-e67f8541.js">
+	<link rel="modulepreload" href="../_app/immutable/components/pages/_layout.svelte-0f7766c0.js">
 	<link rel="modulepreload" href="../_app/immutable/chunks/Icon-20391ca8.js">
-	<link rel="modulepreload" href="../_app/immutable/chunks/stores-da1b6f2a.js">
+	<link rel="modulepreload" href="../_app/immutable/chunks/stores-5f69c0b6.js">
 	<link rel="modulepreload" href="../_app/immutable/modules/pages/_layout.ts-34641214.js">
 	<link rel="modulepreload" href="../_app/immutable/chunks/links-430ac3fb.js">
 	<link rel="modulepreload" href="../_app/immutable/chunks/_layout-0605e95a.js">
-	<link rel="modulepreload" href="../_app/immutable/components/pages/blog/3d-svg-renderer/_page.md-7ba5a2fb.js">
+	<link rel="modulepreload" href="../_app/immutable/components/pages/blog/3d-svg-renderer/_page.md-7694bf19.js">
 	<link rel="modulepreload" href="../_app/immutable/chunks/layout-6885ac10.js">
 	<link rel="modulepreload" href="../_app/immutable/chunks/date-b51ec11b.js">
 	</head>
@@ -35,8 +35,9 @@
 			kind of notification system for when a post goes live but until then,
 			check back here from time to time.
 		</blockquote>
-	<p>Drag around in the frame to rotate the svg. The demo uses only <strong>quaternions</strong> to rotate the two triangles. I’m working on some kind of way to order overlapping polygons so be aware that the purple triangle will always be drawn after the yellow one.</p>
+	<p>Drag around in the frame to rotate the svg. The demo uses only <strong>quaternions</strong> to rotate the two triangles.</p>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" stroke-linejoin="round" stroke-linecap="round" class="cursor-move"><rect width="10" height="10" stroke-width="0.1" stroke="white" fill="none" class="stroke-text-dawn dark:stroke-text-moon"></rect><polygon stroke-width="1" stroke="#f6c177" fill="#f6c177" points="4,6,6.666666666666666,6,5.333333333333333,3.333333333333334"></polygon><polygon stroke-width="1" stroke="#907aa9" fill="#907aa9" points="3.3333333333333335,6.666666666666666,6,6.666666666666666,4.666666666666667,4"></polygon></svg>
+<p>It’s difficult to do <a href="https://en.wikipedia.org/wiki/Hidden-surface_determination" rel="nofollow">visible surface determination</a> in SVG for various reasons. Above, the triangles are sorted by their z-value and then they’re drawn back-to-front. This is known as the <a href="https://en.wikipedia.org/wiki/Painter%27s_algorithm" rel="nofollow">painter’s algorithm</a> and will only work in certain cases.</p>
 <h2>resources</h2>
 <ul><li><a href="https://danceswithcode.net/engineeringnotes/quaternions/quaternions.html" rel="nofollow">Rotation Quaternions, and How to Use Them</a></li>
 <li><a href="https://www.youtube.com/playlist?list=PLpzmRsG7u_gr0FO12cBWj-15_e0yqQQ1U" rel="nofollow">Mathoma’s Quaternion Playlist</a></li></ul></article></main>
@@ -49,8 +50,8 @@
 				</li></ul></nav>
 
 
-		<script type="module" data-sveltekit-hydrate="1bkj3pn">
-		import { start } from "../_app/immutable/start-da6233c0.js";
+		<script type="module" data-sveltekit-hydrate="hvr70x">
+		import { start } from "../_app/immutable/start-ac32e9bf.js";
 
 		start({
 			env: {},
@@ -64,7 +65,7 @@
 				errors: null
 			},
 			paths: {"base":"","assets":""},
-			target: document.querySelector('[data-sveltekit-hydrate="1bkj3pn"]').parentNode,
+			target: document.querySelector('[data-sveltekit-hydrate="hvr70x"]').parentNode,
 			trailing_slash: "never"
 		});
 	</script>
