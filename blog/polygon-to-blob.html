@@ -7,17 +7,17 @@
 		<meta http-equiv="content-security-policy" content=""><title>polygons to blobs</title><!-- HEAD_svelte-fm90m1_START --><meta property="og:image" content="https://josho.dev/favicon.png"><meta property="og:site_name" content="Josh Oertel"><meta property="og:url" content="http://sveltekit-prerender/blog/polygon-to-blob"><!-- HEAD_svelte-fm90m1_END --><!-- HEAD_svelte-ehml8u_START --><meta property="og:title" content="polygons to blobs"><meta property="og:description" content="an interactive guide on converting simple polygon shapes into beautiful blobby ones"><meta property="og:type" content="article"><meta name="description" content="an interactive guide on converting simple polygon shapes into beautiful blobby ones"><!-- HEAD_svelte-ehml8u_END -->
 	<link href="../_app/immutable/assets/_layout-91e7cb26.css" rel="stylesheet">
 	<link href="../_app/immutable/assets/layout-ba65e2b2.css" rel="stylesheet">
-	<link rel="modulepreload" href="../_app/immutable/start-77ca5e7f.js">
+	<link rel="modulepreload" href="../_app/immutable/start-77db3dbe.js">
 	<link rel="modulepreload" href="../_app/immutable/chunks/index-115b88e7.js">
-	<link rel="modulepreload" href="../_app/immutable/chunks/singletons-46ab9aa8.js">
+	<link rel="modulepreload" href="../_app/immutable/chunks/singletons-09358e77.js">
 	<link rel="modulepreload" href="../_app/immutable/chunks/index-3c9e0400.js">
-	<link rel="modulepreload" href="../_app/immutable/components/pages/_layout.svelte-ee7dffe2.js">
+	<link rel="modulepreload" href="../_app/immutable/components/pages/_layout.svelte-d20ebedc.js">
 	<link rel="modulepreload" href="../_app/immutable/chunks/Icon-20391ca8.js">
-	<link rel="modulepreload" href="../_app/immutable/chunks/stores-b7c84c4c.js">
+	<link rel="modulepreload" href="../_app/immutable/chunks/stores-210f3948.js">
 	<link rel="modulepreload" href="../_app/immutable/modules/pages/_layout.ts-34641214.js">
 	<link rel="modulepreload" href="../_app/immutable/chunks/links-430ac3fb.js">
 	<link rel="modulepreload" href="../_app/immutable/chunks/_layout-0605e95a.js">
-	<link rel="modulepreload" href="../_app/immutable/components/pages/blog/polygon-to-blob/_page.md-1e82edf8.js">
+	<link rel="modulepreload" href="../_app/immutable/components/pages/blog/polygon-to-blob/_page.md-34d135dd.js">
 	<link rel="modulepreload" href="../_app/immutable/chunks/layout-6885ac10.js">
 	<link rel="modulepreload" href="../_app/immutable/chunks/date-b51ec11b.js">
 	</head>
@@ -52,10 +52,10 @@
 <h2>The Blobification Method</h2>
 <p>Here’s a closer look at what’s going on.</p>
 <figure class="border-4 border-iris-dawn dark:border-iris-moon">
-	<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 5"><polygon points="1,3,5,1,9,4,7,8,2,7" class="fill-pine-dawn/50 dark:fill-pine-moon/50"></polygon><circle cx="5" cy="1" r="0.1" class="fill-love-dawn dark:fill-love-moon"></circle><polyline points="1,3,5,1,5,1,9,4" stroke-width="0.1" class="stroke-love-dawn/50 dark:stroke-love-moon/50" fill="none" pathLength="1" stroke-dasharray="0.025"></polyline><path class="stroke-gold-dawn dark:stroke-gold-moon" fill="none" stroke-width="0.1" pathLength="1" stroke-dashoffset="1" stroke-dasharray="1" d="M3,2 q2,-1,4,0.5"></path></svg></figure>
+	<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 5" stroke-linecap="round" stroke-linejoin="round"><polygon points="1,3,5,1,9,4,7,8,2,7" class="fill-pine-dawn/50 dark:fill-pine-moon/50"></polygon><circle cx="5" cy="1" r="0.1" class="fill-love-dawn dark:fill-love-moon"></circle><polyline points="1,3,5,1,5,1,9,4" stroke-width="0.1" class="stroke-love-dawn/50 dark:stroke-love-moon/50" fill="none" pathLength="1" stroke-dasharray="0.025"></polyline><path class="stroke-gold-dawn dark:stroke-gold-moon" fill="none" stroke-width="0.1" pathLength="1" stroke-dashoffset="1" stroke-dasharray="1" d="M3,2 q2,-1,4,0.5"></path></svg></figure>
 <p>To put it into words, take two consecutive midpoints, m1 and m2, from the lines that define the polygon and draw a quadratic Bezier curve from m1 to m2 with the curve’s control point equal to the vertex of the polygon that lies between m1 and m2. To draw the entire blob, just repeat this for each pair of midpoints around the polygon. You should have n curves where n is the number of sides of the polygon. Then just string your curves together and <em>voila</em> you have yourself a good ole blobby blob.</p>
 <figure class="border-4 border-iris-dawn dark:border-iris-moon">
-	<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10"><polygon points="1,3,5,1,9,4,7,8,2,7" class="fill-pine-dawn dark:fill-pine-moon"></polygon><path d="M3,2 q2,-1,4,0.5,2,1.5,1,3.5,-1,2,-3.5,1.5,-2.5,-0.5,-3,-2.5,-0.5,-2,1.5,-3" stroke-dasharray="1" stroke-dashoffset="1" stroke-width="0.1" fill-opacity="0" class="fill-gold-dawn dark:fill-gold-moon stroke-gold-dawn dark:stroke-gold-moon" pathLength="1"></path></svg></figure>
+	<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" stroke-linecap="round" stroke-linejoin="round"><polygon points="1,3,5,1,9,4,7,8,2,7" class="fill-pine-dawn dark:fill-pine-moon"></polygon><path d="M3,2 q2,-1,4,0.5,2,1.5,1,3.5,-1,2,-3.5,1.5,-2.5,-0.5,-3,-2.5,-0.5,-2,1.5,-3" stroke-dasharray="1" stroke-dashoffset="1" stroke-width="0.1" fill-opacity="0" class="fill-gold-dawn dark:fill-gold-moon stroke-gold-dawn dark:stroke-gold-moon" pathLength="1"></path></svg></figure>
 <p>I wanted to have a grand finale to end this post but I’ve already put more effort into it than I probably should have. For the last demo below, you can grab hold of the handle in the middle of the line and move it back and forth to see the differences between the polygon and its blob counterpart.</p>
 <figure class="border-4 border-iris-dawn dark:border-iris-moon">
 	<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10"><defs><clipPath id="clip"><rect x1="0" x2="0" width="5" height="10"></rect></clipPath></defs><path d="M3,2 q2,-1,4,0.5,2,1.5,1,3.5,-1,2,-3.5,1.5,-2.5,-0.5,-3,-2.5,-0.5,-2,1.5,-3" class="fill-gold-dawn dark:fill-gold-moon"></path><polygon points="1,3,5,1,9,4,7,8,2,7" class="fill-pine-dawn dark:fill-pine-moon" clip-path="url(#clip)"></polygon><g stroke-width="0.1" class="fill-rose-dawn stroke-love-dawn active:fill-iris-dawn dark:fill-rose-moon dark:stroke-love-moon dark:active:fill-iris-moon"><line x1="5" y1="0" x2="5" y2="10"></line><circle cx="5" cy="5" r="0.30000000000000004" class="hover:cursor-grab"></circle></g></svg></figure>
@@ -71,8 +71,8 @@
 				</li></ul></nav>
 
 
-		<script type="module" data-sveltekit-hydrate="vbqxxe">
-		import { start } from "../_app/immutable/start-77ca5e7f.js";
+		<script type="module" data-sveltekit-hydrate="f5lvk2">
+		import { start } from "../_app/immutable/start-77db3dbe.js";
 
 		start({
 			env: {},
@@ -86,7 +86,7 @@
 				errors: null
 			},
 			paths: {"base":"","assets":""},
-			target: document.querySelector('[data-sveltekit-hydrate="vbqxxe"]').parentNode,
+			target: document.querySelector('[data-sveltekit-hydrate="f5lvk2"]').parentNode,
 			trailing_slash: "never"
 		});
 	</script>
