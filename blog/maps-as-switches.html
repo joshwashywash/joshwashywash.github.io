@@ -7,7 +7,7 @@
 		<meta http-equiv="content-security-policy" content="">
 		<link href="../_app/immutable/assets/_layout-3083fa14.css" rel="stylesheet">
 		<link href="../_app/immutable/assets/layout-ba65e2b2.css" rel="stylesheet">
-		<link rel="modulepreload" href="../_app/immutable/start-05b51b55.js">
+		<link rel="modulepreload" href="../_app/immutable/start-b695fcf6.js">
 		<link rel="modulepreload" href="../_app/immutable/chunks/index-67ac9cad.js">
 		<link rel="modulepreload" href="../_app/immutable/chunks/singletons-caeb5411.js">
 		<link rel="modulepreload" href="../_app/immutable/chunks/index-2a2921d8.js">
@@ -17,7 +17,7 @@
 		<link rel="modulepreload" href="../_app/immutable/modules/pages/_layout.ts-7abdf0b8.js">
 		<link rel="modulepreload" href="../_app/immutable/chunks/links-a1657ed7.js">
 		<link rel="modulepreload" href="../_app/immutable/chunks/_layout-884bae2c.js">
-		<link rel="modulepreload" href="../_app/immutable/components/pages/blog/maps-as-switches/_page.md-0cd755f3.js">
+		<link rel="modulepreload" href="../_app/immutable/components/pages/blog/maps-as-switches/_page.md-d7da37e0.js">
 		<link rel="modulepreload" href="../_app/immutable/chunks/layout-c32c0659.js">
 		<link rel="modulepreload" href="../_app/immutable/chunks/date-2bbe6d61.js"><title>maps as switches</title><!-- HEAD_svelte-fm90m1_START --><meta property="og:image" content="https://josho.dev/favicon.png"><meta property="og:site_name" content="Josh Oertel"><meta property="og:url" content="http://sveltekit-prerender/blog/maps-as-switches"><!-- HEAD_svelte-fm90m1_END --><!-- HEAD_svelte-ehml8u_START --><meta property="og:title" content="maps as switches"><meta property="og:description" content="a demonstration of how javascript's switch statements and map types are sometimes interchangable"><meta property="og:type" content="article"><meta name="description" content="a demonstration of how javascript's switch statements and map types are sometimes interchangable"><!-- HEAD_svelte-ehml8u_END -->
 	</head>
@@ -55,7 +55,7 @@
 <span class="token function">speak</span><span class="token punctuation">(</span>kind<span class="token punctuation">)</span><span class="token punctuation">;</span></code><!-- HTML_TAG_END --></pre>
 <p>There’s nothing wrong with this code but if you’re like me you’ll start to see a pattern. Underneath every <strong>case</strong> there is a bit of code that needs to be ran if the case clause matches the evaluated switch expression. What if we think about the statements under each case as a procedure? With that mindset, you can think of a switch as a <em>map</em> from the current state of something to a procedure that immediately handles it. Let’s see if we can <em>map</em> <strong>switch</strong> to JavaScript’s <strong>Map</strong>. (See what I did there?)</p>
 <blockquote><p>If you’re unfamiliar with Map, it is essentially JavaScript’s version of a hash table / dictionary.</p></blockquote>
-<h2>Switching to Map</h2>
+<h2 id="switching-to-map">Switching to Map</h2>
 <p>We know we want to map some state to a procedure or function and immediately call it. Let’s set up our map first and then we’ll see how we can use it like a switch.</p>
 <pre class="language-ts"><!-- HTML_TAG_START --><code class="language-ts"><span class="token keyword">const</span> map <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Map<span class="token operator">&lt;</span>Kind<span class="token punctuation">,</span> Handler<span class="token operator">></span></span><span class="token punctuation">(</span><span class="token punctuation">[</span>
 	<span class="token punctuation">[</span>
@@ -87,7 +87,7 @@
 <p>So are there any benefits to using a map over a switch? Maps have constant lookup time but in small cases I don’t think you’ll notice any difference. I’ve heard that in some languages the compiler is smart enough to convert a switch into a lookup table but I’m not sure if the same optimization can be done with interpreted languages like JavaScript or Python.</p>
 <p>I think one place where a map might have an advantage over a switch is its ability to dynamically add and remove keys (<strong>handlers</strong> in this case). As far as I know there’s no way to do the same thing with switches.</p>
 <p>Ultimately I’d say it’s probably a matter of preference. I prefer the <code>map</code> way of doing things because I like being different for no reason. Let’s go over another example.</p>
-<h2>Keyboard Event Handling</h2>
+<h2 id="keyboard-event-handling">Keyboard Event Handling</h2>
 <p>Imagine (again) that you’re developing a game and you want to use key presses to move your character around.</p>
 <pre class="language-ts"><!-- HTML_TAG_START --><code class="language-ts"><span class="token comment">// save the handler in a callback in case it needs to be removed later on.</span>
 <span class="token keyword">const</span> <span class="token function-variable function">onKeydown</span> <span class="token operator">=</span> <span class="token punctuation">(</span>event<span class="token operator">:</span> KeyboardEvent<span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
@@ -156,9 +156,9 @@ window<span class="token punctuation">.</span><span class="token function">addEv
 
 <span class="token comment">// window.removeEventListener('keydown', listener);</span></code><!-- HTML_TAG_END --></pre>
 <p>I don’t want to admit it but this might be a little more complex for no apparent gain BUT nevertheless I think it is pretty handy to separate everything out like this.</p>
-<h2>That’s That</h2>
+<h2 id="thats-that">That’s That</h2>
 <p>If you made it this far, thanks for sticking around through this hodge-podgy article. Hopefully it was interesting and to be clear, I’m not really advocating the use of maps in place of switches. I think both switches and maps are perfectly fine and just wanted to share something I’ve been thinking about.</p>
-<h2>P.S.</h2>
+<h2 id="ps">P.S.</h2>
 <p>In the examples above, you might be wondering why there is an extra check for the existence of the key in the map before getting the corresponding value out of it. <em>Map.get</em> will return <em>undefined</em> if the key is not in the map. This can be problematic in some contexts if <em>undefined</em> is a valid value or in cases where a boolean is expected. Values like <em>undefined</em> and <em>null</em> are converted to <strong>false</strong> when used as booleans. I could come up with a contrived example but just trust me that you shouldn’t assume your keys will always be in your map.</p></article></main>
 
 
@@ -169,14 +169,14 @@ window<span class="token punctuation">.</span><span class="token function">addEv
 				</li></ul></nav>
 
 
-		<script type="module" data-sveltekit-hydrate="er8f44">
-			import { start } from "../_app/immutable/start-05b51b55.js";
+		<script type="module" data-sveltekit-hydrate="8n3qsi">
+			import { start } from "../_app/immutable/start-b695fcf6.js";
 
 			start({
 				env: {},
 				paths: {"base":"","assets":""},
-				target: document.querySelector('[data-sveltekit-hydrate="er8f44"]').parentNode,
-				version: "1671154952384",
+				target: document.querySelector('[data-sveltekit-hydrate="8n3qsi"]').parentNode,
+				version: "1671155815032",
 				hydrate: {
 					node_ids: [0, 5],
 					data: [null,null],

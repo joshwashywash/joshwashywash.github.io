@@ -7,7 +7,7 @@
 		<meta http-equiv="content-security-policy" content="">
 		<link href="../_app/immutable/assets/_layout-3083fa14.css" rel="stylesheet">
 		<link href="../_app/immutable/assets/layout-ba65e2b2.css" rel="stylesheet">
-		<link rel="modulepreload" href="../_app/immutable/start-05b51b55.js">
+		<link rel="modulepreload" href="../_app/immutable/start-b695fcf6.js">
 		<link rel="modulepreload" href="../_app/immutable/chunks/index-67ac9cad.js">
 		<link rel="modulepreload" href="../_app/immutable/chunks/singletons-caeb5411.js">
 		<link rel="modulepreload" href="../_app/immutable/chunks/index-2a2921d8.js">
@@ -17,7 +17,7 @@
 		<link rel="modulepreload" href="../_app/immutable/modules/pages/_layout.ts-7abdf0b8.js">
 		<link rel="modulepreload" href="../_app/immutable/chunks/links-a1657ed7.js">
 		<link rel="modulepreload" href="../_app/immutable/chunks/_layout-884bae2c.js">
-		<link rel="modulepreload" href="../_app/immutable/components/pages/blog/tail-recursion/_page.md-ffa4edc8.js">
+		<link rel="modulepreload" href="../_app/immutable/components/pages/blog/tail-recursion/_page.md-6a572097.js">
 		<link rel="modulepreload" href="../_app/immutable/chunks/layout-c32c0659.js">
 		<link rel="modulepreload" href="../_app/immutable/chunks/date-2bbe6d61.js"><title>tail recursion in typescript</title><!-- HEAD_svelte-fm90m1_START --><meta property="og:image" content="https://josho.dev/favicon.png"><meta property="og:site_name" content="Josh Oertel"><meta property="og:url" content="http://sveltekit-prerender/blog/tail-recursion"><!-- HEAD_svelte-fm90m1_END --><!-- HEAD_svelte-ehml8u_START --><meta property="og:title" content="tail recursion in typescript"><meta property="og:description" content="a cursory look at tail-recursive functions in typescript with some examples"><meta property="og:type" content="article"><meta name="description" content="a cursory look at tail-recursive functions in typescript with some examples"><!-- HEAD_svelte-ehml8u_END -->
 	</head>
@@ -33,7 +33,7 @@
 	<p>6/23/2022</p>
 	<p>I recently rewatched a <a href="https://www.youtube.com/watch?v=_JtPhF8MshA&t=765s" rel="nofollow">computerphile video</a> about a simple way to avoid stack overflows when using recursive functions. The technique is known as tail recursion.</p>
 <blockquote><p>There are more idiomatic ways to solve the following problems in JavaScript and TypeScript using <em>Array.*</em> methods. You can pretty much do anything with <em>Array.reduce</em>. Also, I don’t think NodeJS nor Deno support tail recursive calls at all so there’s that.</p></blockquote>
-<h2>example 1 - summing an array of numbers</h2>
+<h2 id="example-1---summing-an-array-of-numbers">example 1 - summing an array of numbers</h2>
 <p>Here’s an implementation of a recursive function that calculates the sum of an array of numbers.</p>
 <pre class="language-ts"><!-- HTML_TAG_START --><code class="language-ts"><span class="token keyword">const</span> sum <span class="token operator">=</span> <span class="token punctuation">(</span>ns<span class="token operator">:</span> <span class="token builtin">number</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token builtin">number</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
 	<span class="token keyword">if</span> <span class="token punctuation">(</span>ns<span class="token punctuation">.</span>length <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
@@ -66,7 +66,7 @@
 <span class="token comment">// sum([], 12)</span>
 <span class="token comment">// 12</span></code><!-- HTML_TAG_END --></pre>
 <p>No triangle and the addition happens before the recursive call. Notice how the running total is carried to the next call of <strong>sum</strong>. This is pretty characteristic of tail recursive functions. Let’s check out another example.</p>
-<h2>example 2 - count occurences in an array</h2>
+<h2 id="example-2---count-occurences-in-an-array">example 2 - count occurences in an array</h2>
 <p>To do this you just loop through the array and check if the current element is equal to the target. If there’s a match, add one to the count. If not, continue the loop.</p>
 <pre class="language-ts"><!-- HTML_TAG_START --><code class="language-ts"><span class="token keyword">const</span> count <span class="token operator">=</span> <span class="token operator">&lt;</span><span class="token constant">T</span><span class="token operator">></span><span class="token punctuation">(</span>t<span class="token operator">:</span> <span class="token constant">T</span><span class="token punctuation">,</span> ts<span class="token operator">:</span> <span class="token constant">T</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token builtin">number</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
 	<span class="token keyword">if</span> <span class="token punctuation">(</span>ts<span class="token punctuation">.</span>length <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
@@ -104,7 +104,7 @@
 <span class="token comment">// count('a', [], 2)</span>
 <span class="token comment">// 2</span></code><!-- HTML_TAG_END --></pre>
 <p>Just like the second version of the <strong>sum</strong> function above, the calculation is performed before the recursion and gets passed along.</p>
-<h2>summary</h2>
+<h2 id="summary">summary</h2>
 <p>While writing this post I realized that this style of recursion is a lot like performing a <strong>while</strong> loop. In a <strong>while</strong> loop all the work is done in the body of the loop and when you’re done, you jump back to the top of the loop to do it all again. Check the out <a href="https://en.wikipedia.org/wiki/Recursion_%28computer_science%29" rel="nofollow">tail recursion wikipedia article</a> for more details about the similarities between recursion and looping structures.</p></article></main>
 
 
@@ -115,14 +115,14 @@
 				</li></ul></nav>
 
 
-		<script type="module" data-sveltekit-hydrate="h7o8t3">
-			import { start } from "../_app/immutable/start-05b51b55.js";
+		<script type="module" data-sveltekit-hydrate="1r9ugv9">
+			import { start } from "../_app/immutable/start-b695fcf6.js";
 
 			start({
 				env: {},
 				paths: {"base":"","assets":""},
-				target: document.querySelector('[data-sveltekit-hydrate="h7o8t3"]').parentNode,
-				version: "1671154952384",
+				target: document.querySelector('[data-sveltekit-hydrate="1r9ugv9"]').parentNode,
+				version: "1671155815032",
 				hydrate: {
 					node_ids: [0, 7],
 					data: [null,null],
