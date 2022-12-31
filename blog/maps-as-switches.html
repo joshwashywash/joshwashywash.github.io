@@ -5,9 +5,9 @@
 		<link rel="icon" href="../favicon.png" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta http-equiv="content-security-policy" content="">
-		<link href="../_app/immutable/assets/_layout-3083fa14.css" rel="stylesheet">
+		<link href="../_app/immutable/assets/_layout-5ba31dc1.css" rel="stylesheet">
 		<link href="../_app/immutable/assets/layout-ba65e2b2.css" rel="stylesheet">
-		<link rel="modulepreload" href="../_app/immutable/start-b695fcf6.js">
+		<link rel="modulepreload" href="../_app/immutable/start-e2cf481e.js">
 		<link rel="modulepreload" href="../_app/immutable/chunks/index-67ac9cad.js">
 		<link rel="modulepreload" href="../_app/immutable/chunks/singletons-caeb5411.js">
 		<link rel="modulepreload" href="../_app/immutable/chunks/index-2a2921d8.js">
@@ -17,12 +17,12 @@
 		<link rel="modulepreload" href="../_app/immutable/modules/pages/_layout.ts-7abdf0b8.js">
 		<link rel="modulepreload" href="../_app/immutable/chunks/links-a1657ed7.js">
 		<link rel="modulepreload" href="../_app/immutable/chunks/_layout-884bae2c.js">
-		<link rel="modulepreload" href="../_app/immutable/components/pages/blog/maps-as-switches/_page.md-d7da37e0.js">
+		<link rel="modulepreload" href="../_app/immutable/components/pages/blog/maps-as-switches/_page.md-e79d6423.js">
 		<link rel="modulepreload" href="../_app/immutable/chunks/layout-c32c0659.js">
 		<link rel="modulepreload" href="../_app/immutable/chunks/date-2bbe6d61.js"><title>maps as switches</title><!-- HEAD_svelte-fm90m1_START --><meta property="og:image" content="https://josho.dev/favicon.png"><meta property="og:site_name" content="Josh Oertel"><meta property="og:url" content="http://sveltekit-prerender/blog/maps-as-switches"><!-- HEAD_svelte-fm90m1_END --><!-- HEAD_svelte-ehml8u_START --><meta property="og:title" content="maps as switches"><meta property="og:description" content="a demonstration of how javascript's switch statements and map types are sometimes interchangable"><meta property="og:type" content="article"><meta name="description" content="a demonstration of how javascript's switch statements and map types are sometimes interchangable"><!-- HEAD_svelte-ehml8u_END -->
 	</head>
 	<body>
-		<div>
+		<div style="display: contents">
 
 
 
@@ -33,11 +33,11 @@
 	<p>8/5/2022</p>
 	<p>Imagine you’re programming a game and there’s a character in the game that says different things depending on what kind of monster you show them. A switch statement can get this job done.</p>
 <p>Before we go any further, I want to declare some types that will be used throughout the code examples.</p>
-<pre class="language-ts"><!-- HTML_TAG_START --><code class="language-ts"><span class="token keyword">type</span> <span class="token class-name">Handler</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token keyword">void</span><span class="token punctuation">;</span>
+<pre class="language-typescript"><!-- HTML_TAG_START --><code class="language-typescript"><span class="token keyword">type</span> <span class="token class-name">Handler</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token keyword">void</span><span class="token punctuation">;</span>
 
 <span class="token keyword">type</span> <span class="token class-name">Kind</span> <span class="token operator">=</span> <span class="token string">'flying'</span> <span class="token operator">|</span> <span class="token string">'bug'</span> <span class="token operator">|</span> <span class="token string">'fire'</span> <span class="token operator">|</span> <span class="token string">'water'</span><span class="token punctuation">;</span></code><!-- HTML_TAG_END --></pre>
 <p>Okey dokey. Now we’re ready.</p>
-<pre class="language-ts"><!-- HTML_TAG_START --><code class="language-ts"><span class="token keyword">const</span> <span class="token function-variable function">speak</span> <span class="token operator">=</span> <span class="token punctuation">(</span>kind<span class="token operator">:</span> Kind<span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+<pre class="language-typescript"><!-- HTML_TAG_START --><code class="language-typescript"><span class="token keyword">const</span> <span class="token function-variable function">speak</span> <span class="token operator">=</span> <span class="token punctuation">(</span>kind<span class="token operator">:</span> Kind<span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
 	<span class="token keyword">switch</span> <span class="token punctuation">(</span>kind<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
 		<span class="token keyword">case</span> <span class="token string">'bug'</span><span class="token operator">:</span>
 			<span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">"Unless you're Cutiefly, I don't want you."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -57,7 +57,7 @@
 <blockquote><p>If you’re unfamiliar with Map, it is essentially JavaScript’s version of a hash table / dictionary.</p></blockquote>
 <h2 id="switching-to-map">Switching to Map</h2>
 <p>We know we want to map some state to a procedure or function and immediately call it. Let’s set up our map first and then we’ll see how we can use it like a switch.</p>
-<pre class="language-ts"><!-- HTML_TAG_START --><code class="language-ts"><span class="token keyword">const</span> map <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Map<span class="token operator">&lt;</span>Kind<span class="token punctuation">,</span> Handler<span class="token operator">></span></span><span class="token punctuation">(</span><span class="token punctuation">[</span>
+<pre class="language-typescript"><!-- HTML_TAG_START --><code class="language-typescript"><span class="token keyword">const</span> map <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Map<span class="token operator">&lt;</span>Kind<span class="token punctuation">,</span> Handler<span class="token operator">></span></span><span class="token punctuation">(</span><span class="token punctuation">[</span>
 	<span class="token punctuation">[</span>
 		<span class="token string">'bug'</span><span class="token punctuation">,</span> <span class="token comment">// case 'bug'</span>
 		<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
@@ -72,7 +72,7 @@
 	<span class="token punctuation">]</span>
 <span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code><!-- HTML_TAG_END --></pre>
 <p>Here we’re mapping the value of a <em>Kind</em> to a function that we can grab hold of and call later on.</p>
-<pre class="language-ts"><!-- HTML_TAG_START --><code class="language-ts"><span class="token keyword">const</span> kind<span class="token operator">:</span> Kind <span class="token operator">=</span> <span class="token string">'flying'</span><span class="token punctuation">;</span>
+<pre class="language-typescript"><!-- HTML_TAG_START --><code class="language-typescript"><span class="token keyword">const</span> kind<span class="token operator">:</span> Kind <span class="token operator">=</span> <span class="token string">'flying'</span><span class="token punctuation">;</span>
 
 <span class="token keyword">if</span> <span class="token punctuation">(</span>map<span class="token punctuation">.</span><span class="token function">has</span><span class="token punctuation">(</span>kind<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
 	<span class="token keyword">const</span> handler <span class="token operator">=</span> map<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>kind<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">as</span> Handler<span class="token punctuation">;</span>
@@ -89,7 +89,7 @@
 <p>Ultimately I’d say it’s probably a matter of preference. I prefer the <code>map</code> way of doing things because I like being different for no reason. Let’s go over another example.</p>
 <h2 id="keyboard-event-handling">Keyboard Event Handling</h2>
 <p>Imagine (again) that you’re developing a game and you want to use key presses to move your character around.</p>
-<pre class="language-ts"><!-- HTML_TAG_START --><code class="language-ts"><span class="token comment">// save the handler in a callback in case it needs to be removed later on.</span>
+<pre class="language-typescript"><!-- HTML_TAG_START --><code class="language-typescript"><span class="token comment">// save the handler in a callback in case it needs to be removed later on.</span>
 <span class="token keyword">const</span> <span class="token function-variable function">onKeydown</span> <span class="token operator">=</span> <span class="token punctuation">(</span>event<span class="token operator">:</span> KeyboardEvent<span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
 	<span class="token keyword">switch</span> <span class="token punctuation">(</span>event<span class="token punctuation">.</span>key<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
 		<span class="token keyword">case</span> <span class="token string">'ArrowDown'</span><span class="token operator">:</span>
@@ -112,7 +112,7 @@ window<span class="token punctuation">.</span><span class="token function">addEv
 <span class="token comment">// window.removeEventListener('keydown', onKeydown);</span></code><!-- HTML_TAG_END --></pre>
 <p>Seems pretty straightforward — check the key and run the code under the corresponding case clause.</p>
 <p>What does it look like if we use a map? First we’ll create the map.</p>
-<pre class="language-ts"><!-- HTML_TAG_START --><code class="language-ts"><span class="token keyword">const</span> map <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Map<span class="token operator">&lt;</span><span class="token builtin">string</span><span class="token punctuation">,</span> Handler<span class="token operator">></span></span><span class="token punctuation">(</span><span class="token punctuation">[</span>
+<pre class="language-typescript"><!-- HTML_TAG_START --><code class="language-typescript"><span class="token keyword">const</span> map <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Map<span class="token operator">&lt;</span><span class="token builtin">string</span><span class="token punctuation">,</span> Handler<span class="token operator">></span></span><span class="token punctuation">(</span><span class="token punctuation">[</span>
 	<span class="token punctuation">[</span>
 		<span class="token string">'ArrowDown'</span><span class="token punctuation">,</span>
 		<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
@@ -139,7 +139,7 @@ window<span class="token punctuation">.</span><span class="token function">addEv
 	<span class="token punctuation">]</span>
 <span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code><!-- HTML_TAG_END --></pre>
 <p>Seems a lot like the first example. Next, we’ll need to create the listener function. I think it might be handy to create a higher order function to do this so that we can create a listener from any map of this shape.</p>
-<pre class="language-ts"><!-- HTML_TAG_START --><code class="language-ts"><span class="token keyword">const</span> <span class="token function-variable function">createKeyboardListener</span> <span class="token operator">=</span> <span class="token punctuation">(</span>map<span class="token operator">:</span> Map<span class="token operator">&lt;</span><span class="token builtin">string</span><span class="token punctuation">,</span> Handler<span class="token operator">></span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+<pre class="language-typescript"><!-- HTML_TAG_START --><code class="language-typescript"><span class="token keyword">const</span> <span class="token function-variable function">createKeyboardListener</span> <span class="token operator">=</span> <span class="token punctuation">(</span>map<span class="token operator">:</span> Map<span class="token operator">&lt;</span><span class="token builtin">string</span><span class="token punctuation">,</span> Handler<span class="token operator">></span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
 	<span class="token keyword">return</span> <span class="token punctuation">(</span>event<span class="token operator">:</span> KeyboardEvent<span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
 		<span class="token keyword">const</span> <span class="token punctuation">&#123;</span> key <span class="token punctuation">&#125;</span> <span class="token operator">=</span> event<span class="token punctuation">;</span>
 		<span class="token keyword">if</span> <span class="token punctuation">(</span>map<span class="token punctuation">.</span><span class="token function">has</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
@@ -150,7 +150,7 @@ window<span class="token punctuation">.</span><span class="token function">addEv
 	<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span></code><!-- HTML_TAG_END --></pre>
 <p>Then you can create the listener and attach / detach it like so.</p>
-<pre class="language-ts"><!-- HTML_TAG_START --><code class="language-ts"><span class="token keyword">const</span> listener <span class="token operator">=</span> <span class="token function">createKeyboardListener</span><span class="token punctuation">(</span>map<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<pre class="language-typescript"><!-- HTML_TAG_START --><code class="language-typescript"><span class="token keyword">const</span> listener <span class="token operator">=</span> <span class="token function">createKeyboardListener</span><span class="token punctuation">(</span>map<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
 window<span class="token punctuation">.</span><span class="token function">addEventListener</span><span class="token punctuation">(</span><span class="token string">'keydown'</span><span class="token punctuation">,</span> listener<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
@@ -169,14 +169,14 @@ window<span class="token punctuation">.</span><span class="token function">addEv
 				</li></ul></nav>
 
 
-		<script type="module" data-sveltekit-hydrate="8n3qsi">
-			import { start } from "../_app/immutable/start-b695fcf6.js";
+		<script type="module" data-sveltekit-hydrate="924dwi">
+			import { start } from "../_app/immutable/start-e2cf481e.js";
 
 			start({
 				env: {},
 				paths: {"base":"","assets":""},
-				target: document.querySelector('[data-sveltekit-hydrate="8n3qsi"]').parentNode,
-				version: "1671248863128",
+				target: document.querySelector('[data-sveltekit-hydrate="924dwi"]').parentNode,
+				version: "1672447153732",
 				hydrate: {
 					node_ids: [0, 5],
 					data: [null,null],
