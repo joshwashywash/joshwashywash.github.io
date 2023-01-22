@@ -7,7 +7,7 @@
 		<meta http-equiv="content-security-policy" content="">
 		<link href="../_app/immutable/assets/_layout-5ba31dc1.css" rel="stylesheet">
 		<link href="../_app/immutable/assets/layout-ba65e2b2.css" rel="stylesheet">
-		<link rel="modulepreload" href="../_app/immutable/start-dc2482b5.js">
+		<link rel="modulepreload" href="../_app/immutable/start-2fda689c.js">
 		<link rel="modulepreload" href="../_app/immutable/chunks/index-cfeaaeca.js">
 		<link rel="modulepreload" href="../_app/immutable/chunks/singletons-a2c2c461.js">
 		<link rel="modulepreload" href="../_app/immutable/chunks/index-328d8fb6.js">
@@ -17,7 +17,7 @@
 		<link rel="modulepreload" href="../_app/immutable/modules/pages/_layout.ts-f4c683de.js">
 		<link rel="modulepreload" href="../_app/immutable/chunks/links-a1657ed7.js">
 		<link rel="modulepreload" href="../_app/immutable/chunks/_layout-e2f7f85c.js">
-		<link rel="modulepreload" href="../_app/immutable/components/pages/blog/maps-as-switches/_page.md-53cf5cd2.js">
+		<link rel="modulepreload" href="../_app/immutable/components/pages/blog/maps-as-switches/_page.md-18cf6580.js">
 		<link rel="modulepreload" href="../_app/immutable/chunks/layout-d811d619.js">
 		<link rel="modulepreload" href="../_app/immutable/chunks/date-2bbe6d61.js"><title>maps as switches</title><!-- HEAD_svelte-fm90m1_START --><meta property="og:image" content="https://josho.dev/favicon.png"><meta property="og:site_name" content="Josh Oertel"><meta property="og:url" content="http://sveltekit-prerender/blog/maps-as-switches"><!-- HEAD_svelte-fm90m1_END --><!-- HEAD_svelte-ehml8u_START --><meta property="og:title" content="maps as switches"><meta property="og:description" content="a demonstration of how javascript's switch statements and map types are sometimes interchangable"><meta property="og:type" content="article"><meta name="description" content="a demonstration of how javascript's switch statements and map types are sometimes interchangable"><!-- HEAD_svelte-ehml8u_END -->
 	</head>
@@ -35,7 +35,7 @@
 <p>Before we go any further, I want to declare some types that will be used throughout the code examples.</p>
 <pre class="language-typescript"><!-- HTML_TAG_START --><code class="language-typescript"><span class="token keyword">type</span> <span class="token class-name">Handler</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token keyword">void</span><span class="token punctuation">;</span>
 
-<span class="token keyword">type</span> <span class="token class-name">Kind</span> <span class="token operator">=</span> <span class="token string">'flying'</span> <span class="token operator">|</span> <span class="token string">'bug'</span> <span class="token operator">|</span> <span class="token string">'fire'</span> <span class="token operator">|</span> <span class="token string">'water'</span><span class="token punctuation">;</span></code><!-- HTML_TAG_END --></pre>
+<span class="token keyword">type</span> <span class="token class-name">Kind</span> <span class="token operator">=</span> <span class="token string">'bug'</span> <span class="token operator">|</span> <span class="token string">'fire'</span> <span class="token operator">|</span> <span class="token string">'flying'</span> <span class="token operator">|</span> <span class="token string">'water'</span><span class="token punctuation">;</span></code><!-- HTML_TAG_END --></pre>
 <p>Okey dokey. Now we’re ready.</p>
 <pre class="language-typescript"><!-- HTML_TAG_START --><code class="language-typescript"><span class="token keyword">const</span> <span class="token function-variable function">speak</span> <span class="token operator">=</span> <span class="token punctuation">(</span>kind<span class="token operator">:</span> Kind<span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
 	<span class="token keyword">switch</span> <span class="token punctuation">(</span>kind<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
@@ -75,7 +75,7 @@
 <pre class="language-typescript"><!-- HTML_TAG_START --><code class="language-typescript"><span class="token keyword">const</span> kind<span class="token operator">:</span> Kind <span class="token operator">=</span> <span class="token string">'flying'</span><span class="token punctuation">;</span>
 
 <span class="token keyword">if</span> <span class="token punctuation">(</span>map<span class="token punctuation">.</span><span class="token function">has</span><span class="token punctuation">(</span>kind<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-	<span class="token keyword">const</span> handler <span class="token operator">=</span> map<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>kind<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">as</span> Handler<span class="token punctuation">;</span>
+	<span class="token keyword">const</span> handler <span class="token operator">=</span> map<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>kind<span class="token punctuation">)</span> <span class="token keyword">as</span> Handler<span class="token punctuation">;</span>
 	<span class="token comment">// ts will error without the type assertion above</span>
 	<span class="token function">handler</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
@@ -169,14 +169,14 @@ window<span class="token punctuation">.</span><span class="token function">addEv
 				</li></ul></nav>
 
 
-		<script type="module" data-sveltekit-hydrate="1t4bqo2">
-			import { start } from "../_app/immutable/start-dc2482b5.js";
+		<script type="module" data-sveltekit-hydrate="1vvbnoj">
+			import { start } from "../_app/immutable/start-2fda689c.js";
 
 			start({
 				env: {},
 				paths: {"base":"","assets":""},
-				target: document.querySelector('[data-sveltekit-hydrate="1t4bqo2"]').parentNode,
-				version: "1674097282060",
+				target: document.querySelector('[data-sveltekit-hydrate="1vvbnoj"]').parentNode,
+				version: "1674360102484",
 				hydrate: {
 					node_ids: [0, 5],
 					data: [null,null],
