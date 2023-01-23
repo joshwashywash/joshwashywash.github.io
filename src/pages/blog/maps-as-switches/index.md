@@ -1,7 +1,7 @@
 ---
-date: 2022-08-05
 description: a demonstration of how javascript's switch statements and map types are sometimes interchangable
 layout: '../../../layouts/Post.astro'
+pubDate: 2022-08-05
 title: maps as switches
 ---
 

@@ -1,8 +1,8 @@
 ---
-layout: '../../../layouts/Post.astro'
-date: 2022-06-23
-title: tail recursion in typescript
 description: a cursory look at tail-recursive functions in typescript with some examples
+layout: '../../../layouts/Post.astro'
+pubDate: 2022-06-23
+title: tail recursion in typescript
 ---
 
 I recently rewatched a [computerphile video](https://www.youtube.com/watch?v=_JtPhF8MshA&t=765s) about a simple way to avoid stack overflows when using recursive functions. The technique is known as tail recursion.

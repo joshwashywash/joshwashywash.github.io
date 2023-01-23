@@ -3,14 +3,14 @@ import Base from '../layouts/Base.astro';
 
 export interface Props {
 	content: {
-		date: string;
+		pubDate: string;
 		description: string;
 		title: string;
 	};
 }
 
 const {
-	content: { date, description, title },
+	content: { pubDate, description, title },
 } = Astro.props;
 ---
 
@@ -18,9 +18,9 @@ const {
 	<article class="container prose prose-rose mb-32 px-4 pt-4 lg:prose-xl">
 		<h1>{title}</h1>
 		{
-			date && (
+			pubDate && (
 				<time>
-					{new Date(date).toLocaleDateString('en-us', {
+					{new Date(pubDate).toLocaleDateString('en-us', {
 						timeZone: 'UTC',
 					})}
 				</time>
