@@ -1,0 +1,10 @@
+{
+	"plugins": [
+		"prettier-plugin-astro",
+		"prettier-plugin-svelte",
+		"prettier-plugin-tailwindcss"
+	],
+	"semi": true,
+	"singleQuote": true,
+	"useTabs": true
+}

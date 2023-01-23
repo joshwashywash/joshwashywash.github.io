@@ -1,0 +1,30 @@
+---
+import Base from '../layouts/Base.astro';
+
+const posts = (await Astro.glob('./blog/**/index.{md,mdx}')).sort((a, b) =>
+	[a, b]
+		.map((c) => new Date(c.frontmatter.date).getTime())
+		.reduce((a, b) => b - a)
+);
+---
+
+<Base title="josh's blog posts" description="a list of josh's blog posts">
+	<main class="flex flex-col items-center px-4 pt-8">
+		<ul>
+			{
+				posts.map((post) => (
+					<li class="flex flex-col">
+						<a class="text-2xl underline" href={post.url}>
+							{post.frontmatter.title}
+						</a>
+						<time datetime={post.frontmatter.date}>
+							{new Date(post.frontmatter.date).toLocaleDateString('en-us', {
+								timeZone: 'UTC',
+							})}
+						</time>
+					</li>
+				))
+			}
+		</ul>
+	</main>
+</Base>
