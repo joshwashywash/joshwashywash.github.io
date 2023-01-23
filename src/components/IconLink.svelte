@@ -7,7 +7,7 @@
 	const { href, to } = link;
 </script>
 
-<a class="icon-link w-24 md:w-28" rel="external" {href}>
+<a class="link w-24 md:w-28" rel="external" {href}>
 	<span class="sr-only">{to}</span>
 	<Icon kind={to} />
 </a>

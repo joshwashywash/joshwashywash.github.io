@@ -32,7 +32,7 @@
 		<ul class="flex justify-around md:justify-evenly">
 			{#each links as { href, to }}
 				<li>
-					<a class="icon-link flex w-8 sm:w-10 md:w-12" {href}>
+					<a class="link flex w-8 sm:w-10 md:w-12" {href}>
 						<span class="sr-only">{to}</span>
 						<Icon kind={to} />
 					</a>
