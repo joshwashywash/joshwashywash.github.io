@@ -75,10 +75,6 @@
 	$: rotation = multiplyQuaternions(xRotation, yRotation);
 
 	// TODO: fix orbit controls
-	let diffX = 0;
-	let diffY = 0;
-	let upX = 0;
-	let upY = 0;
 
 	// pipeline is -> rotate, scale, then convert to svg coordinates
 	$: xformed = points.map((point) =>
@@ -102,24 +98,23 @@
 	stroke-linecap="round"
 	class="cursor-move"
 	on:touchstart|preventDefault
-	on:pointerdown={(e) => {
+	on:pointerdown={() => {
 		grabbing = true;
-		diffX = e.x - upX;
-		diffY = e.y - upY;
 	}}
 	on:pointermove={(e) => {
 		if (grabbing) {
 			const { currentTarget, pointerId, x, y } = e;
 			currentTarget.setPointerCapture(pointerId);
-			const rect = currentTarget.getBoundingClientRect();
-			theta = toAngle((x + diffX - rect.x) / rect.width);
-			phi = toAngle((y + diffY - rect.y) / rect.height);
+			const point = new DOMPoint(x, y).matrixTransform(
+				currentTarget.getScreenCTM()?.inverse()
+			);
+			theta = toAngle(point.x / width);
+			phi = toAngle(point.y / height);
+
 		}
 	}}
-	on:pointerup={(e) => {
+	on:pointerup={() => {
 		grabbing = false;
-		upX = e.x;
-		upY = e.y;
 	}}
 >
 	<rect
