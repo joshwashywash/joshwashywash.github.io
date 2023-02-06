@@ -8,7 +8,9 @@ import { defineConfig } from 'astro/config';
 export default defineConfig({
 	integrations: [mdx(), sitemap(), svelte(), tailwind()],
 	markdown: {
-		shikiConfig: { theme: 'rose-pine-moon' },
+		shikiConfig: {
+			theme: 'rose-pine-moon',
+		},
 	},
 	site: 'https://josho.dev',
 });

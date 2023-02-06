@@ -1,15 +1,38 @@
 ---
 description: a basic implementation of a 3D svg renderer
-layout: '../../../layouts/Post.astro'
-pubDate: 2023-01-23
+date: 2023-01-23
 title: 3d svg renderer
 ---
 
-Drag around in the frame to rotate the svg. The demo uses only **quaternions** to rotate the two triangles.
+The demo uses only **quaternions** to rotate the triangles.
 
-import SVG from './SVG.svelte';
+import TriangleRotator from '../../components/3d/TriangleRotator.svelte';
 
-<SVG width={10} height={10} client:visible />
+<TriangleRotator
+	dTheta={0.03}
+	dPhi={-0.01}
+	width={10}
+	height={10}
+	points={[
+		[-3, -3, 3],
+		[5, -3, 3],
+		[1, 5, 3],
+		[-5, -5, -3],
+		[3, -5, -3],
+		[-1, 3, -3],
+	]}
+	triangles={[
+		{
+			indices: [0, 1, 2], 
+			color: '#f6c177'
+		},
+		{
+			indices: [3, 4, 5],
+			color: '#3e8fb0'
+		}
+	]}
+	client:visible
+/>
 
 It's difficult to do [visible surface determination](https://en.wikipedia.org/wiki/Hidden-surface_determination) in SVG for various reasons. Above, the triangles are sorted by their z-value and then they're drawn back-to-front. This is known as the [painter's algorithm](https://en.wikipedia.org/wiki/Painter%27s_algorithm) and will only work in certain cases.
 

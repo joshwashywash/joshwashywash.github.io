@@ -1,25 +1,39 @@
 <script lang="ts">
-	import type { Polygon } from './types';
-	import { aperture, bezierOffset } from './functions';
-	import { midpoint } from './geometry';
+	import type { Offset } from '../../lib/bezier';
+	import { aperture } from '../../lib/array';
+	import {
+		diff,
+		midpoint,
+		multiply,
+		toVec2,
+		type Vec3,
+	} from '../../lib/vector';
+	import { example, type Polygon } from '../../lib/polygon';
 	import { onMount } from 'svelte';
 	import { timeline } from 'motion';
 
-	export let width: number;
-	export let height: number;
-	export let polygon: Polygon;
+	export let width = 10;
+	export let height = 10;
+	export let polygon: Polygon = example;
+
+	const scale: Vec3 = [width, height, 0];
+
 	const strokeWidth = width / 100;
 
 	const [m0, ...ms] = aperture(2, [...polygon, polygon[0]]).map(([p1, p2]) =>
 		midpoint(p1, p2)
 	);
 
-	const offsets = aperture(2, [m0, ...ms, m0]).map(([m1, m2], i) => {
+	const offsets: Offset[] = aperture(2, [m0, ...ms, m0]).map(([m1, m2], i) => {
 		const controlPoint = polygon[(i + 1) % polygon.length];
-		return bezierOffset(m1, m2, controlPoint);
+		return [diff(controlPoint, m1), diff(m2, m1)];
 	});
 
-	const d = `M${m0} q${offsets}`;
+	const d = `M${toVec2(multiply(scale, m0))} q${offsets.map((o) =>
+		o.map((v) => {
+			return v ? toVec2(multiply(scale, v)) : '';
+		})
+	)}`;
 
 	let blob: SVGPathElement;
 	let _polygon: SVGPolygonElement;
@@ -48,7 +62,11 @@
 	stroke-linecap="round"
 	stroke-linejoin="round"
 >
-	<polygon bind:this={_polygon} points={polygon.join()} class="fill-pine" />
+	<polygon
+		bind:this={_polygon}
+		points={polygon.map((p) => toVec2(multiply(scale, p))).join()}
+		class="fill-pine"
+	/>
 	<path
 		bind:this={blob}
 		{d}

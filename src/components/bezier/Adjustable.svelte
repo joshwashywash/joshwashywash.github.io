@@ -1,43 +1,51 @@
 <script lang="ts">
-	import type { AbsoluteBezierCurve } from './types';
-	import { bezierOffset, randomInt } from './functions';
-	import { clamp } from './functions';
+	import type { Curve } from '../../lib/bezier';
+	import { clamp, randomInt } from '../../lib/number';
 	import { derived } from 'svelte/store';
+	import { diff, toVec2 } from '../../lib/vector';
 	import { tweened } from 'svelte/motion';
 
-	export let height: number;
-	export let width: number;
-	const strokeWidth = width / 20;
+	export let height = 10;
+	export let width = 10;
 
 	const s = width / 6;
 	const t = height / 6;
 
-	const curve = tweened<AbsoluteBezierCurve>([
-		[s, 5 * t],
-		[5 * s, 5 * t],
-		[3 * s, t],
-	]);
+	export let bezier: Curve = [
+		[s, 5 * t, 0],
+		[3 * s, t, 0],
+		[5 * s, 5 * t, 0],
+	];
 
-	const d = derived(curve, ([start, end, control]) => {
-		const offsets = bezierOffset(start, end, control);
-		return `M${start} q${offsets}`;
-	});
+	const strokeWidth = width / 20;
 
-	const randomCurve = (
+	const curve = tweened(bezier);
+
+	const d = derived(
+		curve,
+		([start, control, end]): string =>
+			`M${toVec2(start)}q${toVec2(diff(control, start))} ${toVec2(
+				diff(end, start)
+			)}`
+	);
+
+	const randomBezier = (
 		minX: number,
 		maxX: number,
 		minY: number,
 		maxY: number
-	) =>
-		Array.from({ length: 3 }, () =>
-			[
-				[minX, maxX],
-				[minY, maxY],
-			].map(([a, b]) => randomInt(a, b))
-		) as AbsoluteBezierCurve;
+	): Curve => {
+		const rix = () => randomInt(minX, maxX);
+		const riy = () => randomInt(minY, maxY);
+		return [
+			[rix(), riy(), 0],
+			[rix(), riy(), 0],
+			[rix(), riy(), 0],
+		];
+	};
 
 	const randomize = () => {
-		curve.set(randomCurve(1, width, 1, height));
+		curve.set(randomBezier(1, width, 1, height));
 	};
 
 	let grabbing = false;
@@ -55,6 +63,7 @@
 			$curve[index] = [
 				clamp(0, width, ((x - rect.x) / rect.width) * width),
 				clamp(0, height, ((y - rect.y) / rect.height) * height),
+				0,
 			];
 		}
 	}}

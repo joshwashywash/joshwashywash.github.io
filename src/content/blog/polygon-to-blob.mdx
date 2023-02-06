@@ -1,21 +1,18 @@
 ---
+date: 2022-10-15
 description: an interactive guide on how to convert simple polygon shapes into beautiful blobby ones
-layout: '../../../layouts/Post.astro'
-pubDate: 2022-10-15
 title: polygons to blobs
 ---
-
-import AdjustableBezierCurve from './AdjustableBezierCurve.svelte';
-import BezierHeart from './BezierHeart.svelte';
-import Blobber from './Blobber.svelte';
-import CompleteBlobAnim from './CompleteBlobAnim.svelte';
-import SingleBlobPathAnim from './SingleBlobPathAnim.svelte'
-import Slider from './Slider.svelte';
-import { polygon, width, height } from './constants';
+import Adjustable from '../../components/bezier/Adjustable.svelte';
+import Heart from '../../components/bezier/Heart.svelte';
+import Blobber from '../../components/bezier/Blobber.svelte';
+import CompleteAnimation from '../../components/bezier/CompleteAnimation.svelte';
+import SinglePathAnimation from '../../components/bezier/SinglePathAnimation.svelte'
+import Slider from '../../components/bezier/Slider.svelte';
 
 In this post I'll show you how to make blobby shapes out of polygons. Click or tap on the shape below to see what I mean.
 
-<Blobber client:visible width={width} height={height} polygon={polygon} />
+<Blobber client:visible />
 
 > I'll be using the same polygon in all the demos, but the concept will work for any polygon.
 
@@ -31,13 +28,13 @@ In fact, in SVG any 3 points can define a quadratic Bezier curve. They are:
 
 Woah! A wild Bezier curve coming this way. If you don't like the way it looks, it's cool. You can click/tap it to generate a new one or you can modify it to your liking by dragging around its points.
 
-<AdjustableBezierCurve client:visible width={width} height={height} />
+<Adjustable client:visible />
 
 > If you put the start point and end point on the same line and then drag the control point across the line's midpoint really fast it kinda looks like you're strumming a one-string guitar.
 
 The neat thing about Beziers is that you can string them together to make really curvy shapes. Below is a heart made up of Bezier curves. It's so big that it almost doesn't fit in the viewbox. Click or tap it to make it go **ba-dum ba-dum**.
 
-<BezierHeart client:visible width={width} height={height} scale={2} />
+<Heart client:visible />
 
 So the question is, what's a good strategy for transforming a pointy polygon into a beautiful blob composed of Bezier curves? Well, I thought you'd never ask.
 
@@ -45,17 +42,18 @@ So the question is, what's a good strategy for transforming a pointy polygon int
 
 Here's a closer look at what's going on.
 
-<SingleBlobPathAnim client:visible width={width} height={height / 2} polygon={polygon} />
+<SinglePathAnimation client:visible />
 
 To put it into words, take two consecutive midpoints, m1 and m2, from the lines that define the polygon and draw a quadratic Bezier curve from m1 to m2 with the curve's control point equal to the vertex of the polygon that lies between m1 and m2. To draw the entire blob, just repeat this for each pair of midpoints around the polygon. You should have n curves where n is the number of sides of the polygon. Then just string your curves together and _voila_ you have yourself a good ole blobby blob.
 
-<CompleteBlobAnim client:visible width={width} height={height} polygon={polygon} />
+<CompleteAnimation client:visible />
 
 I wanted to have a grand finale to end this post but I've already put more effort into it than I probably should have. For the last demo below, you can grab hold of the handle in the middle of the line and move it back and forth to see the differences between the polygon and its blob counterpart.
 
-<Slider client:visible width={width} height={height} polygon={polygon} />
+<Slider client:visible />
 
 ## resources
 
 - [MDN docs on SVG paths](https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths)
 - [SVG path visualizer](https://svg-path-visualizer.netlify.app)
+

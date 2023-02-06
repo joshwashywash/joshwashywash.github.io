@@ -1,7 +1,6 @@
 ---
+date: 2022-06-23
 description: a cursory look at tail-recursive functions in typescript with some examples
-layout: '../../../layouts/Post.astro'
-pubDate: 2022-06-23
 title: tail recursion in typescript
 ---
 
