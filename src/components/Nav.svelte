@@ -1,5 +1,4 @@
 <script lang="ts">
-	import Icon from './Icon.svelte';
 	import type { Link } from '../types';
 	import { fly } from 'svelte/transition';
 
@@ -32,9 +31,9 @@
 		<ul class="flex justify-around md:justify-evenly">
 			{#each links as { href, to }}
 				<li>
-					<a class="link flex w-8 sm:w-10 md:w-12" {href}>
+					<a class="link bold" {href}>
 						<span class="sr-only">{to}</span>
-						<Icon kind={to} />
+						<span class="font-bold">{to}</span>
 					</a>
 				</li>
 			{/each}
