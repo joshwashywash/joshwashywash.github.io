@@ -31,7 +31,7 @@
 		<ul class="flex justify-around md:justify-evenly">
 			{#each links as { href, to }}
 				<li>
-					<a class="link bold" {href}>
+					<a class="link" {href}>
 						<span class="sr-only">{to}</span>
 						<span class="font-bold">{to}</span>
 					</a>
