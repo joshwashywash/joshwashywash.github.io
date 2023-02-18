@@ -56,7 +56,7 @@
 									strokeOpacity.set(1, { duration: 0 }),
 								])
 							)
-							.then(() => animate());
+							.then(animate);
 					})
 			)
 		);

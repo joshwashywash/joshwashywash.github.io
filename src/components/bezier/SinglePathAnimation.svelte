@@ -1,6 +1,5 @@
 <script lang="ts">
-	import { example, type Polygon } from '../../lib/polygon';
-	import { animation } from '../../lib/actions/animation';
+	import type { Offset } from '../../lib/bezier';
 	import { aperture } from '../../lib/array';
 	import {
 		diff,
@@ -9,7 +8,7 @@
 		toVec2,
 		type Vec3,
 	} from '../../lib/vector';
-	import type { Offset } from '../../lib/bezier';
+	import { example, type Polygon } from '../../lib/polygon';
 	import { tweened } from 'svelte/motion';
 
 	export let width = 10;
@@ -29,15 +28,16 @@
 	)}`;
 	const [cx, cy] = multiply(scale, controlPoint);
 
-	const strokeDashOffset = tweened(1, { duration: 4000 });
+	const options = { duration: 2000 };
+	const polygonDashOffset = tweened(0.5, options);
+	const blobDashOffset = tweened(1, options);
 
-	const animate = () => {
-		strokeDashOffset.set(0).then(() => {
-			strokeDashOffset.set(1).then(() => {
-				animate();
-			});
-		});
-	};
+	const animate: () => Promise<void> = () =>
+		Promise.all([blobDashOffset.set(0), polygonDashOffset.set(0)]).then(() =>
+			Promise.all([blobDashOffset.set(1), polygonDashOffset.set(0.5)]).then(
+				animate
+			)
+		);
 
 	animate();
 </script>
@@ -62,19 +62,15 @@
 		fill="none"
 		pathLength={1}
 		stroke-dasharray={strokeWidth / 4}
-		stroke-dashoffset={$strokeDashOffset}
+		stroke-dashoffset={$polygonDashOffset}
 	/>
 	<path
 		class="stroke-gold"
 		fill="none"
 		stroke-width={strokeWidth}
 		pathLength={1}
-		stroke-dashoffset={1}
+		stroke-dashoffset={$blobDashOffset}
 		stroke-dasharray={1}
 		{d}
-		use:animation={{
-			keyframes: { strokeDashoffset: 0 },
-			options: { duration: 2, repeat: Infinity, direction: 'alternate' },
-		}}
 	/>
 </svg>
