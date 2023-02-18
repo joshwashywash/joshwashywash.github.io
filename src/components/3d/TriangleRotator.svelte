@@ -6,7 +6,13 @@
 		rotate,
 		toVector,
 	} from '../../lib/quaternion';
-	import { iHat, jHat, createScale, type Vec2, type Vec3 } from '../../lib/vector';
+	import {
+		iHat,
+		jHat,
+		createScale,
+		type Vec2,
+		type Vec3,
+	} from '../../lib/vector';
 	import { onMount, onDestroy } from 'svelte';
 
 	type Triangle = {
@@ -68,10 +74,7 @@
 		(a, b) => rotated[b.indices[0]][2] - rotated[a.indices[0]][2]
 	);
 
-
-	$: svgPoints = rotated.map((point) => 
-		toSVGCoordinates(scale(point))
-	);
+	$: svgPoints = rotated.map((point) => toSVGCoordinates(scale(point)));
 
 	onMount(() => {
 		requestAnimationFrame(animate);

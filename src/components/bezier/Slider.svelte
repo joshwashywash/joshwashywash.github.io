@@ -59,7 +59,7 @@
 	</defs>
 	<path {d} class="fill-gold" />
 	<polygon
-		points={polygon.map((v) => toVec2(multiply(scale,v))).join()}
+		points={polygon.map((v) => toVec2(multiply(scale, v))).join()}
 		class="fill-pine"
 		clip-path="url(#clip)"
 	/>

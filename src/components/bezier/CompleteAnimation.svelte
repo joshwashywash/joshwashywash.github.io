@@ -9,8 +9,7 @@
 		type Vec3,
 	} from '../../lib/vector';
 	import { example, type Polygon } from '../../lib/polygon';
-	import { onMount } from 'svelte';
-	import { timeline } from 'motion';
+	import { tweened } from 'svelte/motion';
 
 	export let width = 10;
 	export let height = 10;
@@ -35,25 +34,34 @@
 		})
 	)}`;
 
-	let blob: SVGPathElement;
-	let _polygon: SVGPolygonElement;
+	const strokeDashOffset = tweened(1, { duration: 2000 });
+	const strokeOpacity = tweened(1, { duration: 2000 });
+	const blobFillOpacity = tweened(0, { duration: 2000 });
+	const polygonFillOpacity = tweened(1, { duration: 2000 });
 
-	onMount(() => {
-		timeline(
-			[
-				[blob, { strokeDashoffset: 0 }, { duration: 2 }], // draw curve
-				[blob, { fillOpacity: 1 }, { duration: 2 }], // fade in blob
-				[_polygon, { fillOpacity: 0 }, { at: '<', duration: 2 }], // fade out
-				[_polygon, { fillOpacity: 1 }, { duration: 2 }], // fade out
-				[
-					blob,
-					{ fillOpacity: [1, 0], strokeOpacity: [1, 0] },
-					{ at: '<', duration: 2 },
-				],
-			],
-			{ repeat: Infinity }
+	const animate = () =>
+		strokeDashOffset.set(0).then(() =>
+			Promise.all([blobFillOpacity.set(1), polygonFillOpacity.set(0)]).then(
+				() =>
+					Promise.resolve().then(() => {
+						const options = { delay: 1000 };
+						Promise.all([
+							blobFillOpacity.set(0, options),
+							strokeOpacity.set(0, options),
+							polygonFillOpacity.set(1, options),
+						])
+							.then(() =>
+								Promise.all([
+									strokeDashOffset.set(1, { duration: 0 }),
+									strokeOpacity.set(1, { duration: 0 }),
+								])
+							)
+							.then(() => animate());
+					})
+			)
 		);
-	});
+
+	animate();
 </script>
 
 <svg
@@ -63,17 +71,17 @@
 	stroke-linejoin="round"
 >
 	<polygon
-		bind:this={_polygon}
+		fill-opacity={$polygonFillOpacity}
 		points={polygon.map((p) => toVec2(multiply(scale, p))).join()}
 		class="fill-pine"
 	/>
 	<path
-		bind:this={blob}
 		{d}
 		stroke-dasharray={1}
-		stroke-dashoffset={1}
+		stroke-dashoffset={$strokeDashOffset}
 		stroke-width={strokeWidth}
-		fill-opacity={0}
+		stroke-opacity={$strokeOpacity}
+		fill-opacity={$blobFillOpacity}
 		class="fill-gold stroke-gold"
 		pathLength={1}
 	/>

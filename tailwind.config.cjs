@@ -25,9 +25,9 @@ module.exports = {
 				return {
 					quoteless: {
 						css: {
-							'blockquote p:first-of-type::before': {content: 'none'},
-							'blockquote p:first-of-type::after': {content: 'none'}
-						}
+							'blockquote p:first-of-type::before': { content: 'none' },
+							'blockquote p:first-of-type::after': { content: 'none' },
+						},
 					},
 					rose: {
 						css: {
