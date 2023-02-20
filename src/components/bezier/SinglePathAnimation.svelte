@@ -65,11 +65,8 @@
 		0% {
 			stroke-dashoffset: 1;
 		}
-		50% {
-			stroke-dashoffset: 0;
-		}
 		100% {
-			stroke-dashoffset: 1;
+			stroke-dashoffset: 0;
 		}
 	}
 
@@ -83,7 +80,7 @@
 	}
 
 	.draw {
-		animation: 2s linear draw infinite; 
+		animation: 2s linear draw infinite alternate; 
 	}
 
 	.draw-fill-forwards {

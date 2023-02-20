@@ -9,7 +9,6 @@
 		type Vec3,
 	} from '../../lib/vector';
 	import { example, type Polygon } from '../../lib/polygon';
-	import { tweened } from 'svelte/motion';
 
 	export let width = 10;
 	export let height = 10;
@@ -34,34 +33,7 @@
 		})
 	)}`;
 
-	const strokeDashOffset = tweened(1, { duration: 2000 });
-	const strokeOpacity = tweened(1, { duration: 2000 });
-	const blobFillOpacity = tweened(0, { duration: 2000 });
-	const polygonFillOpacity = tweened(1, { duration: 2000 });
-
-	const animate = () =>
-		strokeDashOffset.set(0).then(() =>
-			Promise.all([blobFillOpacity.set(1), polygonFillOpacity.set(0)]).then(
-				() =>
-					Promise.resolve().then(() => {
-						const options = { delay: 1000 };
-						Promise.all([
-							blobFillOpacity.set(0, options),
-							strokeOpacity.set(0, options),
-							polygonFillOpacity.set(1, options),
-						])
-							.then(() =>
-								Promise.all([
-									strokeDashOffset.set(1, { duration: 0 }),
-									strokeOpacity.set(1, { duration: 0 }),
-								])
-							)
-							.then(animate);
-					})
-			)
-		);
-
-	animate();
+	const points = polygon.map((p) => toVec2(multiply(scale, p))).join();
 </script>
 
 <svg
@@ -70,19 +42,53 @@
 	stroke-linecap="round"
 	stroke-linejoin="round"
 >
-	<polygon
-		fill-opacity={$polygonFillOpacity}
-		points={polygon.map((p) => toVec2(multiply(scale, p))).join()}
-		class="fill-pine"
-	/>
+	<polygon {points} class="delay-fade-in-out fill-pine" />
 	<path
 		{d}
 		stroke-dasharray={1}
-		stroke-dashoffset={$strokeDashOffset}
 		stroke-width={strokeWidth}
-		stroke-opacity={$strokeOpacity}
-		fill-opacity={$blobFillOpacity}
-		class="fill-gold stroke-gold"
+		class="draw fill-gold stroke-gold"
 		pathLength={1}
 	/>
 </svg>
+
+<style>
+	@keyframes draw {
+		0% {
+			fill-opacity: 0;
+			stroke-dashoffset: 1;
+		}
+		25% {
+			fill-opacity: 0;
+			stroke-dashoffset: 0;
+		}
+		50%,75% {
+			fill-opacity: 1;
+			stroke-dashoffset: 0;
+		}
+		100% {
+			fill-opacity: 0;
+			stroke-opacity: 0;
+		}
+	}
+
+	.draw {
+		animation: 5s draw linear forwards infinite;
+	}
+
+	@keyframes fade-in-out {
+		0%,
+		25%,
+		100% {
+			fill-opacity: 1;
+		}
+		50%,
+		75% {
+			fill-opacity: 0;
+		}
+	}
+
+	.delay-fade-in-out {
+		animation: 5s fade-in-out linear infinite;
+	}
+</style>
