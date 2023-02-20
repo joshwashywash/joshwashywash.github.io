@@ -77,7 +77,7 @@
 	$: svgPoints = rotated.map((point) => toSVGCoordinates(scale(point)));
 
 	onMount(() => {
-		requestAnimationFrame(animate);
+		frame = requestAnimationFrame(animate);
 	});
 
 	onDestroy(() => {
