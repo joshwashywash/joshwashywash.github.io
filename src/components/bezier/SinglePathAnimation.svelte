@@ -9,7 +9,6 @@
 		type Vec3,
 	} from '../../lib/vector';
 	import { example, type Polygon } from '../../lib/polygon';
-	import { tweened } from 'svelte/motion';
 
 	export let width = 10;
 	export let height = 5;
@@ -26,20 +25,8 @@
 	const d = `M${toVec2(multiply(scale, m1))} q${offset.map((v) =>
 		v ? toVec2(multiply(scale, v)) : ''
 	)}`;
+
 	const [cx, cy] = multiply(scale, controlPoint);
-
-	const options = { duration: 2000 };
-	const polygonDashOffset = tweened(0.5, options);
-	const blobDashOffset = tweened(1, options);
-
-	const animate: () => Promise<void> = () =>
-		Promise.all([blobDashOffset.set(0), polygonDashOffset.set(0)]).then(() =>
-			Promise.all([blobDashOffset.set(1), polygonDashOffset.set(0.5)]).then(
-				animate
-			)
-		);
-
-	animate();
 </script>
 
 <svg
@@ -58,19 +45,48 @@
 			.map((pair) => pair.map((v) => toVec2(multiply(scale, v))))
 			.join()}
 		stroke-width={strokeWidth}
-		class="stroke-love/50"
+		class="draw-fill-forwards stroke-love/50"
 		fill="none"
 		pathLength={1}
 		stroke-dasharray={strokeWidth / 4}
-		stroke-dashoffset={$polygonDashOffset}
 	/>
 	<path
-		class="stroke-gold"
+		class="draw stroke-gold"
 		fill="none"
 		stroke-width={strokeWidth}
 		pathLength={1}
-		stroke-dashoffset={$blobDashOffset}
 		stroke-dasharray={1}
 		{d}
 	/>
 </svg>
+
+<style>
+	@keyframes draw {
+		0% {
+			stroke-dashoffset: 1;
+		}
+		50% {
+			stroke-dashoffset: 0;
+		}
+		100% {
+			stroke-dashoffset: 1;
+		}
+	}
+
+	@keyframes march {
+		0% {
+			stroke-dashoffset: 1;
+		}
+		100% {
+			stroke-dashoffset: 0;
+		}
+	}
+
+	.draw {
+		animation: 2s linear draw infinite; 
+	}
+
+	.draw-fill-forwards {
+			animation: 5s linear march infinite forwards;
+		}
+</style>
