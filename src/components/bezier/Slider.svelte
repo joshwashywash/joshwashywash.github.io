@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { example, type Polygon } from '../../lib/polygon';
 	import { aperture } from '../../lib/array';
-	import { clamp } from '../../lib/number';
+	import { createClamp } from '../../lib/number';
 	import {
 		diff,
 		midpoint,
@@ -34,8 +34,19 @@
 	)}`;
 
 	let grabbing = false;
-	const ungrab = () => {grabbing = false;};
-	const grab = () => {grabbing = true;};
+
+	const ungrab = () => {
+		grabbing = false;
+	};
+
+	const grab = () => {
+		grabbing = true;
+	};
+
+	const clamp = createClamp(0, width);
+
+	let circle: SVGCircleElement;
+
 </script>
 
 <svg
@@ -46,10 +57,15 @@
 			e.currentTarget.setPointerCapture(e.pointerId);
 			const { currentTarget, x } = e;
 			const rect = currentTarget.getBoundingClientRect();
-			_x = clamp(0, width, ((x - rect.x) / rect.width) * width);
+			_x = clamp(((x - rect.x) / rect.width) * width);
 		}
 	}}
-	on:pointerup={ungrab}
+	on:pointerup={() => {
+		if (grabbing) {
+			ungrab();
+			circle?.blur();
+		}
+	}}
 	class:cursor-grabbing={grabbing}
 >
 	<defs>
@@ -63,27 +79,26 @@
 		class="fill-pine"
 		clip-path="url(#clip)"
 	/>
-	<g
-		stroke-width={strokeWidth}
-		class="fill-rose stroke-love focus-within:fill-iris active:fill-iris"
-	>
+	<g stroke-width={strokeWidth} class="fill-rose stroke-love">
 		<line x1={_x} y1={0} x2={_x} y2={height} />
 		<circle
-			class="outline-none"
+			aria-label="slider handle"
+			bind:this={circle}
+			class="outline-none hover:fill-iris focus:fill-iris"
 			class:hover:cursor-grab={!grabbing}
 			on:touchstart|preventDefault
 			on:pointerdown={grab}
-			on:keydown={({ key }) => {
+			on:keydown={(e) => {
 				if (grabbing) {
 					const dx = width / 10;
-					if (key === 'ArrowLeft') {
+					if (e.key === 'ArrowLeft') {
 						if (_x > 0) {
-							_x -= dx;
+							_x = clamp(_x - dx);
 						}
 					}
-					if (key === 'ArrowRight') {
+					if (e.key === 'ArrowRight') {
 						if (_x < width) {
-							_x += dx;
+							_x = clamp(_x + dx);
 						}
 					}
 				}

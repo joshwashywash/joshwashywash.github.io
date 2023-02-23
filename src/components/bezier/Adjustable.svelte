@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { Curve } from '../../lib/bezier';
-	import { clamp, randomInt } from '../../lib/number';
+	import { createClamp, randomInt } from '../../lib/number';
 	import { derived } from 'svelte/store';
 	import { diff, toVec2 } from '../../lib/vector';
 	import { tweened } from 'svelte/motion';
@@ -50,6 +50,8 @@
 
 	let grabbing = false;
 	let index = 0;
+	const horizontalClamp = createClamp(0, width);
+	const verticalClamp = createClamp(0, height);
 </script>
 
 <svg
@@ -61,8 +63,8 @@
 			currentTarget.setPointerCapture(pointerId);
 			const rect = currentTarget.getBoundingClientRect();
 			$curve[index] = [
-				clamp(0, width, ((x - rect.x) / rect.width) * width),
-				clamp(0, height, ((y - rect.y) / rect.height) * height),
+				horizontalClamp(((x - rect.x) / rect.width) * width),
+				verticalClamp(((y - rect.y) / rect.height) * height),
 				0,
 			];
 		}
