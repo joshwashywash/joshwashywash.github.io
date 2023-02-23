@@ -40,7 +40,7 @@ module.exports = {
 							'--tw-prose-headings': theme('colors.text'),
 							'--tw-prose-hr': theme('colors.muted'),
 							'--tw-prose-lead': theme('colors.iris'),
-							'--tw-prose-links': theme('colors.pine'),
+							'--tw-prose-links': theme('colors.gold'),
 							'--tw-prose-pre-bg': theme('colors.surface'),
 							'--tw-prose-pre-code': theme('colors.love'),
 							'--tw-prose-quote-borders': theme('colors.love'),
