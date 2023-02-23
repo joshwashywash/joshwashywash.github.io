@@ -1,5 +1,5 @@
 export type Vec2 = [number, number];
-export type Vec3 = [number, number, number];
+export type Vec3 = [...Vec2, number];
 
 export const rotateRight = (v: Vec3): Vec3 => [v[2], v[0], v[1]];
 export const rotateLeft = (v: Vec3): Vec3 => [v[2], v[0], v[1]];

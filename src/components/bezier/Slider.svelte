@@ -34,6 +34,8 @@
 	)}`;
 
 	let grabbing = false;
+	const ungrab = () => {grabbing = false;};
+	const grab = () => {grabbing = true;};
 </script>
 
 <svg
@@ -47,9 +49,7 @@
 			_x = clamp(0, width, ((x - rect.x) / rect.width) * width);
 		}
 	}}
-	on:pointerup={() => {
-		grabbing = false;
-	}}
+	on:pointerup={ungrab}
 	class:cursor-grabbing={grabbing}
 >
 	<defs>
@@ -63,17 +63,37 @@
 		class="fill-pine"
 		clip-path="url(#clip)"
 	/>
-	<g stroke-width={strokeWidth} class="fill-rose stroke-love active:fill-iris">
+	<g
+		stroke-width={strokeWidth}
+		class="fill-rose stroke-love focus-within:fill-iris active:fill-iris"
+	>
 		<line x1={_x} y1={0} x2={_x} y2={height} />
 		<circle
+			class="outline-none"
 			class:hover:cursor-grab={!grabbing}
 			on:touchstart|preventDefault
-			on:pointerdown={() => {
-				grabbing = true;
+			on:pointerdown={grab}
+			on:keydown={({ key }) => {
+				if (grabbing) {
+					const dx = width / 10;
+					if (key === 'ArrowLeft') {
+						if (_x > 0) {
+							_x -= dx;
+						}
+					}
+					if (key === 'ArrowRight') {
+						if (_x < width) {
+							_x += dx;
+						}
+					}
+				}
 			}}
+			on:focus={grab}
+			on:blur={ungrab}
 			cx={_x}
 			cy={height / 2}
 			r={4 * strokeWidth}
+			tabIndex={0}
 		/>
 	</g>
 </svg>

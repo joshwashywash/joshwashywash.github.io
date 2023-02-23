@@ -11,6 +11,7 @@
 	} from '../../lib/vector';
 	import { example, type Polygon } from '../../lib/polygon';
 	import { tweened } from 'svelte/motion';
+	import { createIgnoreTab } from '../../lib/keys';
 
 	export let polygon: Polygon = example;
 	export let width = 10;
@@ -65,13 +66,15 @@
 		start$.set(starts[index]);
 		offsets$.set(offsets[index]);
 	};
+
 </script>
 
 <svg xmlns="http://www.w3.org/2000/svg" viewBox={`0 0 ${width} ${height}`}>
 	<path
-		class="cursor-pointer fill-pine stroke-0 hover:fill-foam"
+		class="cursor-pointer fill-pine stroke-0 outline-none hover:fill-foam focus:fill-foam"
 		d={$d}
-		on:keydown={transform}
+		on:keydown={createIgnoreTab(transform)}
 		on:click={transform}
+		tabIndex={0}
 	/>
 </svg>

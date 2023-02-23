@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { Offset } from '../../lib/bezier';
+	import { createIgnoreTab } from '../../lib/keys';
 	import { createScale, multiply, toVec2, type Vec3 } from '../../lib/vector';
 
 	export let width = 10;
@@ -41,13 +42,14 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox={`0 0 ${width} ${height}`}>
 	<path
 		on:click={beat}
-		on:keypress={beat}
+		on:keypress={createIgnoreTab(beat)}
 		class:beating
-		class="origin-center cursor-pointer fill-love"
+		class="origin-center cursor-pointer fill-rose outline-none hover:fill-love focus:fill-love"
 		{d}
 		on:animationend={() => {
 			beating = false;
 		}}
+		tabIndex={0}
 	/>
 </svg>
 
