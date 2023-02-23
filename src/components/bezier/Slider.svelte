@@ -82,7 +82,6 @@
 	<g stroke-width={strokeWidth} class="fill-rose stroke-love">
 		<line x1={_x} y1={0} x2={_x} y2={height} />
 		<circle
-			aria-label="slider handle"
 			bind:this={circle}
 			class="outline-none hover:fill-iris focus:fill-iris"
 			class:hover:cursor-grab={!grabbing}
