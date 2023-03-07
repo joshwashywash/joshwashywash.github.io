@@ -70,20 +70,11 @@
 		}
 	}
 
-	@keyframes march {
-		0% {
-			stroke-dashoffset: 1;
-		}
-		100% {
-			stroke-dashoffset: 0;
-		}
-	}
-
 	.draw {
-		animation: 2s linear draw infinite alternate; 
+		animation: 2s linear draw infinite alternate;
 	}
 
 	.draw-fill-forwards {
-			animation: 5s linear march infinite forwards;
-		}
+		animation: 5s linear draw infinite forwards;
+	}
 </style>
