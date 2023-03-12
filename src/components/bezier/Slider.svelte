@@ -2,13 +2,7 @@
 	import { example, type Polygon } from '../../lib/polygon';
 	import { aperture } from '../../lib/array';
 	import { createClamp } from '../../lib/number';
-	import {
-		diff,
-		midpoint,
-		multiply,
-		toVec2,
-		type Vec3,
-	} from '../../lib/vector';
+	import { diff, midpoint, multiply, toVec2, type Vec3 } from 'vextreme';
 	import type { Offset } from '../../lib/bezier';
 
 	export let width = 10;
@@ -46,7 +40,6 @@
 	const clamp = createClamp(0, width);
 
 	let circle: SVGCircleElement;
-
 </script>
 
 <svg

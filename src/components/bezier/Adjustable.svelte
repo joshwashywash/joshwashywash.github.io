@@ -2,7 +2,7 @@
 	import type { Curve } from '../../lib/bezier';
 	import { createClamp, randomInt } from '../../lib/number';
 	import { derived } from 'svelte/store';
-	import { diff, toVec2 } from '../../lib/vector';
+	import { diff, toVec2 } from 'vextreme';
 	import { tweened } from 'svelte/motion';
 
 	export let height = 10;

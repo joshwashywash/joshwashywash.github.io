@@ -2,13 +2,7 @@
 	import type { Offset } from '../../lib/bezier';
 	import { aperture } from '../../lib/array';
 	import { derived } from 'svelte/store';
-	import {
-		diff,
-		midpoint,
-		multiply,
-		toVec2,
-		type Vec3,
-	} from '../../lib/vector';
+	import { diff, midpoint, multiply, toVec2, type Vec3 } from 'vextreme';
 	import { example, type Polygon } from '../../lib/polygon';
 	import { tweened } from 'svelte/motion';
 	import { createIgnoreTab } from '../../lib/keys';
@@ -66,7 +60,6 @@
 		start$.set(starts[index]);
 		offsets$.set(offsets[index]);
 	};
-
 </script>
 
 <svg xmlns="http://www.w3.org/2000/svg" viewBox={`0 0 ${width} ${height}`}>

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { Offset } from '../../lib/bezier';
 	import { createIgnoreTab } from '../../lib/keys';
-	import { createScale, multiply, toVec2, type Vec3 } from '../../lib/vector';
+	import { createScale, multiply, toVec2, type Vec3 } from 'vextreme';
 
 	export let width = 10;
 	export let height = 10;

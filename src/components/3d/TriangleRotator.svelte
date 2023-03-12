@@ -6,13 +6,7 @@
 		rotate,
 		toVector,
 	} from '../../lib/quaternion';
-	import {
-		iHat,
-		jHat,
-		createScale,
-		type Vec2,
-		type Vec3,
-	} from '../../lib/vector';
+	import { type Vec3, createScale, type Vec2, jHat, iHat } from 'vextreme';
 	import { onMount, onDestroy } from 'svelte';
 
 	type Triangle = {
