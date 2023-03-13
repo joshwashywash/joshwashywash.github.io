@@ -26,6 +26,6 @@
 		"prettier-plugin-svelte": "^2.9.0",
 		"prettier-plugin-tailwindcss": "^0.2.4",
 		"tailwindcss": "^3.2.7",
-		"vextreme": "^1.2.1"
+		"vextreme": "^1.3.4"
 	}
 }
