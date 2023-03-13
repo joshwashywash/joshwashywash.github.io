@@ -6,7 +6,7 @@
 		rotate,
 		toVector,
 	} from '../../lib/quaternion';
-	import { type Vec3, createScale, type Vec2, jHat, iHat } from 'vextreme';
+	import { type Vec3, createScale, type Vec2, rotateRight } from 'vextreme';
 	import { onMount, onDestroy } from 'svelte';
 
 	type Triangle = {
@@ -55,9 +55,12 @@
 
 	const toSVGCoordinates = createToSVGCoordinates(xDiff, yDiff, width, height);
 
+	const iHat: Vec3 = [1, 0, 0];
+	const jHat = rotateRight(iHat);
+
 	$: rotation = multiply(
-		createRotation(jHat, theta),
-		createRotation(iHat, phi)
+		createRotation(iHat, theta),
+		createRotation(jHat, phi)
 	);
 
 	$: rotated = points.map((point) =>
