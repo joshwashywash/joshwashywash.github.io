@@ -1,5 +1,5 @@
 <script lang="ts">
-	export let circleColor: string;
+	export let color: string = '#eb6f92';
 
 	const radius = 1;
 	const diameter = 2;
@@ -27,5 +27,5 @@
 	xmlns="http://www.w3.org/2000/svg"
 	viewBox="-{radius} -{radius} {diameter} {diameter}"
 >
-	<path fill={circleColor} {d} />
+	<path fill={color} {d} />
 </svg>
