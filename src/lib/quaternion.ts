@@ -1,4 +1,4 @@
-import { add, negate, dot, createScale, cross, type Vec3 } from 'vextreme';
+import { add, negate, dot, createScale, cross, type Vec3 } from './vector';
 
 export type Quaternion = {
 	scalar: number;

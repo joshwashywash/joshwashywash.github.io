@@ -2,7 +2,13 @@
 	import type { Offset } from '../../lib/bezier';
 	import { aperture } from '../../lib/array';
 	import { derived } from 'svelte/store';
-	import { diff, midpoint, multiply, toVec2, type Vec3 } from 'vextreme';
+	import {
+		diff,
+		midpoint,
+		multiply,
+		toVec2,
+		type Vec3,
+	} from '../../lib/vector';
 	import { example, type Polygon } from '../../lib/polygon';
 	import { tweened } from 'svelte/motion';
 	import { createIgnoreTab } from '../../lib/keys';
