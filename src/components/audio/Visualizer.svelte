@@ -5,7 +5,8 @@
 	export let fftSize = 256;
 	export let src: string;
 
-	const context = new AudioContext();
+	const ac = window.AudioContext ?? window.webkitAudioContext;
+	const context = new ac();
 	const audio = new Audio(src);
 
 	let ready = false;
