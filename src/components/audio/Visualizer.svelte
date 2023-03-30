@@ -66,6 +66,7 @@
 </script>
 
 <button
+	class="rounded-lg bg-gold py-1 px-4 text-base hover:bg-gold/90"
 	disabled={!ready}
 	on:click={() => {
 		audio.play();
