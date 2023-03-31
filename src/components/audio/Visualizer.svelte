@@ -1,9 +1,11 @@
 <script lang="ts">
 	import { onDestroy } from 'svelte';
-	import { derived, writable } from 'svelte/store';
+	import { writable } from 'svelte/store';
 
 	export let fftSize = 256;
 	export let src: string;
+
+	const WIDTH = 1;
 
 	const ac = window.AudioContext ?? window.webkitAudioContext;
 	const context = new ac();
@@ -27,16 +29,10 @@
 	analyser.fftSize = fftSize;
 
 	const l = analyser.frequencyBinCount;
-	const angle = (4 * Math.PI) / l;
 
 	const data = writable(new Uint8Array(l));
-	const positions = derived(data, ($data) =>
-		Array.from($data, (d, i) => {
-			const s = d / 255;
-			const a = i * angle;
-			return [s * Math.cos(a), s * Math.sin(a)];
-		})
-	);
+
+	const w = WIDTH / l;
 
 	const animate = () => {
 		data.update((d) => {
@@ -46,7 +42,12 @@
 		frame = window.requestAnimationFrame(animate);
 	};
 
-	audio.addEventListener('play', animate);
+	let paused = true;
+
+	audio.addEventListener('play', () => {
+		animate();
+		paused = false;
+	});
 
 	audio.addEventListener(
 		'canplaythrough',
@@ -59,6 +60,12 @@
 		{ once: true }
 	);
 
+	audio.addEventListener('pause', () => {
+		paused = true;
+	});
+
+	const MAX = (1 << 8) - 1;
+
 	onDestroy(() => {
 		if (frame !== undefined) {
 			window.cancelAnimationFrame(frame);
@@ -66,19 +73,32 @@
 	});
 </script>
 
-<button
-	class="rounded-lg bg-gold py-1 px-4 text-base hover:bg-gold/90"
-	disabled={!ready}
-	on:click={() => {
-		audio.play();
-	}}
->
-	play
-</button>
-<svg viewBox="-1 -1 2 2" xmlns="http://www.w3.org/2000/svg">
-	<g class="fill-love" stroke="none">
-		{#each $positions as [cx, cy]}
-			<circle {cx} {cy} r="1%" />
-		{/each}
-	</g>
-</svg>
+<figure class="flex flex-col gap-2">
+	<figcaption>
+		<button
+			class="rounded-lg bg-gold py-1 px-4 text-base hover:bg-gold/90"
+			disabled={!ready}
+			on:click={() => {
+				if (paused) {
+					audio.play();
+				} else {
+					audio.pause();
+				}
+			}}
+		>
+			{#if paused}
+				play
+			{:else}
+				pause
+			{/if}
+		</button>
+	</figcaption>
+	<svg viewBox="0 0 {WIDTH} {WIDTH}" xmlns="http://www.w3.org/2000/svg">
+		<rect class="stroke-rose" stroke-width="1%" x={0} y={0} width={WIDTH} height={WIDTH} fill="none"/>
+		<g class="fill-love" stroke="none">
+			{#each $data as h, i}
+				<rect x={i * w} y={WIDTH - h / MAX} width={w} height={h / MAX} />
+			{/each}
+		</g>
+	</svg>
+</figure>
