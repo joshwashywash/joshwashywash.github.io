@@ -93,8 +93,11 @@
 			{/if}
 		</button>
 	</figcaption>
-	<svg viewBox="0 0 {WIDTH} {WIDTH}" xmlns="http://www.w3.org/2000/svg">
-		<rect class="stroke-rose" stroke-width="1%" x={0} y={0} width={WIDTH} height={WIDTH} fill="none"/>
+	<svg
+		class="border-2 border-rose"
+		viewBox="0 0 {WIDTH} {WIDTH}"
+		xmlns="http://www.w3.org/2000/svg"
+	>
 		<g class="fill-love" stroke="none">
 			{#each $data as h, i}
 				<rect x={i * w} y={WIDTH - h / MAX} width={w} height={h / MAX} />
