@@ -79,16 +79,18 @@
 		canvasContext.strokeRect(0, 0, canvas?.width, canvas?.height);
 	}
 	$: innerWidth = canvas?.width - 2 * border;
+	$: halfWidth = innerWidth / 2;
+	$: sx = halfWidth + border;
 	$: innerHeight = canvas?.height - 2 * border;
 	$: w = innerWidth / l;
 	$: if (canvasContext) {
 		canvasContext.clearRect(border, border, innerWidth, innerHeight);
 		$data.forEach((d, i) => {
 			const h = (d / MAX) * innerHeight;
-			canvasContext?.save();
-			canvasContext?.translate(border + i * w, border + innerHeight - h);
-			canvasContext?.fillRect(0, 0, w, h);
-			canvasContext?.restore();
+			const y = border + innerHeight - h;
+			const o = i * w;
+			canvasContext?.fillRect(sx + o, y, w, h);
+			canvasContext?.fillRect(sx - o, y, w, h);
 		});
 	}
 </script>
@@ -114,15 +116,4 @@
 		</button>
 	</figcaption>
 	<canvas bind:this={canvas} />
-	<!-- <svg -->
-	<!-- 	class="border-2 border-rose" -->
-	<!-- 	viewBox="0 0 {WIDTH} {WIDTH}" -->
-	<!-- 	xmlns="http://www.w3.org/2000/svg" -->
-	<!-- > -->
-	<!-- 	<g class="fill-love" stroke="none"> -->
-	<!-- 		{#each $data as h, i} -->
-	<!-- 			<rect x={i * w} y={WIDTH - h / MAX} width={w} height={h / MAX} /> -->
-	<!-- 		{/each} -->
-	<!-- 	</g> -->
-	<!-- </svg> -->
 </figure>
