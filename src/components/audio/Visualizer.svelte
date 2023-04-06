@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onDestroy } from 'svelte';
 	import { writable } from 'svelte/store';
+	import Button from '../Button.svelte';
 
 	export let fftSize = 256;
 	export let fillStyle = 'white';
@@ -97,8 +98,7 @@
 
 <figure class="flex flex-col items-center gap-2">
 	<figcaption>
-		<button
-			class="rounded-lg bg-gold py-1 px-4 text-base hover:bg-gold/90"
+		<Button
 			disabled={!ready}
 			on:click={() => {
 				if ($paused) {
@@ -113,7 +113,7 @@
 			{:else}
 				pause
 			{/if}
-		</button>
+		</Button>
 	</figcaption>
 	<canvas bind:this={canvas} />
 </figure>
