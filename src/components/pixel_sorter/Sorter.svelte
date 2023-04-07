@@ -55,7 +55,7 @@
 	let down = false;
 
 	// takes an `n` that's in the range [0, from] and maps it to the range [0, to]
-	const c = (n: number, from: number, to: number) => (n / from) * to;
+	const c = (n: number, from: number, to: number) => Math.floor((n / from) * to);
 </script>
 
 <figure class="flex flex-col items-center gap-2">
