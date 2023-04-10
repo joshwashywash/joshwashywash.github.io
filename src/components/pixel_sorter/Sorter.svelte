@@ -55,7 +55,8 @@
 	let down = false;
 
 	// takes an `n` that's in the range [0, from] and maps it to the range [0, to]
-	const c = (n: number, from: number, to: number) => Math.floor((n / from) * to);
+	const c = (n: number, from: number, to: number) =>
+		Math.floor((n / from) * to);
 </script>
 
 <figure class="flex flex-col items-center gap-2">
@@ -72,7 +73,7 @@
 	</figcaption>
 	<canvas
 		class="w-full touch-none"
-		on:pointerdown={({ currentTarget, x, y }) => {
+		on:pointerdown={({ currentTarget, offsetX, offsetY }) => {
 			down = true;
 			if (context) {
 				osc?.putImageData(
@@ -81,10 +82,9 @@
 					0
 				);
 			}
-			const { left, width, top, height } =
-				currentTarget.getBoundingClientRect();
-			downX = c(x - left, width, canvas.width);
-			downY = c(y - top, height, canvas.height);
+			const { width, height } = currentTarget.getBoundingClientRect();
+			downX = c(offsetX, width, canvas.width);
+			downY = c(offsetY, height, canvas.height);
 		}}
 		on:pointermove={(e) => {
 			if (down) {
@@ -95,22 +95,20 @@
 						0
 					);
 				}
-				const { currentTarget, x, y } = e;
-				const { left, width, top, height } =
-					currentTarget.getBoundingClientRect();
-				const moveX = c(x - left, width, canvas.width);
-				const moveY = c(y - top, height, canvas.height);
+				const { currentTarget, offsetX, offsetY } = e;
+				const { width, height } = currentTarget.getBoundingClientRect();
+				const moveX = c(offsetX, width, canvas.width);
+				const moveY = c(offsetY, height, canvas.height);
 				const diffX = moveX - downX;
 				const diffY = moveY - downY;
 				context?.fillRect(downX, downY, diffX, diffY);
 			}
 		}}
-		on:pointerup={({ currentTarget, x, y }) => {
+		on:pointerup={({ currentTarget, offsetX, offsetY }) => {
 			down = false;
-			const { left, width, top, height } =
-				currentTarget.getBoundingClientRect();
-			upX = c(x - left, width, canvas.width);
-			upY = c(y - top, height, canvas.height);
+			const { width, height } = currentTarget.getBoundingClientRect();
+			upX = c(offsetX, width, canvas.width);
+			upY = c(offsetY, height, canvas.height);
 			const w = upX - downX;
 			const h = upY - downY;
 			const data = osc?.getImageData(downX, downY, w, h);
