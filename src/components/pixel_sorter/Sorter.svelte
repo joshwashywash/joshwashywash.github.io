@@ -3,7 +3,6 @@
 	import { red, sorter } from './utils';
 
 	export let src: string;
-
 </script>
 
 {#await loadImage(src)}
@@ -16,6 +15,7 @@
 			sort(a, b) {
 				return red(a) - red(b);
 			},
+			timeout: 1000,
 		}}
 	/>
 {/await}

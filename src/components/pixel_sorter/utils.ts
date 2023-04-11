@@ -6,10 +6,14 @@ export const blue = (n: number) => (n >> (2 * 8)) & ((1 << 8) - 1);
 
 export const sorter: Action<
 	HTMLCanvasElement,
-	{ image: HTMLImageElement; sort: (a: number, b: number) => number }
+	{
+		image: HTMLImageElement;
+		sort: (a: number, b: number) => number;
+		timeout: number;
+	}
 > = (canvas, opts) => {
 	if (opts) {
-		const { image, sort } = opts;
+		const { image, sort, timeout } = opts;
 		const osc = new OffscreenCanvas(image.width, image.height);
 		const oscc = osc.getContext('2d');
 
@@ -36,11 +40,11 @@ export const sorter: Action<
 		let downX: null | number = null;
 		let downY: null | number = null;
 
-		let timeout: NodeJS.Timeout | null = null;
+		let timeoutId: NodeJS.Timeout | null = null;
 
 		const onPointerDown = (e: PointerEvent) => {
 			down = true;
-			timeout = setTimeout(reset, 2000);
+			timeoutId = setTimeout(reset, timeout);
 			downX = cx(e.offsetX);
 			downY = cy(e.offsetY);
 			if (context) {
@@ -53,9 +57,10 @@ export const sorter: Action<
 		};
 
 		const onPointerMove = (e: PointerEvent) => {
-			if (timeout) {
-				clearTimeout(timeout);
+			if (timeoutId) {
+				clearTimeout(timeoutId);
 			}
+
 			if (down) {
 				if (oscc) {
 					context?.putImageData(
