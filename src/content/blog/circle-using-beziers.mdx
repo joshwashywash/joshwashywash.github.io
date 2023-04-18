@@ -5,8 +5,9 @@ title: a circle as cubic beziers
 ---
 
 import CircleAsBeziers from '../../components/bezier/CircleAsBeziers.svelte'
+import colors from './colors';
 
-<CircleAsBeziers client:visible />
+<CircleAsBeziers color={colors.gold} client:visible />
 
 The circle above is made entirely out of cubic bezier curves. 
 

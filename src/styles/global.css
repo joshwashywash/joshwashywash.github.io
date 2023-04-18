@@ -2,14 +2,3 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-	body {
-		@apply bg-base font-mono text-text antialiased;
-	}
-}
-
-@layer components {
-	.link {
-		@apply outline-none transition-colors duration-300 ease-out hover:text-gold focus:text-gold;
-	}
-}

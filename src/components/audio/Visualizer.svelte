@@ -1,119 +1,42 @@
 <script lang="ts">
-	import { onDestroy } from 'svelte';
-	import { writable } from 'svelte/store';
 	import Button from '../Button.svelte';
+	import loadAudio from '../../lib/loaders/audio';
+	import { visualizer } from './utils';
 
 	export let fftSize = 256;
-	export let fillStyle = 'white';
-	export let strokeStyle = 'white';
+	export let fillColor = 'white';
+	export let strokeColor = 'white';
+	export let borderWidth = 1;
 	export let src: string;
 
-	const ac = window.AudioContext ?? window.webkitAudioContext;
-	const audioContext = new ac();
-	const audio = new Audio(src);
-
-	let ready = false;
-	let frame: number | undefined = undefined;
-	onDestroy(() => {
-		if (frame !== undefined) {
-			window.cancelAnimationFrame(frame);
-		}
-	});
-
-	audio.addEventListener('ended', () => {
-		data.update((d) => {
-			d.fill(0);
-			return d;
-		});
-		if (frame !== undefined) {
-			cancelAnimationFrame(frame);
-			frame = undefined;
-		}
-	});
-
-	const analyser = audioContext.createAnalyser();
-
-	analyser.fftSize = fftSize;
-
-	const l = analyser.frequencyBinCount;
-
-	const data = writable(new Uint8Array(l));
-
-	const animate = () => {
-		data.update((d) => {
-			analyser.getByteFrequencyData(d);
-			return d;
-		});
-		frame = window.requestAnimationFrame(animate);
-	};
-
-	const paused = writable(audio.paused);
-
-	audio.addEventListener('play', () => {
-		animate();
-		paused.set(audio.paused);
-	});
-
-	audio.addEventListener(
-		'canplaythrough',
-		() => {
-			const source = audioContext.createMediaElementSource(audio);
-			source.connect(analyser);
-			analyser.connect(audioContext.destination);
-			ready = true;
-		},
-		{ once: true }
-	);
-
-	audio.addEventListener('pause', () => {
-		paused.set(audio.paused);
-	});
-
-	const border = 1;
-	const MAX = (1 << 8) - 1;
-
-	let canvas: HTMLCanvasElement;
-	$: canvasContext = canvas?.getContext('2d');
-	$: if (canvasContext) {
-		canvasContext.fillStyle = fillStyle;
-		canvasContext.strokeStyle = strokeStyle;
-		canvasContext.strokeRect(0, 0, canvas?.width, canvas?.height);
-	}
-	$: innerWidth = canvas?.width - 2 * border;
-	$: halfWidth = innerWidth / 2;
-	$: sx = halfWidth + border;
-	$: innerHeight = canvas?.height - 2 * border;
-	$: w = innerWidth / l;
-	$: if (canvasContext) {
-		canvasContext.clearRect(border, border, innerWidth, innerHeight);
-		$data.forEach((d, i) => {
-			const h = (d / MAX) * innerHeight;
-			const y = border + innerHeight - h;
-			const o = i * w;
-			canvasContext?.fillRect(sx + o, y, w, h);
-			canvasContext?.fillRect(sx - o, y, w, h);
-		});
-	}
+	// TODO: make the visualizer action emit an event that you can use to set `playing`
+	let playing = false;
 </script>
 
-<figure class="flex flex-col items-center gap-2">
-	<figcaption>
-		<Button
-			disabled={!ready}
-			on:click={() => {
-				if ($paused) {
-					audio.play();
-				} else {
-					audio.pause();
-				}
-			}}
-		>
-			{#if $paused}
-				play
-			{:else}
-				pause
-			{/if}
-		</Button>
-	</figcaption>
-	<canvas bind:this={canvas} />
-</figure>
+{#await loadAudio(src)}
+	<p>loading...</p>
+{:then audio}
+	<figure class="flex flex-col items-center gap-2">
+		<figcaption>
+			<Button
+				on:click={() => {
+					if (playing) {
+						audio.pause();
+					} else {
+						audio.play();
+					}
+					playing = !playing;
+				}}
+			>
+				{#if playing}
+					pause
+				{:else}
+					play
+				{/if}
+			</Button>
+		</figcaption>
+		<canvas
+			use:visualizer={{ audio, borderWidth, fillColor, fftSize, strokeColor }}
+		/>
+	</figure>
+{/await}

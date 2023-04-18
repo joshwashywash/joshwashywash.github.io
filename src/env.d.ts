@@ -1,6 +1,2 @@
-/// <reference path="../.astro/types.d.ts" />
 /// <reference types="astro/client" />
-
-interface Window {
-	webkitAudioContext: AudioContext;
-}
+/// <reference path="../.astro/types.d.ts" />

@@ -1,5 +1,5 @@
 <script lang="ts">
-	export let color: string = '#eb6f92';
+	export let color: string;
 
 	const radius = 1;
 	const diameter = 2;
