@@ -1,0 +1,13 @@
+---
+date: 2023-04-18
+description: an introduction to polygon clipping
+draft: true
+title: polygon clipping
+---
+
+import EdgePoint from '../../components/polygon_clipping/EdgePoint.svelte';
+import Triangle from '../../components/polygon_clipping/Triangle.svelte';
+import colors from '../../lib/colors';
+
+<EdgePoint insideColor={colors.pine} outsideColor={colors.gold} lineColor={colors.text} client:only />
+<Triangle insideColor={colors.pine} outsideColor={colors.gold} lineColor={colors.text} client:only />
