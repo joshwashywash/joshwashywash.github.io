@@ -50,7 +50,7 @@ export const moveable: Action<
 		svg.addEventListener('pointermove', onPointerMove);
 		return {
 			destroy() {
-				element.addEventListener('pointerdown', onPointerDown);
+				element.removeEventListener('pointerdown', onPointerDown);
 				svg.removeEventListener('pointerup', onPointerUp);
 				svg.removeEventListener('pointermove', onPointerMove);
 			},
