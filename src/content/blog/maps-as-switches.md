@@ -1,6 +1,6 @@
 ---
 date: 2022-08-05
-description: a demonstration of how javascript's switch statements and map types are sometimes interchangable
+description: a demonstration showing how javascript's switch statements and map types are sometimes interchangable
 title: maps as switches
 ---
 
