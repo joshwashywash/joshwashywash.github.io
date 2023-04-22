@@ -1,14 +1,11 @@
 <script lang="ts">
-	import type { Link } from '../types';
+	import type { Link as TLink } from '../types';
+	import Link from '../components/Link.svelte';
 
-	export let links: Link[] = [
-		{ href: '/', to: 'home' },
-		{ href: '/blog', to: 'blog' },
-	];
+	export let links: TLink[];
 
 	let scrollY = 0;
 	let lastScroll = 0;
-	let clientHeight: number;
 
 	let show = true;
 </script>
@@ -22,18 +19,16 @@
 />
 
 <nav
-	bind:clientHeight
 	class="fixed bottom-0 w-full bg-base py-2 transition-transform"
 	class:translate-y-full={!show}
 	aria-label="navigation"
 >
 	<ul class="flex justify-around md:justify-evenly">
-		{#each links as { href, to }}
+		{#each links as { href, text }}
 			<li>
-				<a class="link" {href}>
-					<span class="sr-only">{to}</span>
-					<span class="font-bold">{to}</span>
-				</a>
+				<Link {href}>
+					<span class="font-bold">{text}</span>
+				</Link>
 			</li>
 		{/each}
 	</ul>

@@ -1,8 +1,8 @@
 ---
-import Nav from '../components/Nav.svelte';
-import { SITE_TITLE, SITE_DESCRIPTION } from '../config';
-
 import '../styles/global.css';
+import Nav from '../components/Nav.svelte';
+import type { Link } from '../types';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../config';
 
 export interface Props {
 	title?: string;
@@ -11,6 +11,11 @@ export interface Props {
 }
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+
+	const links: Link[] = [
+		{ href: '/', text: 'home' },
+		{ href: '/blog', text: 'blog' },
+	];
 
 const {
 	title = SITE_TITLE,
@@ -52,6 +57,6 @@ const {
 	</head>
 	<body class="bg-base font-mono text-text antialiased">
 		<slot />
-		<Nav client:load />
+		<Nav links={links} client:load />
 	</body>
 </html>

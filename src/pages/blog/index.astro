@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import Link from '../../components/Link.svelte';
 import { getCollection } from 'astro:content';
 
 const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
@@ -14,9 +15,9 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
 			{
 				posts.map((post) => (
 					<li class="flex flex-col">
-						<a class="link text-2xl underline" href={`/blog/${post.slug}`}>
-							{post.data.title}
-						</a>
+						<Link href={`/blog/${post.slug}`} client:load>
+							<span class="underline text-2xl">{post.data.title}</span>
+						</Link>
 						<time datetime={post.data.date.toISOString()}>
 							{post.data.date.toLocaleDateString('en-us', {
 								timeZone: 'UTC',
