@@ -58,6 +58,11 @@ export const moveable: Action<
 	}
 };
 
+export const multiply =
+	(b: Vec2) =>
+		(a: Vec2): Vec2 =>
+			[a[0] * b[0], a[1] * b[1]];
+
 export const right = (
 	ax: number,
 	ay: number,

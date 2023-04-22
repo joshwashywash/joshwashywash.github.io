@@ -1,13 +1,35 @@
 ---
 date: 2023-04-18
 description: an introduction to polygon clipping
-draft: true
 title: polygon clipping
 ---
 
 import EdgePoint from '../../components/polygon_clipping/EdgePoint.svelte';
 import Triangle from '../../components/polygon_clipping/Triangle.svelte';
+import RayCast from '../../components/polygon_clipping/RayCast.svelte';
 import colors from '../../lib/colors';
 
-<EdgePoint insideColor={colors.pine} outsideColor={colors.gold} lineColor={colors.text} client:only />
+
+export const polygon = [
+	[9.5, 4],
+	[8.5, 1],
+	[7.5, 3],
+	[5.5, 2],
+	[6.5, 5],
+	[3.5, 4],
+	[1.5, 5],
+	[1.5, 3],
+	[2.5, 2],
+	[0.5, 3],
+	[0.5, 6],
+	[1.5, 9],
+	[2.5, 7],
+	[5.5, 8],
+	[6.5, 9],
+	[7.5, 6],
+	[8.5, 6],
+];
+
+<RayCast width={10} height={10} polygon={polygon} insideColor={colors.pine} outsideColor={colors.gold} polygonColor={colors.text} client:only />
 <Triangle insideColor={colors.pine} outsideColor={colors.gold} lineColor={colors.text} client:only />
+<EdgePoint insideColor={colors.pine} outsideColor={colors.gold} lineColor={colors.text} client:only />
