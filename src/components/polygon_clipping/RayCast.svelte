@@ -40,7 +40,7 @@
 		stroke={polygonColor}
 		stroke-width="1%"
 		fill="none"
-		points={`${polygon.join(' ')}`}
+		points={polygon.join(' ')}
 	/>
 	<line x1={cx} y1={cy} x2={width} y2={cy} stroke={color} stroke-width="1%" />
 	<circle

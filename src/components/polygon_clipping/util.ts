@@ -1,6 +1,10 @@
 import type { Action } from 'svelte/action';
 import type { Vec2 } from '../../lib/vector';
 
+type Segment = [Vec2, Vec2];
+
+const lerp = (a: number, b: number) => (t: number) => a + (b - a) * t;
+
 export const contains = (polygon: Vec2[]) => {
 	const { length } = polygon;
 	return (cx: number, cy: number): boolean => {
@@ -12,6 +16,28 @@ export const contains = (polygon: Vec2[]) => {
 			}
 		}
 		return true;
+	};
+};
+
+export const intersection = (ab: Segment) => {
+	const [[ax, ay], [bx, by]] = ab;
+	return (cd: Segment): Vec2 | null => {
+		const [[cx, cy], [dx, dy]] = cd;
+		const denominator = (dy - cy) * (bx - ax) - (dx - cx) * (by - ay);
+
+		if (denominator === 0) {
+			return null;
+		}
+
+		const t = ((dx - cx) * (ay - cy) - (dy - cy) * (ax - cx)) / denominator;
+		const u = ((cy - ay) * (ax - bx) - (cx - ax) * (ay - by)) / denominator;
+
+		if (0 <= t && t <= 1 && 0 <= u && u <= 1) {
+			// remove this check if working with infinite lines instead of segments
+			return [lerp(ax, bx)(t), lerp(ay, by)(t)];
+		}
+
+		return null;
 	};
 };
 
@@ -58,11 +84,6 @@ export const moveable: Action<
 	}
 };
 
-export const multiply =
-	(b: Vec2) =>
-		(a: Vec2): Vec2 =>
-			[a[0] * b[0], a[1] * b[1]];
-
 export const right = (
 	ax: number,
 	ay: number,
@@ -70,4 +91,4 @@ export const right = (
 	by: number,
 	cx: number,
 	cy: number
-): boolean => (cy - ay) * (bx - ax) - (by - ay) * (cx - ax) > 0;
+): boolean => (cy - ay) * (bx - ax) > (by - ay) * (cx - ax);
