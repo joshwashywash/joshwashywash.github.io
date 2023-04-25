@@ -1,8 +1,9 @@
 import type { Action } from 'svelte/action';
 import type { Vec2 } from '../../lib/vector';
 
-type Segment = [Vec2, Vec2];
-
+/*
+ * 0 <= t <= 1
+ */
 const lerp = (a: number, b: number) => (t: number) => a + (b - a) * t;
 
 export const contains = (polygon: Vec2[]) => {
@@ -19,21 +20,27 @@ export const contains = (polygon: Vec2[]) => {
 	};
 };
 
-export const intersection = (ab: Segment) => {
-	const [[ax, ay], [bx, by]] = ab;
-	return (cd: Segment): Vec2 | null => {
-		const [[cx, cy], [dx, dy]] = cd;
-		const denominator = (dy - cy) * (bx - ax) - (dx - cx) * (by - ay);
+export const intersection = (a: Vec2, b: Vec2) => {
+	const [ax, ay] = a;
+	const [bx, by] = b;
+	const rx = bx - ax;
+	const ry = by - ay;
+	return (c: Vec2, d: Vec2): Vec2 | null => {
+		const [cx, cy] = c;
+		const [dx, dy] = d;
+		const sx = dx - cx;
+		const sy = dy - cy;
+
+		const denominator = sy * rx - ry * sx;
 
 		if (denominator === 0) {
 			return null;
 		}
 
-		const t = ((dx - cx) * (ay - cy) - (dy - cy) * (ax - cx)) / denominator;
-		const u = ((cy - ay) * (ax - bx) - (cx - ax) * (ay - by)) / denominator;
+		const t = (sy * (cx - ax) - sx * (cy - ay)) / denominator;
+		const u = (ry * (cx - ax) - rx * (cy - ay)) / denominator;
 
 		if (0 <= t && t <= 1 && 0 <= u && u <= 1) {
-			// remove this check if working with infinite lines instead of segments
 			return [lerp(ax, bx)(t), lerp(ay, by)(t)];
 		}
 
@@ -65,18 +72,27 @@ export const moveable: Action<
 				);
 			}
 		};
+
 		const onPointerUp = () => {
 			down = false;
 		};
+
 		const onPointerDown = () => {
 			down = true;
 		};
+
+		const onTouchStart = (e: TouchEvent) => {
+			e.preventDefault();
+		};
+
 		element.addEventListener('pointerdown', onPointerDown);
+		element.addEventListener('touchstart', onTouchStart);
 		svg.addEventListener('pointerup', onPointerUp);
 		svg.addEventListener('pointermove', onPointerMove);
 		return {
 			destroy() {
 				element.removeEventListener('pointerdown', onPointerDown);
+				element.removeEventListener('touchstart', onTouchStart);
 				svg.removeEventListener('pointerup', onPointerUp);
 				svg.removeEventListener('pointermove', onPointerMove);
 			},

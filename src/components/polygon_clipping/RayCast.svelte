@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { Vec2 } from '../../lib/vector';
-	import { moveable } from './util';
+	import { intersection, moveable } from './util';
 
 	export let insideColor: string;
 	export let outsideColor: string;
@@ -14,25 +14,26 @@
 	let cx = width / 2;
 	let cy = height / 2;
 
-	const contains = (polygon: Vec2[]) => {
+	const lineIntersections = (polygon: Vec2[]) => {
 		const { length } = polygon;
-		return (xp: number, yp: number): boolean => {
-			let count = 0;
+		return (p1: Vec2, p2: Vec2): Vec2[] => {
+			const intersections: Vec2[] = [];
 			for (let i = 0; i < length; i += 1) {
-				const [x1, y1] = polygon[i];
-				const [x2, y2] = polygon[(i + 1) % length];
-				count += Number(
-					yp < y1 !== yp < y2 && xp < x1 + ((yp - y1) / (y2 - y1)) * (x2 - x1)
-				);
+				const c = polygon[i];
+				const d = polygon[(i + 1) % length];
+				const ins = intersection(c, d)(p1, p2);
+				if (ins) {
+					intersections.push(ins);
+				}
 			}
-			return count % 2 === 1;
+			return intersections;
 		};
 	};
 
-	const c = contains(polygon);
+	const li = lineIntersections(polygon);
 
-	$: i = c(cx, cy);
-	$: color = i ? insideColor : outsideColor;
+	$: ints = li([cx, cy], [width, cy]);
+	$: color = ints.length % 2 === 1 ? insideColor : outsideColor;
 </script>
 
 <svg viewBox="0 0 {width} {height}" xmlns="http://www.w3.org/2000/svg">
@@ -55,4 +56,17 @@
 		{cy}
 		r="3%"
 	/>
+
+	<g fill={color} stroke={polygonColor} stroke-width="1%">
+		{#each ints as [cx, cy]}
+			<circle {cx} {cy} r="1%" />
+		{/each}
+	</g>
+	<text
+		class="text-[10%]"
+		x={width}
+		y={height - height / 10}
+		text-anchor="end"
+		fill={polygonColor}>{ints.length}</text
+	>
 </svg>

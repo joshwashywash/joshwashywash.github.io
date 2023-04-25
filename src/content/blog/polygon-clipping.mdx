@@ -8,6 +8,7 @@ title: polygon clipping
 import EdgePoint from '../../components/polygon_clipping/EdgePoint.svelte';
 import Triangle from '../../components/polygon_clipping/Triangle.svelte';
 import RayCast from '../../components/polygon_clipping/RayCast.svelte';
+import Intersection from '../../components/polygon_clipping/Intersection.svelte';
 import colors from '../../lib/colors';
 
 export const polygon = [
@@ -30,6 +31,7 @@ export const polygon = [
 	[8.5, 6],
 ];
 
+<Intersection client:visible />
 <RayCast width={10} height={10} polygon={polygon} insideColor={colors.pine} outsideColor={colors.gold} polygonColor={colors.text} client:visible />
 <Triangle insideColor={colors.pine} outsideColor={colors.gold} lineColor={colors.text} client:visible />
 <EdgePoint insideColor={colors.pine} outsideColor={colors.gold} lineColor={colors.text} client:visible />
