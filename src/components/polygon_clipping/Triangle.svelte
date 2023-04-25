@@ -3,8 +3,8 @@
 	import { contains, moveable } from './util';
 
 	export let insideColor: string;
-	export let outsideColor: string;
 	export let lineColor: string;
+	export let outsideColor: string;
 
 	const DIAMETER = 6;
 

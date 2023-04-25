@@ -6,16 +6,15 @@
 	export let lineColor: string;
 	export let pointColor: string;
 
-	const WIDTH = 1;
-	const HEIGHT = 1;
-
 	const CELL_COUNT = 4;
-	const W = WIDTH / CELL_COUNT;
 
-	const a: Vec2 = [W, W];
-	const b: Vec2 = [3 * W, 3 * W];
-	const c: Vec2 = [W, 3 * W];
-	const d: Vec2 = [3 * W, W];
+	const WIDTH = CELL_COUNT;
+	const HEIGHT = WIDTH;
+
+	const a: Vec2 = [1, 1];
+	const b: Vec2 = [3, 3];
+	const c: Vec2 = [1, 3];
+	const d: Vec2 = [3, 1];
 
 	$: inter = intersection(a, b);
 	$: point = inter(c, d);
@@ -32,9 +31,8 @@
 				class="cursor-move"
 				use:moveable
 				on:move={({ detail }) => {
-					const { x, y } = detail;
-					point[0] = x;
-					point[1] = y;
+					point[0] = detail.x;
+					point[1] = detail.y;
 				}}
 				cx={point[0]}
 				cy={point[1]}

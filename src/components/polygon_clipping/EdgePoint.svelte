@@ -1,11 +1,12 @@
 <script lang="ts">
 	import { right, moveable } from './util';
+
 	const RADIUS = Math.SQRT2 / 2;
 	const DIAMETER = 2 * RADIUS;
 
 	export let insideColor: string;
-	export let outsideColor: string;
 	export let lineColor: string;
+	export let outsideColor: string;
 
 	let cx = -RADIUS / 2;
 	let cy = 0;
