@@ -54,7 +54,7 @@
 		}}
 		{cx}
 		{cy}
-		r="3%"
+		r="4%"
 	/>
 
 	<g fill={color} stroke={polygonColor} stroke-width="1%">

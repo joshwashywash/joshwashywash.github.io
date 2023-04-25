@@ -31,7 +31,7 @@ export const polygon = [
 	[8.5, 6],
 ];
 
-<Intersection client:visible />
+<Intersection intersectionColor={colors.gold} lineColor={colors.text} pointColor={colors.pine} client:visible />
 <RayCast width={10} height={10} polygon={polygon} insideColor={colors.pine} outsideColor={colors.gold} polygonColor={colors.text} client:visible />
 <Triangle insideColor={colors.pine} outsideColor={colors.gold} lineColor={colors.text} client:visible />
 <EdgePoint insideColor={colors.pine} outsideColor={colors.gold} lineColor={colors.text} client:visible />
