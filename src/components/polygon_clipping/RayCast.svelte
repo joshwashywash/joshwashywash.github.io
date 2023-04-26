@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { Vec2 } from '../../lib/vector';
-	import { lineIntersections, moveable } from './util';
+	import { lineIntersections, translatable } from './util';
 
 	export let insideColor: string;
 	export let outsideColor: string;
@@ -31,7 +31,7 @@
 	<circle
 		class="cursor-move"
 		fill={color}
-		use:moveable
+		use:translatable
 		on:move={({ detail }) => {
 			cx = detail.x;
 			cy = detail.y;

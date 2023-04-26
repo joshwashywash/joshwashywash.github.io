@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { right, moveable } from './util';
+	import { right, translatable } from './util';
 
 	const RADIUS = Math.SQRT2 / 2;
 	const DIAMETER = 2 * RADIUS;
@@ -38,7 +38,7 @@
 		<circle
 			class="cursor-move"
 			{fill}
-			use:moveable
+			use:translatable
 			on:move={({ detail }) => {
 				cx = detail.x;
 				cy = detail.y;

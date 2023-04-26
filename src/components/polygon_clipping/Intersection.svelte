@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { intersection, moveable } from './util';
+	import { intersection, translatable } from './util';
 	import type { Vec2 } from '../../lib/vector';
 
 	export let intersectionColor: string;
@@ -29,7 +29,7 @@
 		{#each [a, b, c, d] as point}
 			<circle
 				class="cursor-move"
-				use:moveable
+				use:translatable
 				on:move={({ detail }) => {
 					point[0] = detail.x;
 					point[1] = detail.y;
