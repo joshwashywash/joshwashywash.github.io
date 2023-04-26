@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { Vec2 } from '../../lib/vector';
-	import { intersection, moveable } from './util';
+	import { lineIntersections, moveable } from './util';
 
 	export let insideColor: string;
 	export let outsideColor: string;
@@ -13,23 +13,6 @@
 
 	let cx = width / 2;
 	let cy = height / 2;
-
-	const lineIntersections = (polygon: Vec2[]) => {
-		const { length } = polygon;
-		return (p1: Vec2, p2: Vec2): Vec2[] => {
-			const intersections: Vec2[] = [];
-			const ins = intersection(p1, p2);
-			for (let i = 0; i < length; i += 1) {
-				const c = polygon[i];
-				const d = polygon[(i + 1) % length];
-				const hit = ins(c, d);
-				if (hit) {
-					intersections.push(hit);
-				}
-			}
-			return intersections;
-		};
-	};
 
 	const li = lineIntersections(polygon);
 

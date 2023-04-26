@@ -48,6 +48,23 @@ export const intersection = (a: Vec2, b: Vec2) => {
 	};
 };
 
+export const lineIntersections = (polygon: Vec2[]) => {
+	const { length } = polygon;
+	return (p1: Vec2, p2: Vec2): Vec2[] => {
+		const intersections: Vec2[] = [];
+		const ins = intersection(p1, p2);
+		for (let i = 0; i < length; i += 1) {
+			const c = polygon[i];
+			const d = polygon[(i + 1) % length];
+			const hit = ins(c, d);
+			if (hit) {
+				intersections.push(hit);
+			}
+		}
+		return intersections;
+	};
+};
+
 export const moveable: Action<
 	SVGElement,
 	{},
