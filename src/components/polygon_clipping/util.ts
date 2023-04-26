@@ -56,18 +56,13 @@ export const moveable: Action<
 	const svg = element.ownerSVGElement;
 	if (svg) {
 		let down = false;
-		const {
-			baseVal: { width: viewBoxWidth, height: viewBoxHeight, x, y },
-		} = svg.viewBox;
+
 		const onPointerMove = (e: PointerEvent) => {
-			const { width, height } = svg.getBoundingClientRect();
 			if (down) {
+				const m = svg.getScreenCTM()?.inverse();
 				element.dispatchEvent(
 					new CustomEvent('move', {
-						detail: {
-							x: (e.offsetX / width) * viewBoxWidth + x,
-							y: (e.offsetY / height) * viewBoxHeight + y,
-						},
+						detail: new DOMPoint(e.x, e.y).matrixTransform(m),
 					})
 				);
 			}
@@ -87,14 +82,14 @@ export const moveable: Action<
 
 		element.addEventListener('pointerdown', onPointerDown);
 		element.addEventListener('touchstart', onTouchStart);
-		svg.addEventListener('pointerup', onPointerUp);
 		svg.addEventListener('pointermove', onPointerMove);
+		svg.addEventListener('pointerup', onPointerUp);
 		return {
 			destroy() {
 				element.removeEventListener('pointerdown', onPointerDown);
 				element.removeEventListener('touchstart', onTouchStart);
-				svg.removeEventListener('pointerup', onPointerUp);
 				svg.removeEventListener('pointermove', onPointerMove);
+				svg.removeEventListener('pointerup', onPointerUp);
 			},
 		};
 	}
