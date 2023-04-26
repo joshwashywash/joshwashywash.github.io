@@ -18,12 +18,13 @@
 		const { length } = polygon;
 		return (p1: Vec2, p2: Vec2): Vec2[] => {
 			const intersections: Vec2[] = [];
+			const ins = intersection(p1, p2);
 			for (let i = 0; i < length; i += 1) {
 				const c = polygon[i];
 				const d = polygon[(i + 1) % length];
-				const ins = intersection(c, d)(p1, p2);
-				if (ins) {
-					intersections.push(ins);
+				const hit = ins(c, d);
+				if (hit) {
+					intersections.push(hit);
 				}
 			}
 			return intersections;
@@ -67,6 +68,8 @@
 		x={width}
 		y={height - height / 10}
 		text-anchor="end"
-		fill={polygonColor}>{ints.length}</text
+		fill={polygonColor}
 	>
+		{ints.length}
+	</text>
 </svg>
