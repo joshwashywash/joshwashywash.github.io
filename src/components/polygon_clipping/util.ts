@@ -72,11 +72,9 @@ export const translatable: Action<
 > = (element) => {
 	const svg = element.ownerSVGElement;
 	if (svg) {
-		let down = false;
-
+		let m: DOMMatrix | undefined;
 		const onPointerMove = (e: PointerEvent) => {
-			if (down) {
-				const m = svg.getScreenCTM()?.inverse();
+			if (m !== undefined) {
 				element.dispatchEvent(
 					new CustomEvent('translate', {
 						detail: DOMPoint.fromPoint(e).matrixTransform(m),
@@ -86,11 +84,11 @@ export const translatable: Action<
 		};
 
 		const onPointerUp = () => {
-			down = false;
+			m = undefined;
 		};
 
 		const onPointerDown = () => {
-			down = true;
+			m = svg.getScreenCTM()?.inverse();
 		};
 
 		const onTouchStart = (e: TouchEvent) => {
@@ -101,6 +99,7 @@ export const translatable: Action<
 		element.addEventListener('touchstart', onTouchStart);
 		svg.addEventListener('pointermove', onPointerMove);
 		svg.addEventListener('pointerup', onPointerUp);
+
 		return {
 			destroy() {
 				element.removeEventListener('pointerdown', onPointerDown);
