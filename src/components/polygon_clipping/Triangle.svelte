@@ -34,7 +34,7 @@
 		class="cursor-move"
 		{fill}
 		use:translatable
-		on:move={({ detail }) => {
+		on:translate={({ detail }) => {
 			cx = detail.x;
 			cy = detail.y;
 		}}

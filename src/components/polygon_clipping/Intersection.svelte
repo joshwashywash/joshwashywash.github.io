@@ -30,7 +30,7 @@
 			<circle
 				class="cursor-move"
 				use:translatable
-				on:move={({ detail }) => {
+				on:translate={({ detail }) => {
 					point[0] = detail.x;
 					point[1] = detail.y;
 				}}

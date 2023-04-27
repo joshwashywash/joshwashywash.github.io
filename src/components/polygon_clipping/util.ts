@@ -68,7 +68,7 @@ export const lineIntersections = (polygon: Vec2[]) => {
 export const translatable: Action<
 	SVGElement,
 	{},
-	{ 'on:move': (e: CustomEvent<DOMPoint>) => void }
+	{ 'on:translate': (e: CustomEvent<DOMPoint>) => void }
 > = (element) => {
 	const svg = element.ownerSVGElement;
 	if (svg) {
@@ -78,7 +78,7 @@ export const translatable: Action<
 			if (down) {
 				const m = svg.getScreenCTM()?.inverse();
 				element.dispatchEvent(
-					new CustomEvent('move', {
+					new CustomEvent('translate', {
 						detail: DOMPoint.fromPoint(e).matrixTransform(m),
 					})
 				);
