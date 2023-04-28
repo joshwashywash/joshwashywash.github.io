@@ -33,7 +33,7 @@
 	<circle
 		class="cursor-move"
 		{fill}
-		use:translatable
+		use:translatable={{ offsetX: cx, offsetY: cy }}
 		on:translate={({ detail }) => {
 			cx = detail.x;
 			cy = detail.y;

@@ -67,28 +67,45 @@ export const lineIntersections = (polygon: Vec2[]) => {
 
 export const translatable: Action<
 	SVGElement,
-	{},
-	{ 'on:translate': (e: CustomEvent<DOMPoint>) => void }
-> = (element) => {
+	{offsetX: number, offsetY: number},
+	{ 'on:translate': (e: CustomEvent<{ x: number; y: number }>) => void }
+> = (element, options = {offsetX: 0, offsetY:0}) => {
 	const svg = element.ownerSVGElement;
 	if (svg) {
-		let m: DOMMatrix | undefined;
+		let downX: number | undefined = undefined;
+		let downY: number | undefined = undefined;
+		let tx = 0;
+		let ty = 0;
+		const { width: vbWidth, height: vbHeight } = svg.viewBox.baseVal;
 		const onPointerMove = (e: PointerEvent) => {
-			if (m !== undefined) {
+			if (downX !== undefined && downY !== undefined) {
+				const { width, height } = svg.getBoundingClientRect();
+				tx = ((e.x - downX) / width) * vbWidth + options.offsetX;
+				ty = ((e.y - downY) / height) * vbHeight + options.offsetY;
 				element.dispatchEvent(
 					new CustomEvent('translate', {
-						detail: DOMPoint.fromPoint(e).matrixTransform(m),
+						detail: {
+							x: tx,
+							y: ty
+						},
 					})
 				);
 			}
 		};
 
 		const onPointerUp = () => {
-			m = undefined;
+			downX = undefined;
+			downY = undefined;
+			options.offsetX = tx
+			options.offsetY = ty
+			svg.removeEventListener('pointermove', onPointerMove);
 		};
 
-		const onPointerDown = () => {
-			m = svg.getScreenCTM()?.inverse();
+		const onPointerDown = (e: PointerEvent) => {
+			downX = e.x;
+			downY = e.y;
+			svg.addEventListener('pointermove', onPointerMove);
+			svg.addEventListener('pointerup', onPointerUp, {once: true});
 		};
 
 		const onTouchStart = (e: TouchEvent) => {
@@ -97,15 +114,11 @@ export const translatable: Action<
 
 		element.addEventListener('pointerdown', onPointerDown);
 		element.addEventListener('touchstart', onTouchStart);
-		svg.addEventListener('pointermove', onPointerMove);
-		svg.addEventListener('pointerup', onPointerUp);
 
 		return {
 			destroy() {
 				element.removeEventListener('pointerdown', onPointerDown);
 				element.removeEventListener('touchstart', onTouchStart);
-				svg.removeEventListener('pointermove', onPointerMove);
-				svg.removeEventListener('pointerup', onPointerUp);
 			},
 		};
 	}

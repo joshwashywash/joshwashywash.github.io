@@ -29,7 +29,7 @@
 		{#each [a, b, c, d] as point}
 			<circle
 				class="cursor-move"
-				use:translatable
+				use:translatable={{ offsetX: point[0], offsetY: point[1] }}
 				on:translate={({ detail }) => {
 					point[0] = detail.x;
 					point[1] = detail.y;
