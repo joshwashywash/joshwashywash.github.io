@@ -67,7 +67,7 @@ export const lineIntersections = (polygon: Vec2[]) => {
 
 export const translatable: Action<
 	SVGElement,
-	never,
+	{},
 	{ 'on:translate': (e: CustomEvent<DOMPoint>) => void }
 > = (element) => {
 	const svg = element.ownerSVGElement;
