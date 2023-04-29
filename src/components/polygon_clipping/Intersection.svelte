@@ -16,8 +16,8 @@
 	const c: Vec2 = [1, 3];
 	const d: Vec2 = [3, 1];
 
-	$: inter = intersection(a, b);
-	$: point = inter(c, d);
+	$: inter = intersection(a[0], a[1], b[0], b[1]);
+	$: point = inter(c[0], c[1], d[0], d[1]);
 </script>
 
 <svg viewBox="0 0 {WIDTH} {HEIGHT}" xmlns="http://www.w3.org/2000/svg">
@@ -29,7 +29,7 @@
 		{#each [a, b, c, d] as point}
 			<circle
 				class="cursor-move"
-				use:translatable={{ offsetX: point[0], offsetY: point[1] }}
+				use:translatable={{ offset: { x: point[0], y: point[1] } }}
 				on:translate={({ detail }) => {
 					point[0] = detail.x;
 					point[1] = detail.y;

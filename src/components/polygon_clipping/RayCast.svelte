@@ -16,7 +16,7 @@
 
 	const li = lineIntersections(polygon);
 
-	$: ints = li([cx, cy], [width, cy]);
+	$: ints = li(cx, cy, width, cy);
 	$: color = ints.length % 2 === 1 ? insideColor : outsideColor;
 </script>
 
@@ -31,7 +31,7 @@
 	<circle
 		class="cursor-move"
 		fill={color}
-		use:translatable={{offsetX: cx, offsetY: cy}}
+		use:translatable={{ offset: { x: cx, y: cy } }}
 		on:translate={({ detail }) => {
 			cx = detail.x;
 			cy = detail.y;

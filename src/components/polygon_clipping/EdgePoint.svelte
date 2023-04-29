@@ -20,7 +20,9 @@
 	$: x2 = -x1;
 	$: y2 = -y1;
 
-	$: fill = right(x1, y1, x2, y2, cx, cy) ? insideColor : outsideColor;
+	$: r = right(cx, cy);
+
+	$: fill = r(x1, y1, x2, y2) ? insideColor : outsideColor;
 </script>
 
 <figure class="flex flex-col items-center gap-2">
@@ -38,7 +40,7 @@
 		<circle
 			class="cursor-move"
 			{fill}
-			use:translatable={{offsetX:cx, offsetY: cy}}
+			use:translatable={{ offset: { x: cx, y: cy } }}
 			on:translate={({ detail }) => {
 				cx = detail.x;
 				cy = detail.y;
