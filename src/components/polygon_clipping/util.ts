@@ -1,6 +1,40 @@
 import type { Action } from 'svelte/action';
 import type { Vec2 } from '../../lib/vector';
 
+export const clip = (clipper: Vec2[]) => {
+	const { length: clipperLength } = clipper;
+	return (subject: Vec2[]): Vec2[] => {
+		let output = [...subject];
+		for (let i = 0; i < clipperLength; i += 1) {
+			const [edgeStartX, edgeStartY] = clipper[i];
+			const [edgeEndX, edgeEndY] = clipper[(i + 1) % clipperLength];
+			const inter = intersection(edgeStartX, edgeStartY, edgeEndX, edgeEndY);
+			const r = right(edgeStartX, edgeStartY, edgeEndX, edgeEndY);
+			const input = [...output];
+			output = [];
+			for (let j = 0; j < input.length; j += 1) {
+				const [ax, ay] = input[j];
+				const [bx, by] = input[(j + 1) % input.length];
+				if (r(bx, by)) {
+					if (!r(ax, ay)) {
+						const c = inter(ax, ay, bx, by);
+						if (c) {
+							output.push(c);
+						}
+					}
+					output.push([bx, by]);
+				} else if (r(ax, ay)) {
+					const c = inter(ax, ay, bx, by);
+					if (c) {
+						output.push(c);
+					}
+				}
+			}
+		}
+		return output;
+	};
+};
+
 /*
  * 0 <= t <= 1
  */
@@ -9,11 +43,10 @@ const lerp = (a: number, b: number) => (t: number) => a + (b - a) * t;
 export const contains = (polygon: Vec2[]) => {
 	const { length } = polygon;
 	return (cx: number, cy: number): boolean => {
-		const r = right(cx, cy);
 		for (let i = 0; i < length; i += 1) {
 			const [ax, ay] = polygon[i];
 			const [bx, by] = polygon[(i + 1) % length];
-			if (!r(ax, ay, bx, by)) {
+			if (!right(ax, ay, bx, by)(cx, cy)) {
 				return false;
 			}
 		}
@@ -25,7 +58,8 @@ export const intersection = (
 	ax: number,
 	ay: number,
 	bx: number,
-	by: number
+	by: number,
+	segment = false
 ) => {
 	const rx = bx - ax;
 	const ry = by - ay;
@@ -42,11 +76,10 @@ export const intersection = (
 		const t = (sy * (cx - ax) - sx * (cy - ay)) / denominator;
 		const u = (ry * (cx - ax) - rx * (cy - ay)) / denominator;
 
-		if (0 <= t && t <= 1 && 0 <= u && u <= 1) {
-			return [lerp(ax, bx)(t), lerp(ay, by)(t)];
+		if (segment && !(0 <= t && t <= 1 && 0 <= u && u <= 1)) {
+			return null;
 		}
-
-		return null;
+		return [lerp(ax, bx)(t), lerp(ay, by)(t)];
 	};
 };
 
@@ -54,7 +87,7 @@ export const lineIntersections = (polygon: Vec2[]) => {
 	const { length } = polygon;
 	return (x1: number, y1: number, x2: number, y2: number): Vec2[] => {
 		const intersections: Vec2[] = [];
-		const ins = intersection(x1, y1, x2, y2);
+		const ins = intersection(x1, y1, x2, y2, true);
 		for (let i = 0; i < length; i += 1) {
 			const [cx, cy] = polygon[i];
 			const [dx, dy] = polygon[(i + 1) % length];
@@ -128,6 +161,6 @@ export const translatable: Action<
 };
 
 export const right =
-	(cx: number, cy: number) =>
-	(ax: number, ay: number, bx: number, by: number): boolean =>
+	(ax: number, ay: number, bx: number, by: number) =>
+	(cx: number, cy: number): boolean =>
 		(cy - ay) * (bx - ax) > (by - ay) * (cx - ax);
