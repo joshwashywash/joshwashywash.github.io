@@ -4,8 +4,6 @@ const hoverableStroke: Action<SVGElement, { color: string; width: string }> = (
 	element,
 	options = { color: 'white', width: '1%' }
 ) => {
-	element.style.stroke = 'none';
-	element.style.strokeWidth = '0';
 
 	const pointerEnter = () => {
 		element.style.stroke = options.color;
@@ -16,6 +14,8 @@ const hoverableStroke: Action<SVGElement, { color: string; width: string }> = (
 		element.style.stroke = 'none';
 		element.style.strokeWidth = '0';
 	};
+
+	pointerOut();
 
 	element.addEventListener('pointerenter', pointerEnter);
 	element.addEventListener('pointerout', pointerOut);
