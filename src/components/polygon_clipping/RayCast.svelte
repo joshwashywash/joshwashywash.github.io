@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { Vec2 } from '../../lib/vector';
+	import hoverableStroke from '../../lib/actions/hoverableStroke';
 	import { lineIntersections, translatable } from './util';
 
 	export let insideColor: string;
@@ -31,6 +32,7 @@
 	<circle
 		class="cursor-move"
 		fill={color}
+		use:hoverableStroke={{color: polygonColor, width: "1%"}}
 		use:translatable={{ offset: { x: cx, y: cy } }}
 		on:translate={({ detail }) => {
 			cx = detail.x;

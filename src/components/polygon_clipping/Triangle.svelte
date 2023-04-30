@@ -1,4 +1,5 @@
 <script lang="ts">
+	import hoverableStroke from '../../lib/actions/hoverableStroke';
 	import type { Vec2 } from '../../lib/vector';
 	import { contains, translatable } from './util';
 
@@ -6,12 +7,12 @@
 	export let lineColor: string;
 	export let outsideColor: string;
 
-	const DIAMETER = 6;
+	const DIAMETER = 4;
 
 	const triangle: Vec2[] = [
-		[1, 5],
-		[3, 1],
-		[5, 5],
+		[2, 1],
+		[3, 3],
+		[1, 3],
 	];
 
 	let cx = DIAMETER / 2;
@@ -33,6 +34,7 @@
 	<circle
 		class="cursor-move"
 		{fill}
+		use:hoverableStroke={{ color: lineColor, width: '1%' }}
 		use:translatable={{ offset: { x: cx, y: cy } }}
 		on:translate={({ detail }) => {
 			cx = detail.x;

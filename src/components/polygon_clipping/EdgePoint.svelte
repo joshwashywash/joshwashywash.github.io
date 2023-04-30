@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { right, translatable } from './util';
+	import hoverableStroke from '../../lib/actions/hoverableStroke'
 
 	const RADIUS = Math.SQRT2 / 2;
 	const DIAMETER = 2 * RADIUS;
@@ -23,6 +24,9 @@
 	$: r = right(x1, y1, x2, y2);
 
 	$: fill = r(cx, cy) ? insideColor : outsideColor;
+
+	let stroke = 'none';
+
 </script>
 
 <figure class="flex flex-col items-center gap-2">
@@ -33,14 +37,16 @@
 		</label>
 	</figcaption>
 	<svg
-	class="w-5/6"
+		class="w-5/6"
 		viewBox="{-RADIUS} {-RADIUS} {DIAMETER} {DIAMETER}"
 		xmlns="http://www.w3.org/2000/svg"
 	>
 		<line {x1} {y1} {x2} {y2} stroke={lineColor} stroke-width="1%" />
 		<circle
 			class="cursor-move"
+			use:hoverableStroke={{ color: lineColor, width:"1%" }}
 			{fill}
+			{stroke}
 			use:translatable={{ offset: { x: cx, y: cy } }}
 			on:translate={({ detail }) => {
 				cx = detail.x;
