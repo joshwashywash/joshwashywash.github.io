@@ -16,7 +16,7 @@
 	const c: Vec2 = [1, 3];
 	const d: Vec2 = [3, 1];
 
-	$: inter = intersection(a[0], a[1], b[0], b[1]);
+	$: inter = intersection(a[0], a[1], b[0], b[1], true);
 	$: point = inter(c[0], c[1], d[0], d[1]);
 </script>
 

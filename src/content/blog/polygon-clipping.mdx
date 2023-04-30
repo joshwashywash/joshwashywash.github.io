@@ -12,6 +12,28 @@ import RayCast from '../../components/polygon_clipping/RayCast.svelte';
 import Intersection from '../../components/polygon_clipping/Intersection.svelte';
 import colors from '../../lib/colors';
 
+export const clipper = [
+  [
+    5,
+    1.6666666666666667
+  ],
+  [
+    8.333333333333334,
+    8.333333333333334
+  ],
+  [
+    1.6666666666666667,
+    8.333333333333334
+  ]
+];
+
+export const subject = [
+	[-0.5, -0.5],
+	[0.5, -0.5],
+	[0.5, 0.5],
+	[-0.5, 0.5],
+];
+
 export const polygon = [
 	[9.5, 4],
 	[8.5, 1],
@@ -32,9 +54,18 @@ export const polygon = [
 	[8.5, 6],
 ];
 
-
-<PolygonClipper client:visible />
-<Intersection intersectionColor={colors.gold} lineColor={colors.text} pointColor={colors.pine} client:visible />
-<RayCast width={10} height={10} polygon={polygon} insideColor={colors.pine} outsideColor={colors.gold} polygonColor={colors.text} client:visible />
-<Triangle insideColor={colors.pine} outsideColor={colors.gold} lineColor={colors.text} client:visible />
+## Point on Right Side
 <EdgePoint insideColor={colors.pine} outsideColor={colors.gold} lineColor={colors.text} client:visible />
+
+## Point in Polygon
+<Triangle insideColor={colors.pine} outsideColor={colors.gold} lineColor={colors.text} client:visible />
+
+## Line Intersection
+<Intersection intersectionColor={colors.gold} lineColor={colors.text} pointColor={colors.pine} client:visible />
+
+## Ray Casting
+<RayCast width={10} height={10} polygon={polygon} insideColor={colors.pine} outsideColor={colors.gold} polygonColor={colors.text} client:visible />
+
+## Sutherland-Hodgeman Polygon Clipping
+<PolygonClipper subjectColor={colors.gold} strokeColor={colors.text} width={10} height={10} subject={polygon} clipper={clipper} client:visible />
+

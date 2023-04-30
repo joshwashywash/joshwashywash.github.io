@@ -2,21 +2,14 @@
 	import type { Vec2 } from '../../lib/vector';
 	import { clip , translatable } from './util';
 
-	const L = 2;
+	export let strokeColor: string;
+	export let subjectColor: string;
 
-	const clipper: Vec2[] = [
-		[-0.5, -0.5],
-		[0.5, -0.5],
-		[0.5, 0.5],
-		[-0.5, 0.5],
-	];
+	export let width: number;
+	export let height: number;
 
-	const subject: Vec2[] = [
-		[-0.5, -0.5],
-		[0.5, -0.5],
-		[0.5, 0.5],
-		[-0.5, 0.5],
-	];
+	export let clipper: Vec2[];
+	export let subject: Vec2[];
 
 	let subjectTranslation: Vec2 = [0, 0];
 	let clipperTranslation: Vec2 = [-0.25, -0.25];
@@ -32,11 +25,9 @@
 	$: clipped = clip(translatedClipper)(translatedSubject);
 </script>
 
-<svg viewBox="-1 -1 {L} {L}">
+<svg viewBox="0 0 {width} {height}">
 	<polygon
-		class="cursor-move"
-		fill="white"
-		stroke-width="1%"
+		fill={subjectColor}
 		points={clipped.join(' ')}
 	/>
 	<polygon
@@ -48,8 +39,8 @@
 			clipperTranslation[0] = detail.x;
 			clipperTranslation[1] = detail.y;
 		}}
-		fill="red"
-		fill-opacity=".5"
+		fill="transparent"
+		stroke={strokeColor}
 		stroke-width="1%"
 		points={translatedClipper.join(' ')}
 	/>

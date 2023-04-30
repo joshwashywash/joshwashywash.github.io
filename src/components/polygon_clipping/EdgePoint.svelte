@@ -33,6 +33,7 @@
 		</label>
 	</figcaption>
 	<svg
+	class="w-5/6"
 		viewBox="{-RADIUS} {-RADIUS} {DIAMETER} {DIAMETER}"
 		xmlns="http://www.w3.org/2000/svg"
 	>
