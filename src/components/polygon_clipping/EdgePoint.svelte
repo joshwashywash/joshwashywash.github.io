@@ -20,9 +20,9 @@
 	$: x2 = -x1;
 	$: y2 = -y1;
 
-	$: r = right(cx, cy);
+	$: r = right(x1, y1, x2, y2);
 
-	$: fill = r(x1, y1, x2, y2) ? insideColor : outsideColor;
+	$: fill = r(cx, cy) ? insideColor : outsideColor;
 </script>
 
 <figure class="flex flex-col items-center gap-2">
