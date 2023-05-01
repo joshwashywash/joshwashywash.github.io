@@ -12,10 +12,10 @@ export interface Props {
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
-	const links: Link[] = [
-		{ href: '/', text: 'home' },
-		{ href: '/blog', text: 'blog' },
-	];
+const links: Link[] = [
+	{ href: '/', name: 'home' },
+	{ href: '/blog', name: 'blog' },
+];
 
 const {
 	title = SITE_TITLE,

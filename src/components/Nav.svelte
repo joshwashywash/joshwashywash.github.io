@@ -24,10 +24,10 @@
 	aria-label="navigation"
 >
 	<ul class="flex justify-around md:justify-evenly">
-		{#each links as { href, text }}
+		{#each links as { href, name }}
 			<li>
 				<Link {href}>
-					<span class="font-bold">{text}</span>
+					<span class="font-bold">{name}</span>
 				</Link>
 			</li>
 		{/each}

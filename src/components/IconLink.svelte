@@ -4,10 +4,14 @@
 
 	export let link: Link;
 
-	const { href, to } = link;
+	const { href, name } = link;
 </script>
 
-<a class="outline-none transition-colors duration-300 ease-out hover:text-gold focus:text-gold w-24 md:w-28" rel="external" {href}>
-	<span class="sr-only">{to}</span>
-	<Icon kind={to} />
+<a
+	class="w-24 outline-none transition-colors duration-300 ease-out hover:text-gold focus:text-gold md:w-28"
+	rel="external"
+	{href}
+>
+	<span class="sr-only">{name}</span>
+	<Icon kind={name} />
 </a>
