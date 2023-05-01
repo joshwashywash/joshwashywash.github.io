@@ -1,5 +1,4 @@
 <script lang="ts">
-	import hoverableStroke from '../../lib/actions/hoverableStroke';
 	import type { Vec2 } from '../../lib/vector';
 	import { contains, translatable } from './util';
 
@@ -32,9 +31,9 @@
 		stroke-width="1%"
 	/>
 	<circle
-		class="cursor-move"
+		style="--stroke-color: {lineColor}"
+		class="cursor-move hover:stroke-[--stroke-color] hover:stroke-[1%]"
 		{fill}
-		use:hoverableStroke={{ color: lineColor, width: '1%' }}
 		use:translatable={{ offset: { x: cx, y: cy } }}
 		on:translate={({ detail }) => {
 			cx = detail.x;

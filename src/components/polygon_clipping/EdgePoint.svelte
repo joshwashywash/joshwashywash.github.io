@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { right, translatable } from './util';
-	import hoverableStroke from '../../lib/actions/hoverableStroke'
 
 	const RADIUS = Math.SQRT2 / 2;
 	const DIAMETER = 2 * RADIUS;
@@ -26,7 +25,6 @@
 	$: fill = r(cx, cy) ? insideColor : outsideColor;
 
 	let stroke = 'none';
-
 </script>
 
 <figure class="flex flex-col items-center gap-2">
@@ -43,8 +41,8 @@
 	>
 		<line {x1} {y1} {x2} {y2} stroke={lineColor} stroke-width="1%" />
 		<circle
-			class="cursor-move"
-			use:hoverableStroke={{ color: lineColor, width:"1%" }}
+			style="--stroke-color: {lineColor}"
+			class="cursor-move hover:stroke-[--stroke-color] hover:stroke-[1%]"
 			{fill}
 			{stroke}
 			use:translatable={{ offset: { x: cx, y: cy } }}
@@ -58,3 +56,4 @@
 		/>
 	</svg>
 </figure>
+
