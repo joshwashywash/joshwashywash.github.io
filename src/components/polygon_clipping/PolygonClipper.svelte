@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { Vec2 } from '../../lib/vector';
-	import { clip , translatable } from './util';
+	import { clip, translatable } from './util';
 
 	export let strokeColor: string;
 	export let subjectColor: string;
@@ -12,7 +12,7 @@
 	export let subject: Vec2[];
 
 	let subjectTranslation: Vec2 = [0, 0];
-	let clipperTranslation: Vec2 = [-0.25, -0.25];
+	let clipperTranslation: Vec2 = [0, 0];
 
 	const add =
 		(a: Vec2) =>
@@ -23,25 +23,39 @@
 	$: translatedClipper = clipper.map(add(clipperTranslation));
 
 	$: clipped = clip(translatedClipper)(translatedSubject);
+
+	let showClippedPoints = false;
 </script>
 
-<svg viewBox="0 0 {width} {height}">
-	<polygon
-		fill={subjectColor}
-		points={clipped.join(' ')}
-	/>
-	<polygon
-		class="cursor-move"
-		use:translatable={{
-			offset: { x: clipperTranslation[0], y: clipperTranslation[1] },
-		}}
-		on:translate={({ detail }) => {
-			clipperTranslation[0] = detail.x;
-			clipperTranslation[1] = detail.y;
-		}}
-		fill="transparent"
-		stroke={strokeColor}
-		stroke-width="1%"
-		points={translatedClipper.join(' ')}
-	/>
-</svg>
+<figure class="flex flex-col items-center">
+	<figcaption>
+		<label>
+			<span>show clipped points</span>
+			<input type="checkbox" bind:checked={showClippedPoints} />
+		</label>
+	</figcaption>
+
+	<svg viewBox="0 0 {width} {height}">
+		<polygon fill={subjectColor} points={clipped.join(' ')} />
+		<polygon
+			class="cursor-move"
+			use:translatable={{
+				offset: { x: clipperTranslation[0], y: clipperTranslation[1] },
+			}}
+			on:translate={({ detail }) => {
+				clipperTranslation[0] = detail.x;
+				clipperTranslation[1] = detail.y;
+			}}
+			fill="transparent"
+			stroke={strokeColor}
+			stroke-width="1%"
+			points={translatedClipper.join(' ')}
+		/>
+
+		{#if showClippedPoints}
+			{#each clipped as [cx, cy]}
+				<circle {cx} {cy} r="1%" fill={strokeColor} />
+			{/each}
+		{/if}
+	</svg>
+</figure>

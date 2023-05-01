@@ -7,15 +7,15 @@ title: polygon clipping
 
 import PolygonClipper from '../../components/polygon_clipping/PolygonClipper.svelte';
 import EdgePoint from '../../components/polygon_clipping/EdgePoint.svelte';
-import Triangle from '../../components/polygon_clipping/Triangle.svelte';
+import PointInPolygon from '../../components/polygon_clipping/PointInPolygon.svelte';
 import RayCast from '../../components/polygon_clipping/RayCast.svelte';
 import Intersection from '../../components/polygon_clipping/Intersection.svelte';
 import colors from '../../lib/colors';
 
-export const clipper = [
-  [5, 2.5],
-  [7.5, 7.5],
-  [2.5, 7.5],
+export const triangle = [
+  [5, 2],
+  [8, 8],
+  [2, 8],
 ];
 
 export const subject = [
@@ -25,7 +25,10 @@ export const subject = [
 	[-0.5, 0.5],
 ];
 
-export const polygon = [
+export const width = 10;
+export const height = 10;
+
+export const cat = [
 	[9.5, 4],
 	[8.5, 1],
 	[7.5, 3],
@@ -49,14 +52,14 @@ export const polygon = [
 <EdgePoint insideColor={colors.pine} outsideColor={colors.gold} lineColor={colors.text} client:visible />
 
 ## Point in Polygon
-<Triangle insideColor={colors.pine} outsideColor={colors.gold} lineColor={colors.text} client:visible />
+<PointInPolygon width={width} height={height} polygon={triangle} pointX={5} pointY={6} insideColor={colors.pine} outsideColor={colors.gold} lineColor={colors.text} client:visible />
 
 ## Line Intersection
 <Intersection intersectionColor={colors.gold} lineColor={colors.text} pointColor={colors.pine} client:visible />
 
 ## Ray Casting
-<RayCast width={10} height={10} polygon={polygon} insideColor={colors.pine} outsideColor={colors.gold} polygonColor={colors.text} client:visible />
+<RayCast width={width} height={height} polygon={cat} insideColor={colors.pine} outsideColor={colors.gold} polygonColor={colors.text} client:visible />
 
 ## Sutherland-Hodgeman Polygon Clipping
-<PolygonClipper subjectColor={colors.gold} strokeColor={colors.text} width={10} height={10} subject={polygon} clipper={clipper} client:visible />
+<PolygonClipper subjectColor={colors.pine} strokeColor={colors.text} width={10} height={10} subject={cat} clipper={triangle} client:visible />
 

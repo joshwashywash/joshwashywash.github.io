@@ -6,26 +6,22 @@
 	export let lineColor: string;
 	export let outsideColor: string;
 
-	const DIAMETER = 4;
+	export let width: number;
+	export let height: number;
 
-	const triangle: Vec2[] = [
-		[2, 1],
-		[3, 3],
-		[1, 3],
-	];
+	export let polygon: Vec2[];
+	export let pointX: number;
+	export let pointY: number;
 
-	let cx = DIAMETER / 2;
-	let cy = cx;
+	const c = contains(polygon);
 
-	const c = contains(triangle);
-
-	$: fill = c(cx, cy) ? insideColor : outsideColor;
+	$: fill = c(pointX, pointY) ? insideColor : outsideColor;
 </script>
 
-<svg viewBox="0 0 {DIAMETER} {DIAMETER}" xmlns="http://www.w3.org/2000/svg">
+<svg viewBox="0 0 {width} {height}" xmlns="http://www.w3.org/2000/svg">
 	<polygon
 		fill="none"
-		points={triangle.join(' ')}
+		points={polygon.join(' ')}
 		stroke={lineColor}
 		stroke-linecap="round"
 		stroke-width="1%"
@@ -34,13 +30,13 @@
 		style="--stroke-color: {lineColor}"
 		class="cursor-move hover:stroke-[--stroke-color] hover:stroke-[1%]"
 		{fill}
-		use:translatable={{ offset: { x: cx, y: cy } }}
+		use:translatable={{ offset: { x: pointX, y: pointY } }}
 		on:translate={({ detail }) => {
-			cx = detail.x;
-			cy = detail.y;
+			pointX = detail.x;
+			pointY = detail.y;
 		}}
-		{cx}
-		{cy}
+		cx={pointX}
+		cy={pointY}
 		r="3%"
 	/>
 </svg>
