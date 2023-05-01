@@ -11,7 +11,6 @@
 	export let clipper: Vec2[];
 	export let subject: Vec2[];
 
-	let subjectTranslation: Vec2 = [0, 0];
 	let clipperTranslation: Vec2 = [0, 0];
 
 	const add =
@@ -19,10 +18,9 @@
 		(b: Vec2): Vec2 =>
 			[a[0] + b[0], a[1] + b[1]];
 
-	$: translatedSubject = subject.map(add(subjectTranslation));
 	$: translatedClipper = clipper.map(add(clipperTranslation));
 
-	$: clipped = clip(translatedClipper)(translatedSubject);
+	$: clipped = clip(translatedClipper)(subject);
 
 	let showClippedPoints = false;
 </script>
