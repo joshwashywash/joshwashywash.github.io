@@ -1,8 +1,7 @@
 ---
-date: 2023-04-18
-description: an introduction to polygon clipping
-draft: true
-title: polygon clipping
+date: 2023-05-03
+description: an exploration and build up to the sutherland-hodgeman polygon clipping algorithm
+title: sutherland-hodgeman polygon clipping
 ---
 
 import PolygonClipper from '../../components/polygon_clipping/PolygonClipper.svelte';
@@ -12,21 +11,14 @@ import RayCast from '../../components/polygon_clipping/RayCast.svelte';
 import Intersection from '../../components/polygon_clipping/Intersection.svelte';
 import colors from '../../lib/colors';
 
+export const width = 10;
+export const height = 10;
+
 export const triangle = [
   [5, 2],
   [8, 8],
   [2, 8],
 ];
-
-export const subject = [
-	[-0.5, -0.5],
-	[0.5, -0.5],
-	[0.5, 0.5],
-	[-0.5, 0.5],
-];
-
-export const width = 10;
-export const height = 10;
 
 export const cat = [
 	[9.5, 4],
@@ -48,18 +40,85 @@ export const cat = [
 	[8.5, 6],
 ];
 
-## Point on Right Side
+## intro
+
+I'm not really sure how to motivate the exploration of the [sutherland-hodgeman algorithm](https://en.wikipedia.org/wiki/Sutherland%E2%80%93Hodgman_algorithm). I used it for something at work and I thought it was interesting enough to share with the world.
+
+In this post we'll build our way up to a visualization of the algorithm. You can jump straight to the [end](#sutherland-hodgeman-polygon-clipping) if you just want to see the result.
+
+> And just so it's clear, I won't be diving too deep into the theory and explanation of the algorithm. I will link to the resources that I used to help create these visualizations at the end of this post.
+
+> I'll use the terms __vertex__ and __point__ interchangeably to refer to the same thing.
+
+## the problem
+
+In computer graphics and modeling, sometimes there is a need to *clip* geometries. Clipping is the process of selectively rendering parts of an object. The simplest example I can think of is clipping objects in a 3-D scene. If you've spent anytime working with or researching how objects are displayed in a 3-D scene on a 2-D surface such as your monitor you'll see that objects that are beyond a certain depth are *clipped* out of the scene. Why though? Well there's a cost to rendering and it's merely just strategy to improve performance. Objects that are outside the clipping region don't really need to be processed because the user will not see them anyway. Why do all that extra work for something that will never be seen?
+
+This technique isn't only useful for 3-D graphics. There's good reasons to clip objects in 2-D as well. An example of this is image-editing sofware. Programs like photoshop allow you to place objects completely or partially outside of the viewport and any piece of the object that is not visible in the viewport gets clipped.
+
+In the world of modeling (this is what I used the algo for), clipping a polygon can be used to determine exactly what points are needed to render or consider a shape. Knowing these points ensures that you don't get weird anomalies when drawing the shape. I don't want to go too deep into the details cuz it's difficult to explain but take my word for it that clipping polygons has its merits.
+
+## the approach
+
+At a very high level the algorithm considers two polygons: 
+
+1. the subject polygon
+2. the clipping polygon (clipper).
+
+We want to *clip* the subject by the clipper. To do this we'll loop over the edges of the clipper and check each pair of points of an input list of vertices. These vertices define segments of what will be the final clipped polygon and they come from iteratively feeding in the previous input list from the last loop iteration.
+
+On thing that the algorithm requires is a way to tell if point lies on the *inside* of a polygon. This is because we only want to keep points that lie on the inside of our clipping polygon. If a point lies outside, then we either need to clip the segment that this point belongs to or we throw away the point and its segment altogether. 
+
+## point on right side
+
+One important characterstic of the representation of our polygons is that their points are listed in a clockwise order. This gives us a way to traverse the points and an indication of which side of its segments should be considered the **inside** of the polygon. As long as we're traveling clockwise, the interior of the polygon is the right side of any segment of the polygon. Imagine that you are an ant traveling clockwise along the polygon's edges. It's always the case then that to your right is the inside of the polygon and therefore, if we're only considering convex polygons, any point that lies to your right will potentially be inside the polygon. In the demo below, you can drag the point around the space and rotate the line with the slider input. 
+
 <EdgePoint insideColor={colors.pine} outsideColor={colors.gold} lineColor={colors.text} client:visible />
 
-## Point in Polygon
+We can use the cross product in 2-D to determine which side of the line the point is on and update the color accordingly. The cross product will yield either a positive or negative value depending on the directions of the vectors that define the line and the point. The sign of the result is all we really need to know to determine which side the point is on.
+
+## point in polygon
+
+Now that we can determine which side of a line a point lies on, we can extend this idea to determine if a point lies inside a polygon. We do this by looping over the polygon's edges and checking that the point is to the right of every segment. If we're only considering convex polygons, the point should always be to the right. If we're traveling counterclockwise, the point is only inside the polygon if it is to the left of all the segments that comprise the polygon.
+
 <PointInPolygon width={width} height={height} polygon={triangle} pointX={5} pointY={6} insideColor={colors.pine} outsideColor={colors.gold} lineColor={colors.text} client:visible />
 
-## Line Intersection
-<Intersection intersectionColor={colors.gold} lineColor={colors.text} pointColor={colors.pine} client:visible />
+But there is a problem with this approach in that it can not handle **concave** polygons. A concave polygon is any polygon that has an interior angle that measures between 180 and 360 degrees. Luckily there's a simple algorithm that can handle any polygon be it convex or concave. 
 
-## Ray Casting
+## ray casting
+
+All we're going to do is shoot a ray straight to the right from the point that we're considering and count the number of times that the ray crosses the edges of the polygon. If the number of crossings is even, the point lies outside the polygon, if it is odd, the point is inside. This works because we're counting the number of times that we enter and exit the polygon. The polygon has a finite area so we'll eventually exit it if we ever enter it.
+
+In the demo below you can move around the point. The number of times it crosses the polygon's edges is displayed in the bottom right of the figure. If you move the point outside the shape, it will change colors.
+
 <RayCast width={width} height={height} polygon={cat} insideColor={colors.pine} outsideColor={colors.gold} polygonColor={colors.text} client:visible />
 
-## Sutherland-Hodgeman Polygon Clipping
+To be honest, this is actually a detour cuz we don't need it in the final algorithm. I just wanted to show it off. What we do need though is a way to get the intersection point of two lines.
+
+## line intersection
+
+We need a way to get the intersection of two lines because the algorithm may clip lines at the intersection point of a segment of the subject polygon and a clipping edge of the clipper. The technique for this uses some more vector math and linear interpolation. There is a link to a video in [sources](#sources) which describes how to find the point of intersection of two lines.
+
+In the following demo you can drag around any of the line segments' endpoints to see how the intersection point is updated. The lines are treated as segments so if there is no intersection, no intersection is drawn.
+
+<Intersection intersectionColor={colors.gold} lineColor={colors.text} pointColor={colors.pine} client:visible />
+
+## sutherland-hodgeman polygon clipping
+
+The ability to determine intersections and if a point lies inside or outside the polygon are the only two pieces that we really need to finish the sutherland-hodgeman algorithm.
+
+In the final demo below, you can drag around the clipping polygon and see how it clips the subject polygon. You can view the clipped points as well. I kinda just put that toggle switch there to show that the subject polygon is in fact getting clipped and that it's not done using a mask or an svg clip-path.
+
 <PolygonClipper subjectColor={colors.pine} strokeColor={colors.text} width={10} height={10} subject={cat} clipper={triangle} client:visible />
 
+## outro
+
+I actually streamed my progress on this blog post at https://twitch.tv/joshwashywash. I go into a lot more detail on various parts of this post if anyone wants to see my creative process.
+
+I kinda want to explore one more (polygon clipping algorithm)[https://en.wikipedia.org/wiki/Weiler%E2%80%93Atherton_clipping_algorithm] as the sutherland-hodgeman algo does have some limitations. For now, I think I'll probably switch to a different topic and come back to it in the future.
+
+## sources
+
+- [various polygon definitions and properties](https://en.wikipedia.org/wiki/Polygon)
+- [checking if a point is inside a polygon using ray casting](https://www.youtube.com/watch?v=RSXM9bgqxJM&t=301s)
+- [derivation of line intersection calculation](https://www.youtube.com/watch?v=c065KoXooSw&t=949s)
