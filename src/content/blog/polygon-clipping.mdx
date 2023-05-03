@@ -71,7 +71,7 @@ On thing that the algorithm requires is a way to tell if point lies on the *insi
 
 ## point on right side
 
-One important characterstic of the representation of our polygons is that their points are listed in a clockwise order. This gives us a way to traverse the points and an indication of which side of its segments should be considered the **inside** of the polygon. As long as we're traveling clockwise, the interior of the polygon is the right side of any segment of the polygon. Imagine that you are an ant traveling clockwise along the polygon's edges. It's always the case then that to your right is the inside of the polygon and therefore, if we're only considering convex polygons, any point that lies to your right will potentially be inside the polygon. In the demo below, you can drag the point around the space and rotate the line with the slider input. 
+One important characterstic of the representation of our polygons is that their points are listed in a clockwise order. This gives us a way to traverse the points and an indication of which side of its segments should be considered the **inside** of the polygon. As long as we're traveling clockwise, the interior of the polygon is the right side of any segment of the polygon. Imagine that you are an ant traveling clockwise along the polygon's edges. It's always the case then that to your right is the inside of the polygon and therefore, if we're only considering convex polygons, any point that lies to your right will potentially be inside the polygon. 
 
 <EdgePoint insideColor={colors.pine} outsideColor={colors.gold} lineColor={colors.text} client:visible />
 
