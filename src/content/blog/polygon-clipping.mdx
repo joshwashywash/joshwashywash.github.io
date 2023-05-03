@@ -63,7 +63,7 @@ In the world of modeling (this is what I used the algo for), clipping a polygon 
 At a very high level the algorithm considers two polygons: 
 
 1. the subject polygon
-2. the clipping polygon (clipper).
+2. the clipping polygon (clipper)
 
 We want to *clip* the subject by the clipper. To do this we'll loop over the edges of the clipper and check each pair of points of an input list of vertices. These vertices define segments of what will be the final clipped polygon and they come from iteratively feeding in the previous input list from the last loop iteration.
 
