@@ -19,8 +19,8 @@ const { Content, headings } = await post.render();
 ---
 
 <Base title={post.data.title} description={post.data.description}>
-	<main class="flex justify-evenly px-8 pt-4">
-		<article class="prose prose-rose prose-quoteless mb-40 lg:prose-xl">
+	<main class="flex justify-evenly px-8 pt-4 lg:gap-4">
+		<article class="prose prose-rose prose-quoteless mb-40 w-full lg:prose-xl">
 			<h1>{post.data.title}</h1>
 			<time datetime={post.data.date.toISOString()}>
 				{
