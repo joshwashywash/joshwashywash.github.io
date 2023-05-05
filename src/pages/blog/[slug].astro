@@ -33,7 +33,7 @@ const { Content, headings } = await post.render();
 		</article>
 		{
 			headings.length > 0 && (
-				<section class="max-w-[30ch]">
+				<aside class="max-w-[30ch]">
 					<nav
 						aria-label="table of contents"
 						class="sticky top-8 hidden lg:block"
@@ -46,7 +46,7 @@ const { Content, headings } = await post.render();
 							))}
 						</ul>
 					</nav>
-				</section>
+				</aside>
 			)
 		}
 	</main>
