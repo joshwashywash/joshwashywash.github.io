@@ -19,7 +19,7 @@
 	use:turtle={{
 		angle: Math.PI / 6,
 		amount,
-		colors(i) {
+		color(i) {
 			return `hsl(${i ?? 0}, 100%, 75%, 25%)`;
 		},
 		sequences,

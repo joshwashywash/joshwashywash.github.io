@@ -19,7 +19,7 @@ export const turtle: Action<
 	{
 		amount: number;
 		angle: number;
-		colors: (index?: number) => string;
+		color: (index?: number) => string;
 		sequences: number[][];
 		size: number;
 		thickness: number;
@@ -29,7 +29,7 @@ export const turtle: Action<
 	options = {
 		amount: 5,
 		angle: Math.PI / 6,
-		colors() {
+		color() {
 			return 'black';
 		},
 		sequences: [],
@@ -46,7 +46,7 @@ export const turtle: Action<
 		context.lineJoin = 'round';
 		let i = 0;
 		for (const sequence of options.sequences) {
-			context.strokeStyle = options.colors(i);
+			context.strokeStyle = options.color(i);
 			context.translate(canvas.width / 2, canvas.height / 2);
 			context.beginPath();
 			context.moveTo(0, 0);
