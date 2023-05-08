@@ -8,19 +8,19 @@
 	);
 
 	const size = 1000;
-	const scale = 0.8;
+	const scale = 0.6;
 
-	const amount = size * scale * (2 / 100);
+	const amount = size * scale * (3 / 100);
 	const thickness = size * (1 / 100);
 </script>
 
 <canvas
-	class="w-full max-w-max"
+	class="w-full"
 	use:turtle={{
 		angle: Math.PI / 6,
 		amount,
 		color(i) {
-			return `hsl(${i ?? 0}, 100%, 75%, 25%)`;
+			return `hsl(${i ?? 0}, 100%, 75%, 50%)`;
 		},
 		sequences,
 		size,
