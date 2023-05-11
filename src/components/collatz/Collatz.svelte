@@ -36,8 +36,7 @@
 		stroke-width="1%"
 	>
 		{#each ds as d, i}
-			{@const stroke = `hsl(${i} 100% 50%)`}
-			<path {stroke} {d} />
+			<path stroke={`hsl(${i} 100% 50%)`} {d} />
 		{/each}
 	</g>
 </svg>
