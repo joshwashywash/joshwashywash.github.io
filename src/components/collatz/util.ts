@@ -1,5 +1,3 @@
-import type { Action } from 'svelte/action';
-
 const collatz = (n: number) => (n % 2 === 0 ? n / 2 : 3 * n + 1);
 
 export const collatzSequence = (n: number): number[] => {
