@@ -8,3 +8,24 @@ export const collatzSequence = (n: number): number[] => {
 	}
 	return sequence;
 };
+
+export const path = (
+	size: number,
+	forward: number,
+	angle: number,
+	spreadAngle = 0
+) => {
+	const center = size / 2;
+	const angles = [angle, -angle];
+	let s = 0;
+	return (sequence: number[]) => {
+		let d = `m${center}, ${center}`;
+		let a = s;
+		for (let i = sequence.length - 1; i >= 0; i -= 1) {
+			a += angles[sequence[i] & 1];
+			d += `l${forward * Math.cos(a)}, ${forward * Math.sin(a)}`;
+		}
+		s += spreadAngle;
+		return d;
+	};
+};

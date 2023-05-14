@@ -1,27 +1,16 @@
 <script lang="ts">
-	import { collatzSequence } from './util';
+	import { collatzSequence, path } from './util';
 
 	export let n = 1;
 	export let size = 10;
 	export let scale = 0.7;
+	export let angle = Math.PI / 6;
+	export let forward = size * scale * (3 / 100);
+	export let spread = 0;
 
-	const amount = size * scale * (3 / 100);
+	const divs = 360 / n;
 
-	const path = (size: number, amount: number, angle: number) => {
-		const center = size / 2;
-		const angles = [angle, -angle];
-		return (sequence: number[]) => {
-			let d = `m${center}, ${center}`;
-			let a = 0;
-			for (let i = sequence.length - 1; i >= 0; i -= 1) {
-				a += angles[sequence[i] & 1];
-				d += `l${amount * Math.cos(a)}, ${amount * Math.sin(a)}`;
-			}
-			return d;
-		};
-	};
-
-	const pather = path(size, amount, Math.PI / 6);
+	const pather = path(size, forward, angle, spread);
 
 	const ds = Array.from({ length: n }, (_, i) =>
 		pather(collatzSequence(n - i))
@@ -36,7 +25,7 @@
 		stroke-width="1%"
 	>
 		{#each ds as d, i}
-			<path stroke={`hsl(${i} 100% 50%)`} {d} />
+			<path stroke={`hsl(${divs * i} 100% 50%)`} {d} />
 		{/each}
 	</g>
 </svg>
