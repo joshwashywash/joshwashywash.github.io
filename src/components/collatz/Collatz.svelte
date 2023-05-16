@@ -19,7 +19,19 @@
 	$: ds = Array.from({ length: n }, (_, i) => pather(collatzSequence(n - i)));
 </script>
 
-<figure class="flex flex-col items-center gap-2">
+<figure
+	class="flex flex-col items-center justify-center gap-4 sm:flex-row-reverse sm:gap-8"
+>
+	<fieldset class="flex flex-col gap-2">
+		<label class="flex flex-col items-center">
+			angle: {angle}
+			<input type="range" bind:value={angle} min={0} max={180} />
+		</label>
+		<label class="flex flex-col items-center">
+			forward: {forward}
+			<input type="range" bind:value={forward} min={0} max={100} />
+		</label>
+	</fieldset>
 	<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {size} {size}">
 		<g
 			stroke-linecap="round"
@@ -32,14 +44,4 @@
 			{/each}
 		</g>
 	</svg>
-	<fieldset class="flex flex-col gap-2">
-		<label class="flex flex-col items-center">
-			angle: {angle}
-			<input type="range" bind:value={angle} min={0} max={180} />
-		</label>
-		<label class="flex flex-col items-center">
-			forward: {forward}
-			<input type="range" bind:value={forward} min={0} max={100} />
-		</label>
-	</fieldset>
 </figure>
