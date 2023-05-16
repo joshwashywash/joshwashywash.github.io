@@ -28,12 +28,12 @@
 </script>
 
 <figure class="flex flex-col items-center gap-2">
-	<figcaption>
+	<fieldset>
 		<label class="flex items-center gap-2">
 			<span>angle: {angle}</span>
 			<input bind:value={angle} type="range" max="180" />
 		</label>
-	</figcaption>
+	</fieldset>
 	<svg
 		class="w-5/6"
 		viewBox="{-RADIUS} {-RADIUS} {DIAMETER} {DIAMETER}"
@@ -56,4 +56,3 @@
 		/>
 	</svg>
 </figure>
-
