@@ -1,10 +1,12 @@
 ---
 date: 2023-05-05
-draft: true
 description: a collatz conjecture visualization
 title: collatz conjecture
 ---
 
 import Collatz from '../../components/collatz/Collatz.svelte'
 
-<Collatz n={500} client:visible />
+export const n = 360
+
+
+<Collatz n={n} client:visible />

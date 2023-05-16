@@ -1,4 +1,4 @@
-const collatz = (n: number) => (n % 2 === 0 ? n / 2 : 3 * n + 1);
+const collatz = (n: number): number => (n % 2 === 0 ? n / 2 : 3 * n + 1);
 
 export const collatzSequence = (n: number): number[] => {
 	const sequence = [n];
