@@ -26,12 +26,12 @@
 </script>
 
 <figure class="flex flex-col items-center">
-	<figcaption>
+	<fieldset>
 		<label>
 			<span>show clipped points</span>
 			<input type="checkbox" bind:checked={showClippedPoints} />
 		</label>
-	</figcaption>
+	</fieldset>
 
 	<svg viewBox="0 0 {width} {height}">
 		<polygon fill={subjectColor} points={clipped.join(' ')} />

@@ -17,7 +17,7 @@
 	<p>loading...</p>
 {:then audio}
 	<figure class="flex flex-col items-center gap-2">
-		<figcaption>
+		<fieldset>
 			<Button
 				on:click={() => {
 					if (playing) {
@@ -34,7 +34,7 @@
 					play
 				{/if}
 			</Button>
-		</figcaption>
+		</fieldset>
 		<canvas
 			use:visualizer={{ audio, borderWidth, fillColor, fftSize, strokeColor }}
 		/>
