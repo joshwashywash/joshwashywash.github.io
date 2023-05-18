@@ -38,7 +38,7 @@ export const clip = (clipper: Vec2[]) => {
 /*
  * 0 <= t <= 1
  */
-const lerp = (a: number, b: number) => (t: number) => a + (b - a) * t;
+const lerp = (a: number, b: number) => (t: number) => (1 - t) * a + t * b;
 
 export const contains = (polygon: Vec2[]) => {
 	const { length } = polygon;
