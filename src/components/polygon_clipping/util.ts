@@ -54,13 +54,7 @@ export const contains = (polygon: Vec2[]) => {
 	};
 };
 
-export const intersection = (
-	ax: number,
-	ay: number,
-	bx: number,
-	by: number,
-	segment = false
-) => {
+export const intersection = (ax: number, ay: number, bx: number, by: number, segment = false) => {
 	const rx = bx - ax;
 	const ry = by - ay;
 	return (cx: number, cy: number, dx: number, dy: number): Vec2 | null => {

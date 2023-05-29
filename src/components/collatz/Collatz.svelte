@@ -19,9 +19,7 @@
 	$: ds = Array.from({ length: n }, (_, i) => pather(collatzSequence(n - i)));
 </script>
 
-<figure
-	class="flex flex-col items-center justify-center gap-4 sm:flex-row-reverse sm:gap-8"
->
+<figure class="flex flex-col items-center justify-center gap-4 sm:flex-row-reverse sm:gap-8">
 	<fieldset class="flex flex-col gap-2">
 		<label class="flex flex-col items-center">
 			angle: {angle}
@@ -33,12 +31,7 @@
 		</label>
 	</fieldset>
 	<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {size} {size}">
-		<g
-			stroke-linecap="round"
-			stroke-linejoin="round"
-			fill="none"
-			stroke-width="1%"
-		>
+		<g stroke-linecap="round" stroke-linejoin="round" fill="none" stroke-width="1%">
 			{#each ds as d, i}
 				<path stroke={`hsl(${divs * i} 100% 50%)`} {d} />
 			{/each}

@@ -2,13 +2,7 @@
 	import type { Offset } from '../../lib/bezier';
 	import { aperture } from '../../lib/array';
 	import { derived } from 'svelte/store';
-	import {
-		diff,
-		midpoint,
-		multiply,
-		toVec2,
-		type Vec3,
-	} from '../../lib/vector';
+	import { diff, midpoint, multiply, toVec2, type Vec3 } from '../../lib/vector';
 	import { example, type Polygon } from '../../lib/polygon';
 	import { tweened } from 'svelte/motion';
 	import { createIgnoreTab } from '../../lib/keys';
@@ -25,12 +19,10 @@
 	const [m0] = midpoints;
 	midpoints.push(m0);
 
-	const blobOffsets: Offset[] = aperture(2, midpoints).map(
-		([end, control], i) => [
-			diff(polygon[(i + 1) % polygon.length], end),
-			diff(control, end),
-		]
-	);
+	const blobOffsets: Offset[] = aperture(2, midpoints).map(([end, control], i) => [
+		diff(polygon[(i + 1) % polygon.length], end),
+		diff(control, end),
+	]);
 
 	const polygonOffsets: Offset[] = pairs.map(([end, control]) => [
 		diff(control, end),
@@ -57,9 +49,7 @@
 			)
 			.join(' ')}`;
 
-	const d = derived([start$, offsets$], ([$start, $offsets]) =>
-		createPath($start, $offsets)
-	);
+	const d = derived([start$, offsets$], ([$start, $offsets]) => createPath($start, $offsets));
 
 	const transform = () => {
 		index = (index + 1) % starts.length;

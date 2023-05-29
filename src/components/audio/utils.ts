@@ -39,12 +39,7 @@ export const visualizer: Action<
 
 			const animate = () => {
 				analyser.getByteFrequencyData(data);
-				canvasContext.clearRect(
-					borderWidth,
-					borderWidth,
-					innerWidth,
-					innerHeight
-				);
+				canvasContext.clearRect(borderWidth, borderWidth, innerWidth, innerHeight);
 				for (let i = 0; i < l; i += 1) {
 					const h = (data[i] / 255) * innerHeight;
 					const y = borderWidth + innerHeight - h;

@@ -1,13 +1,7 @@
 <script lang="ts">
 	import type { Offset } from '../../lib/bezier';
 	import { aperture } from '../../lib/array';
-	import {
-		diff,
-		midpoint,
-		multiply,
-		toVec2,
-		type Vec3,
-	} from '../../lib/vector';
+	import { diff, midpoint, multiply, toVec2, type Vec3 } from '../../lib/vector';
 	import { example, type Polygon } from '../../lib/polygon';
 
 	export let width = 10;
@@ -18,9 +12,7 @@
 
 	const strokeWidth = width / 100;
 
-	const [m0, ...ms] = aperture(2, [...polygon, polygon[0]]).map(([p1, p2]) =>
-		midpoint(p1, p2)
-	);
+	const [m0, ...ms] = aperture(2, [...polygon, polygon[0]]).map(([p1, p2]) => midpoint(p1, p2));
 
 	const offsets: Offset[] = aperture(2, [m0, ...ms, m0]).map(([m1, m2], i) => {
 		const controlPoint = polygon[(i + 1) % polygon.length];

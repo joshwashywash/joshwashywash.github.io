@@ -3,9 +3,8 @@ import Base from '../../layouts/Base.astro';
 import Link from '../../components/Link.svelte';
 import { getCollection } from 'astro:content';
 
-const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
-	(a, b) =>
-		[a, b].map((c) => new Date(c.data.date).getTime()).reduce((a, b) => b - a)
+const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort((a, b) =>
+	[a, b].map((c) => new Date(c.data.date).getTime()).reduce((a, b) => b - a)
 );
 ---
 
@@ -16,7 +15,7 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
 				posts.map((post) => (
 					<li class="flex flex-col">
 						<Link href={`/blog/${post.slug}`} client:load>
-							<span class="underline text-2xl">{post.data.title}</span>
+							<span class="text-2xl underline">{post.data.title}</span>
 						</Link>
 						<time datetime={post.data.date.toISOString()}>
 							{post.data.date.toLocaleDateString('en-us', {

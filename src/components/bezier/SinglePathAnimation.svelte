@@ -1,13 +1,7 @@
 <script lang="ts">
 	import type { Offset } from '../../lib/bezier';
 	import { aperture } from '../../lib/array';
-	import {
-		diff,
-		midpoint,
-		multiply,
-		toVec2,
-		type Vec3,
-	} from '../../lib/vector';
+	import { diff, midpoint, multiply, toVec2, type Vec3 } from '../../lib/vector';
 	import { example, type Polygon } from '../../lib/polygon';
 
 	export let width = 10;
@@ -35,15 +29,10 @@
 	stroke-linecap="round"
 	stroke-linejoin="round"
 >
-	<polygon
-		points={polygon.map((p) => toVec2(multiply(scale, p))).join()}
-		class="fill-pine/50"
-	/>
+	<polygon points={polygon.map((p) => toVec2(multiply(scale, p))).join()} class="fill-pine/50" />
 	<circle {cx} {cy} r={strokeWidth} class="fill-love" />
 	<polyline
-		points={pairs
-			.map((pair) => pair.map((v) => toVec2(multiply(scale, v))))
-			.join()}
+		points={pairs.map((pair) => pair.map((v) => toVec2(multiply(scale, v)))).join()}
 		stroke-width={strokeWidth}
 		class="draw-fill-forwards stroke-love/50"
 		fill="none"

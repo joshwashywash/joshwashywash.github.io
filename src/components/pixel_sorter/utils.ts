@@ -48,11 +48,7 @@ export const sorter: Action<
 			downX = cx(e.offsetX);
 			downY = cy(e.offsetY);
 			if (context) {
-				oscc?.putImageData(
-					context.getImageData(0, 0, canvas.width, canvas.height),
-					0,
-					0
-				);
+				oscc?.putImageData(context.getImageData(0, 0, canvas.width, canvas.height), 0, 0);
 			}
 		};
 
@@ -63,11 +59,7 @@ export const sorter: Action<
 
 			if (down) {
 				if (oscc) {
-					context?.putImageData(
-						oscc.getImageData(0, 0, osc.width, osc.height),
-						0,
-						0
-					);
+					context?.putImageData(oscc.getImageData(0, 0, osc.width, osc.height), 0, 0);
 				}
 				if (context && downX && downY) {
 					const moveX = cx(e.offsetX);
@@ -96,11 +88,7 @@ export const sorter: Action<
 					if (context) {
 						const pixels = new Uint32Array(data.data.buffer);
 						pixels.sort(sort);
-						context.putImageData(
-							data,
-							Math.min(downX, upX),
-							Math.min(downY, upY)
-						);
+						context.putImageData(data, Math.min(downX, upX), Math.min(downY, upY));
 					}
 				}
 			}

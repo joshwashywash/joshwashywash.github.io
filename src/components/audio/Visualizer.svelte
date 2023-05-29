@@ -35,8 +35,6 @@
 				{/if}
 			</Button>
 		</fieldset>
-		<canvas
-			use:visualizer={{ audio, borderWidth, fillColor, fftSize, strokeColor }}
-		/>
+		<canvas use:visualizer={{ audio, borderWidth, fillColor, fftSize, strokeColor }} />
 	</figure>
 {/await}

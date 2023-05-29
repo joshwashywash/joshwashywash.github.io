@@ -24,17 +24,10 @@
 	const d = derived(
 		curve,
 		([start, control, end]): string =>
-			`M${toVec2(start)}q${toVec2(diff(control, start))} ${toVec2(
-				diff(end, start)
-			)}`
+			`M${toVec2(start)}q${toVec2(diff(control, start))} ${toVec2(diff(end, start))}`
 	);
 
-	const randomBezier = (
-		minX: number,
-		maxX: number,
-		minY: number,
-		maxY: number
-	): Curve => {
+	const randomBezier = (minX: number, maxX: number, minY: number, maxY: number): Curve => {
 		const rix = () => randomInt(minX, maxX);
 		const riy = () => randomInt(minY, maxY);
 		return [

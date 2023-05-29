@@ -21,12 +21,7 @@
 </script>
 
 <svg viewBox="0 0 {width} {height}" xmlns="http://www.w3.org/2000/svg">
-	<polygon
-		stroke={polygonColor}
-		stroke-width="1%"
-		fill="none"
-		points={polygon.join(' ')}
-	/>
+	<polygon stroke={polygonColor} stroke-width="1%" fill="none" points={polygon.join(' ')} />
 	<line x1={cx} y1={cy} x2={width} y2={cy} stroke={color} stroke-width="1%" />
 	<circle
 		style="--stroke-color: {polygonColor}"
@@ -47,14 +42,7 @@
 			<circle {cx} {cy} r="1%" />
 		{/each}
 	</g>
-	<text
-		class="text-[10%]"
-		x={width}
-		y={height - height / 10}
-		text-anchor="end"
-		fill={polygonColor}
-	>
+	<text class="text-[10%]" x={width} y={height - height / 10} text-anchor="end" fill={polygonColor}>
 		{ints.length}
 	</text>
 </svg>
-

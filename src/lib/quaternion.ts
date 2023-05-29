@@ -6,30 +6,27 @@ export type Quaternion = {
 };
 
 export const conjugate = (q: Quaternion): Quaternion => {
-	const { scalar, vector } = q;
 	return {
-		scalar,
-		vector: negate(vector),
+		...q,
+		vector: negate(q.vector),
 	};
 };
 
 export const createRotation = (unit: Vec3, theta: number): Quaternion => {
-	const r = Math.sin(theta / 2);
-	const [xHat, yHat, zHat] = unit;
 	return {
 		scalar: Math.cos(theta / 2),
-		vector: [xHat * r, yHat * r, zHat * r],
+		vector: createScale(Math.sin(theta / 2))(unit),
 	};
 };
 
 export const multiply = (r: Quaternion, s: Quaternion): Quaternion => {
-	const { scalar: rs, vector: rv } = r;
-	const { scalar: ss, vector: sv } = s;
 	return {
-		scalar: rs * ss - dot(rv, sv),
-		vector: [createScale(ss)(rv), createScale(rs)(sv), cross(rv, sv)].reduce(
-			(acc, curr) => add(acc, curr)
-		),
+		scalar: r.scalar * s.scalar - dot(r.vector, s.vector),
+		vector: [
+			createScale(s.scalar)(r.vector),
+			createScale(r.scalar)(s.vector),
+			cross(r.vector, s.vector),
+		].reduce((acc, curr) => add(acc, curr)),
 	};
 };
 

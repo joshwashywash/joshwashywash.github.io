@@ -44,13 +44,6 @@
 
 	{#if point}
 		{@const [cx, cy] = point}
-		<circle
-			{cx}
-			{cy}
-			stroke-width="1%"
-			stroke={lineColor}
-			fill={intersectionColor}
-			r="3%"
-		/>
+		<circle {cx} {cy} stroke-width="1%" stroke={lineColor} fill={intersectionColor} r="3%" />
 	{/if}
 </svg>

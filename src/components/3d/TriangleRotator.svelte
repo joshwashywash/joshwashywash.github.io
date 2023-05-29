@@ -1,17 +1,6 @@
 <script lang="ts">
-	import {
-		createRotation,
-		fromVector,
-		multiply,
-		rotate,
-		toVector,
-	} from '../../lib/quaternion';
-	import {
-		type Vec3,
-		createScale,
-		type Vec2,
-		rotateRight,
-	} from '../../lib/vector';
+	import { createRotation, fromVector, multiply, rotate, toVector } from '../../lib/quaternion';
+	import { type Vec3, createScale, type Vec2, rotateRight } from '../../lib/vector';
 	import { onMount, onDestroy } from 'svelte';
 
 	type Triangle = {
@@ -63,18 +52,11 @@
 	const iHat: Vec3 = [1, 0, 0];
 	const jHat = rotateRight(iHat);
 
-	$: rotation = multiply(
-		createRotation(iHat, theta),
-		createRotation(jHat, phi)
-	);
+	$: rotation = multiply(createRotation(iHat, theta), createRotation(jHat, phi));
 
-	$: rotated = points.map((point) =>
-		toVector(rotate(rotation, fromVector(point)))
-	);
+	$: rotated = points.map((point) => toVector(rotate(rotation, fromVector(point))));
 
-	$: sorted = triangles.sort(
-		(a, b) => rotated[b.indices[0]][2] - rotated[a.indices[0]][2]
-	);
+	$: sorted = triangles.sort((a, b) => rotated[b.indices[0]][2] - rotated[a.indices[0]][2]);
 
 	$: svgPoints = rotated.map((point) => toSVGCoordinates(scale(point)));
 
@@ -94,10 +76,6 @@
 	stroke-linecap="round"
 >
 	{#each sorted as { indices, color }}
-		<polygon
-			stroke={color}
-			fill={color}
-			points={`${indices.map((i) => svgPoints[i])}`}
-		/>
+		<polygon stroke={color} fill={color} points={`${indices.map((i) => svgPoints[i])}`} />
 	{/each}
 </svg>

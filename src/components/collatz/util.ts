@@ -9,12 +9,7 @@ export const collatzSequence = (n: number): number[] => {
 	return sequence;
 };
 
-export const path = (
-	size: number,
-	forward: number,
-	angle: number,
-	spreadAngle: number
-) => {
+export const path = (size: number, forward: number, angle: number, spreadAngle: number) => {
 	const center = size / 2;
 	const angles = [angle, -angle];
 	let s = 0;
