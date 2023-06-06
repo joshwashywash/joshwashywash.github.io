@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { createRotation, fromVector, multiply, rotate, toVector } from '../../lib/quaternion';
 	import { type Vec3, createScale, type Vec2, rotateRight } from '../../lib/vector';
-	import { onMount, onDestroy } from 'svelte';
+	import { onMount } from 'svelte';
 
 	type Triangle = {
 		indices: Vec3;
@@ -62,10 +62,11 @@
 
 	onMount(() => {
 		frame = requestAnimationFrame(animate);
-	});
-
-	onDestroy(() => {
-		if (frame) cancelAnimationFrame(frame);
+		return () => {
+			if (frame !== undefined) {
+				cancelAnimationFrame(frame);
+			}
+		};
 	});
 </script>
 
