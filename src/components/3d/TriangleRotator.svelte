@@ -61,7 +61,7 @@
 	$: svgPoints = rotated.map((point) => toSVGCoordinates(scale(point)));
 
 	onMount(() => {
-		frame = requestAnimationFrame(animate);
+		animate();
 		return () => {
 			if (frame !== undefined) {
 				cancelAnimationFrame(frame);
