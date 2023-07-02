@@ -52,9 +52,9 @@ In this post we'll build our way up to a visualization of the algorithm. You can
 
 ## the problem
 
-In computer graphics and modeling, sometimes there is a need to _clip_ geometries. Clipping is the process of selectively rendering parts of an object. The simplest example I can think of is clipping objects in a 3-D scene. If you've spent anytime working with or researching how objects are displayed in a 3-D scene on a 2-D surface such as your monitor you'll see that objects that are beyond a certain depth are _clipped_ out of the scene. Why though? Well there's a cost to rendering and it's merely just strategy to improve performance. Objects that are outside the clipping region don't really need to be processed because the user will not see them anyway. Why do all that extra work for something that will never be seen?
+In computer graphics and modeling, sometimes there is a need to _clip_ geometries. Clipping is the process of selectively rendering parts of an object. The simplest example I can think of is clipping objects in a 3-D scene. If you've spent anytime working with or researching how objects are displayed in a 3-D scene on a 2-D surface such as your monitor you'll see that objects that are beyond a certain depth are _clipped_ out of the scene. Why though? Well there's a cost to rendering and it's clipping is merely just a strategy to improve performance. Objects that are outside the clipping region don't really need to be processed because the user will not see them anyway. Why do all that extra work for something that will never be seen?
 
-This technique isn't only useful for 3-D graphics. There's good reasons to clip objects in 2-D as well. An example of this is image-editing sofware. Programs like photoshop allow you to place objects completely or partially outside of the viewport and any piece of the object that is not visible in the viewport gets clipped.
+This technique isn't only useful for 3-D graphics. There's good reasons to clip objects in 2-D as well. An example being image-editing sofware. Programs like photoshop allow you to place objects completely or partially outside of the viewport and any piece of the object that is not visible in the viewport gets clipped.
 
 In the world of modeling (this is what I used the algo for), clipping a polygon can be used to determine exactly what points are needed to render or consider a shape. Knowing these points ensures that you don't get weird anomalies when drawing the shape. I don't want to go too deep into the details cuz it's difficult to explain but take my word for it that clipping polygons has its merits.
 
@@ -62,8 +62,8 @@ In the world of modeling (this is what I used the algo for), clipping a polygon 
 
 At a very high level the algorithm considers two polygons:
 
-1. the subject polygon
-2. the clipping polygon (clipper)
+1. the polygon to clip aka the subject
+2. the polygon to clip to aka the clipper
 
 We want to _clip_ the subject by the clipper. To do this we'll loop over the edges of the clipper and check each pair of points of an input list of vertices. These vertices define segments of what will be the final clipped polygon and they come from iteratively feeding in the previous input list from the last loop iteration.
 
@@ -98,7 +98,7 @@ Now that we can determine which side of a line a point lies on, we can extend th
 	client:visible
 />
 
-But there is a problem with this approach in that it can not handle **concave** polygons. A concave polygon is any polygon that has an interior angle that measures between 180 and 360 degrees. Luckily there's a simple algorithm that can handle any polygon be it convex or concave.
+But there is a problem with this approach in that it can not handle **concave** polygons. A concave polygon is any polygon that has at least one interior angle that measures between 180 and 360 degrees. Luckily there's a simple algorithm that can handle any polygon be it convex or concave.
 
 ## ray casting
 
@@ -116,7 +116,7 @@ In the demo below you can move around the point. The number of times it crosses 
 	client:visible
 />
 
-To be honest, this is actually a detour cuz we don't need it in the final algorithm. I just wanted to show it off. What we do need though is a way to get the intersection point of two lines.
+To be honest, this is actually a detour cuz we don't need it in the final algorithm. I just wanted to show it off. What we actually need is a way to get the intersection point of two lines.
 
 ## line intersection
 
@@ -153,7 +153,7 @@ I actually streamed my progress on this blog post at https://twitch.tv/joshwashy
 
 A playlist of these videos can be found [here](https://www.youtube.com/playlist?list=PLAMKWiWwP_OSQBtWkczGYzI0V_N_vuzeX).
 
-I kinda want to explore one more [polygon clipping algorithm](https://en.wikipedia.org/wiki/Weiler%E2%80%93Atherton_clipping_algorithm) as the sutherland-hodgeman algo does have some limitations. For now, I think I'll probably switch to a different topic and come back to it in the future.
+I kinda want to explore one more [polygon clipping algorithm](https://en.wikipedia.org/wiki/Weiler%E2%80%93Atherton_clipping_algorithm) that dosen't have the same limitation that the sutherland-hodgeman algo has. For now, I think I'll probably switch to a different topic and come back to it in the future.
 
 ## sources
 
