@@ -1,14 +1,14 @@
 <script lang="ts">
 	import { right, translatable } from './util';
 
-	const RADIUS = Math.SQRT2 / 2;
+	const RADIUS = Math.SQRT2 * 0.5;
 	const DIAMETER = 2 * RADIUS;
 
 	export let insideColor: string;
 	export let lineColor: string;
 	export let outsideColor: string;
 
-	let cx = -RADIUS / 2;
+	let cx = -RADIUS * 0.5;
 	let cy = 0;
 
 	let angle = 90;

@@ -1,4 +1,6 @@
-const collatz = (n: number): number => (n % 2 === 0 ? n / 2 : 3 * n + 1);
+const collatz = (n: number): number => (n % 2 === 0 ? n * 0.5 : 3 * n + 1);
+
+export const toRads = (d: number) => (Math.PI / 180) * d;
 
 export const collatzSequence = (n: number): number[] => {
 	const sequence = [n];
@@ -10,7 +12,7 @@ export const collatzSequence = (n: number): number[] => {
 };
 
 export const path = (size: number, forward: number, angle: number, spreadAngle: number) => {
-	const center = size / 2;
+	const center = size * 0.5;
 	const angles = [angle, -angle];
 	let s = 0;
 	return (sequence: number[]) => {

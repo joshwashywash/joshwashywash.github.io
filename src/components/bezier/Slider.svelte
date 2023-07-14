@@ -1,18 +1,19 @@
 <script lang="ts">
-	import { example, type Polygon } from '../../lib/polygon';
+	import type { Offset } from '../../lib/bezier';
+	import type { Polygon } from '../../lib/polygon';
+	import type { Vec3 } from '../../lib/vector';
 	import { aperture } from '../../lib/array';
 	import { createClamp } from '../../lib/number';
-	import { diff, midpoint, multiply, toVec2, type Vec3 } from '../../lib/vector';
-	import type { Offset } from '../../lib/bezier';
+	import { diff, midpoint, multiply, toVec2 } from '../../lib/vector';
 
-	export let width = 10;
-	export let height = 10;
+	export let width: number;
+	export let height: number;
 	export let strokeWidth = width / 100;
-	export let polygon: Polygon = example;
+	export let polygon: Polygon;
 
 	const scale: Vec3 = [width, height, 0];
 
-	let _x = width / 2;
+	let _x = width * 0.5;
 
 	const [m0, ...ms] = aperture(2, [...polygon, polygon[0]]).map(([p1, p2]) => midpoint(p1, p2));
 
@@ -96,7 +97,7 @@
 			on:focus={grab}
 			on:blur={ungrab}
 			cx={_x}
-			cy={height / 2}
+			cy={height * 0.5}
 			r={4 * strokeWidth}
 			tabIndex={0}
 		/>

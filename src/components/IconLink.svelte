@@ -2,9 +2,9 @@
 	import Icon from './Icon.svelte';
 	import type { Link } from '../types';
 
-	export let link: Link;
-
-	const { href, name } = link;
+	type $$Props = Link;
+	export let name: $$Props['name'];
+	export let href: $$Props['href'];
 </script>
 
 <a

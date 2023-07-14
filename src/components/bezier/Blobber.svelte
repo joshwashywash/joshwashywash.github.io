@@ -1,13 +1,14 @@
 <script lang="ts">
 	import type { Offset } from '../../lib/bezier';
+	import type { Polygon } from '../../lib/polygon';
+	import type { Vec3 } from '../../lib/vector';
 	import { aperture } from '../../lib/array';
-	import { derived } from 'svelte/store';
-	import { diff, midpoint, multiply, toVec2, type Vec3 } from '../../lib/vector';
-	import { example, type Polygon } from '../../lib/polygon';
-	import { tweened } from 'svelte/motion';
 	import { createIgnoreTab } from '../../lib/keys';
+	import { derived } from 'svelte/store';
+	import { diff, midpoint, multiply, toVec2 } from '../../lib/vector';
+	import { tweened } from 'svelte/motion';
 
-	export let polygon: Polygon = example;
+	export let polygon: Polygon;
 	export let width = 10;
 	export let height = 10;
 

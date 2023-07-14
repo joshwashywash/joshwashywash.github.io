@@ -1,6 +1,7 @@
 <script lang="ts">
+	import type { Vec3, Vec2 } from '../../lib/vector';
 	import { createRotation, fromVector, multiply, rotate, toVector } from '../../lib/quaternion';
-	import { type Vec3, createScale, type Vec2, rotateRight } from '../../lib/vector';
+	import { createScale, iHat, jHat } from '../../lib/vector';
 	import { onMount } from 'svelte';
 
 	type Triangle = {
@@ -11,13 +12,12 @@
 	export let width: number;
 	export let height: number;
 	export let distance = 3;
-
-	const scale = createScale(1 / distance);
-
 	export let points: Vec3[];
 	export let triangles: Triangle[];
 	export let dPhi = 0.01;
 	export let dTheta = 0.03;
+
+	const scale = createScale(1 / distance);
 
 	let theta = 0;
 	let phi = 0;
@@ -43,14 +43,11 @@
 			const [xCoordinate, yCoordinate] = [
 				[x, xDiff, svgWidth],
 				[y, yDiff, svgHeight],
-			].map(([xy, diff, dimension]) => (xy / diff) * dimension + dimension / 2);
+			].map(([xy, diff, dimension]) => (xy / diff) * dimension + dimension * 0.5);
 			return [xCoordinate, svgHeight - yCoordinate];
 		};
 
 	const toSVGCoordinates = createToSVGCoordinates(xDiff, yDiff, width, height);
-
-	const iHat: Vec3 = [1, 0, 0];
-	const jHat = rotateRight(iHat);
 
 	$: rotation = multiply(createRotation(iHat, theta), createRotation(jHat, phi));
 

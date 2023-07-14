@@ -1,12 +1,13 @@
 <script lang="ts">
 	import type { Offset } from '../../lib/bezier';
+	import type { Polygon } from '../../lib/polygon';
+	import type { Vec3 } from '../../lib/vector';
 	import { aperture } from '../../lib/array';
-	import { diff, midpoint, multiply, toVec2, type Vec3 } from '../../lib/vector';
-	import { example, type Polygon } from '../../lib/polygon';
+	import { diff, midpoint, multiply, toVec2 } from '../../lib/vector';
 
-	export let width = 10;
-	export let height = 10;
-	export let polygon: Polygon = example;
+	export let width: number;
+	export let height: number;
+	export let polygon: Polygon;
 
 	const scale: Vec3 = [width, height, 0];
 

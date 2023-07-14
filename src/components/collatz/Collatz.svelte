@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { collatzSequence, path } from './util';
+	import { collatzSequence, path, toRads } from './util';
 
 	export let n = 1;
 	export let size = 1;
@@ -11,8 +11,6 @@
 	$: f = forward / 100;
 
 	const divs = 360 / n;
-
-	const toRads = (d: number) => (Math.PI / 180) * d;
 
 	$: pather = path(size, f, toRads(angle), toRads(spread));
 

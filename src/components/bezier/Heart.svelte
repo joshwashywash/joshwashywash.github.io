@@ -1,15 +1,16 @@
 <script lang="ts">
 	import type { Offset } from '../../lib/bezier';
+	import type { Vec3 } from '../../lib/vector';
 	import { createIgnoreTab } from '../../lib/keys';
-	import { createScale, multiply, toVec2, type Vec3 } from '../../lib/vector';
+	import { createScale, multiply, toVec2 } from '../../lib/vector';
 
-	export let width = 10;
-	export let height = 10;
+	export let width: number;
+	export let height: number;
 	export let scalar = 2;
 
 	const scale = createScale(scalar);
 
-	const start: Vec3 = [1 / 2, 1 / 4, 0];
+	const start: Vec3 = [0.5, 0.25, 0];
 
 	const offsets: Offset[] = [
 		[

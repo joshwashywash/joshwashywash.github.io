@@ -11,8 +11,8 @@
 	export let width: number;
 	export let height: number;
 
-	let cx = width / 2;
-	let cy = height / 2;
+	let cx = width * 0.5;
+	let cy = height * 0.5;
 
 	const li = lineIntersections(polygon);
 

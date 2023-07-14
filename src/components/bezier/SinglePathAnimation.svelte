@@ -1,12 +1,12 @@
 <script lang="ts">
 	import type { Offset } from '../../lib/bezier';
+	import type { Polygon } from '../../lib/polygon';
 	import { aperture } from '../../lib/array';
 	import { diff, midpoint, multiply, toVec2, type Vec3 } from '../../lib/vector';
-	import { example, type Polygon } from '../../lib/polygon';
 
-	export let width = 10;
-	export let height = 5;
-	export let polygon: Polygon = example;
+	export let width: number;
+	export let height: number;
+	export let polygon: Polygon;
 	const strokeWidth = width / 100;
 
 	const pairs = aperture(2, polygon.slice(0, 3));

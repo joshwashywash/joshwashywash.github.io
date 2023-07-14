@@ -9,7 +9,7 @@
 	export let borderWidth = 1;
 	export let src: string;
 
-	// TODO: make the visualizer action emit an event that you can use to set `playing`
+	// TODO: make the visualizer action emit an event that you can use to set `playing`. can access audio.paused to update the button text
 	let playing = false;
 </script>
 

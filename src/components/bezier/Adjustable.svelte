@@ -5,8 +5,8 @@
 	import { diff, toVec2 } from '../../lib/vector';
 	import { tweened } from 'svelte/motion';
 
-	export let height = 10;
-	export let width = 10;
+	export let height: number;
+	export let width: number;
 
 	const s = width / 6;
 	const t = height / 6;
