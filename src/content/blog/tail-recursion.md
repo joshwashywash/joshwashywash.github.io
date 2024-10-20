@@ -55,11 +55,11 @@ sum([3, 4, 5], 3, 12);
 12;
 ```
 
-No triangle and the addition happens before the recursive call. Notice how the running total is carried along to the next call of `sum`. This is pretty characteristic of tail recursive functions. Let's check out another example.
+No triangle and the addition happens before the recursive call. Notice how the running total is carried along to the next call of `sum`. This is pretty characteristic of tail recursive functions.
 
 ## example 2 - count occurences in an array
 
-To do this you just loop through the array and check if the current element is equal to the target. If there's a match, add one to the count. If not, continue the loop.
+To do this you just loop through the array and check if the current element is equal to the target. If there's a match, add 1 to the tally otherwise add 0.
 
 ```typescript
 const count = <T>(item: T, items: T[], index = 0): number => {
@@ -86,7 +86,7 @@ count('a', ['a', 'b', '', 'a']);
 2;
 ```
 
-Here's the tail-recursiveversion which does its calculation before the recursive call.
+Here's the tail-recursive version.
 
 ```typescript
 const count = <T>(item: T, items: T[], index = 0, tally = 0): number => {
@@ -109,8 +109,8 @@ count('a', ['a', 'b', '', 'a'], 4, 2);
 2;
 ```
 
-Just like the second version of the **sum** function above, the calculation is performed before the recursion and gets passed along.
+Just like the second version of the **sum** function above, the calculation is performed before the recursion and the result gets passed along.
 
 ## summary
 
-While writing this post I realized that this style of recursion is a lot like performing a **while** loop. In a **while** loop all the work is done in the body of the loop and when you're done, you jump back to the top of the loop to do it all again. Check the out [tail recursion wikipedia article](https://en.wikipedia.org/wiki/Recursion_%28computer_science%29) for more details about the similarities between recursion and looping structures.
+While writing this post I realized that this style of recursion is a lot like performing a **while** loop. In a **while** loop all the work is done in the body of the loop and when you're done, you jump back to the top of the loop to do it all again. Check out the [tail recursion wikipedia article](https://en.wikipedia.org/wiki/Recursion_%28computer_science%29) for more details about the similarities between recursion and looping structures.
