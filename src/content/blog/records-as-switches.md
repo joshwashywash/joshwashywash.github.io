@@ -25,16 +25,14 @@ const getReply = (kind: Kind): string => {
 	}
 };
 
-const kind: Kind = 'flying';
-
-const reply = getReply(kind);
+const reply = getReply('flying');
 ```
 
 There's nothing wrong with this code but if you're like me you'll start to see a pattern. Underneath every **case** there is a bit of code that needs to be ran if the case clause matches the evaluated switch expression. What if we think about the statements under each case as a procedure? With that mindset, you can think of a switch as a _map_ from the current state of something to a procedure that immediately handles it. Let's see if we can _map_ **switch** to a record.
 
 ## switching to a record
 
-We know we want to map some state to a procedure or function and immediately call it. Let's set up our map first and then we'll see how we can use it like a switch.
+We know we want to map some state to a procedure or function and immediately call it. Let's set up the record first and then we'll see how we can use it like a switch.
 
 ```typescript
 const replyRecord: Record<Kind, string> = {
@@ -48,11 +46,10 @@ const replyRecord: Record<Kind, string> = {
 Here we're mapping the value of a _Kind_ to a string.
 
 ```typescript
-const kind: Kind = 'flying';
-const reply = replyRecord[kind];
+const reply = replyRecord['flying'];
 ```
 
-You might be wondering why we're using a record and not an JavaScript **Map**. Firstly maps can be used as lookup tables but they really are more useful if you don't know what things you'll be putting into it. Since we're using typescript, we know exactly what should be in the table so we can use a record instead. Secondly, because the keys of the record are constant, we don't have to worry about the case where a `Kind` may not be in the table. All `Kind`s are guaranteed to be in the table. If we used the `.get` method on a **Map** we'd have to cast with an `as` clause or, because `.get`'s return type is `T | undefined` we'd have to check for `undefined`. This is a source of ambiguity if the `undefined` is a valid value in the map.
+You might be wondering why we're using a record and not a JavaScript **Map**. Firstly while Maps can be used as lookup tables, they really are more useful if you don't know what you'll be putting into them. Since we're using TypeScript, we know exactly what should be in the record Secondly, because the keys of the record are constant, we don't have to worry about the case where a `Kind` may not be in the record. All `Kind`s are guaranteed to be in there. If we used the `.get` method on a **Map** we'd have to cast with an `as` clause or, because `.get`'s return type is `T | undefined` we'd have to check for `undefined`. This is a source of ambiguity if `undefined` is a valid value in the map.
 
 ```typescript
 const replyMap = new Map(/* ... */);
@@ -67,7 +64,7 @@ So are there any benefits to using a record over a switch? Objects have constant
 
 ## example: keyboard event handling
 
-Imagine that you're developing a game and you want to use key presses to move your character around.
+Imagine that you're developing a game and you want to use key presses to move a character around.
 
 ```typescript
 const onKeydown = (event: KeyboardEvent) => {
@@ -93,7 +90,7 @@ window.addEventListener('keydown', onKeydown);
 window.removeEventListener('keydown', onKeydown);
 ```
 
-Seems pretty straightforward -- check the key and run the code under the corresponding case clause.
+Seems pretty straightforward - check the key and run the code under the corresponding case clause.
 
 What does it look like if we use a record?
 
@@ -148,7 +145,7 @@ const createKeyListener = (moveRecord: Record<Key, Move>) => {
 };
 ```
 
-Then you can create the listener and attach / detach it like so.
+Then you can create the listener and add / remove it like so.
 
 ```typescript
 const listener = createKeyboardListener(moveRecord);
@@ -157,7 +154,9 @@ window.addEventListener('keydown', listener);
 window.removeEventListener('keydown', listener);
 ```
 
-I don't want to admit it but this might be a little more complex for no apparent gain BUT nevertheless I think it is pretty handy to separate everything out like this. This might be a case where a **Map** is preferred especially if you want to dynamically add and remove "key handlers" from the map.
+I don't want to admit it but this might be a little more complex for no apparent gain BUT nevertheless I think it is pretty handy to separate things out.
+
+This might be a case where a **Map** is preferred especially if you want to dynamically add and remove "key handlers".
 
 ```typescript
 const createKeyListener = (moveMap: Map<string, Move>) => {
