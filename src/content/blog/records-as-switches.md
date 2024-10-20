@@ -49,7 +49,7 @@ Here we're mapping the value of a _Kind_ to a string.
 const reply = replyRecord['flying'];
 ```
 
-You might be wondering why we're using a record and not a JavaScript **Map**. While Maps can be used as lookup tables, they really are more useful if you don't know what you'll be putting into them. Since we're using TypeScript, we know exactly what should be in the record. Secondly, because the keys of the record are constant, we don't have to worry about the case where a `Kind` may not be in the record. All `Kind`s are guaranteed to be there. If we used the `.get` method on a **Map** we'd have to cast it with an `as` or, because `.get`'s return type is `T | undefined` we'd have to check for `undefined`. This is a source of ambiguity if `undefined` is a valid value in the map.
+You might be wondering why we're using a record and not a JavaScript **Map**. While Maps can be used as lookup tables, they really are more useful if you don't know what they'll be storing. Since we're using TypeScript, we know exactly what should be stored. Secondly, because the keys of the record are constant, we don't have to worry about any `Kind`s not being present. All `Kind`s are guaranteed to be there. If we used the `.get` method on a Map we'd have to cast it with an `as` or, because `.get`'s return type is `T | undefined`, we'd have to check for `undefined`. This is a source of ambiguity if `undefined` is a valid value in the map.
 
 ```typescript
 const replyMap = new Map(/* ... */);
@@ -60,7 +60,7 @@ if (reply !== undefined) {
 }
 ```
 
-There are benefits to using a record over a switch. Objects have constant lookup-time whereas a switch may have to check each case one by one, however there won't be any noticeable difference in performance until the size of the switch gets very large. I've heard that in some languages the compiler is smart enough to convert a switch into a lookup table but I'm not sure if the same optimization can be done with interpreted languages like JavaScript or Python.
+There are benefits to using a record over a switch. All objects have constant lookup-time whereas a switch may have to check each of its case one by one. There won't be any noticeable difference in performance until the size of the switch gets very large, however. I've heard that in some languages the compiler is smart enough to convert a switch into a lookup table but I'm not sure if the same optimization can be done with interpreted languages like JavaScript or Python.
 
 ## example: keyboard event handling
 
@@ -90,9 +90,9 @@ window.addEventListener('keydown', onKeydown);
 window.removeEventListener('keydown', onKeydown);
 ```
 
-Seems pretty straightforward - chcek the key and run the code under the corresponding case clause.
+Seems pretty straightforward - chcek the key and run the code under the corresponding case.
 
-What does it look like if a record is used?
+Here's what a 'record' implementation might look like.
 
 ```typescript
 type Positionable = {
@@ -156,7 +156,7 @@ window.removeEventListener('keydown', listener);
 
 I don't want to admit it but this might be a little more complex for no apparent gain BUT nevertheless it can sometimes be handy to separate things out.
 
-This may be a case where a **Map** is preferred especially if you want to dynamically add and remove "key handlers".
+This may be a case where a Map is preferred especially if you want to dynamically add and remove "key press handlers".
 
 ```typescript
 const createKeyListener = (moveMap: Map<string, Move>) => {
@@ -173,4 +173,4 @@ The benefit of doing it this way is that you can add or remove entries from the 
 
 ## that's that
 
-If you made it this far, thanks for sticking around through this hodge-podgy article. Hopefully it was interesting and to be clear, I'm not really advocating the use of records or maps in place of switches. I think both appeoaches are perfectly fine.
+If you made it this far, thanks for sticking around through this hodge-podgey article. Hopefully it was interesting To be clear, I'm not really advocating the use of records or maps in place of switches. I think both approaches are perfectly fine.
