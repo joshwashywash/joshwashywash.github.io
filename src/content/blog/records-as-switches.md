@@ -7,8 +7,6 @@ title: records or maps as switches
 Imagine you're programming a game and there's a character in the game that says different things depending on what kind of pokemon you show them. You'd probably use a `switch` statement for this.
 
 ```typescript
-type Handler = () => void;
-
 type Kind = 'bug' | 'fire' | 'flying' | 'water';
 
 /**
