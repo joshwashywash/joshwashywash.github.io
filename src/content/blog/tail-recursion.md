@@ -8,7 +8,7 @@ I recently rewatched a [computerphile video](https://www.youtube.com/watch?v=_Jt
 
 Note that there are more idiomatic ways to solve the following problems in JavaScript and TypeScript using _Array.\*_ methods. You can pretty much do anything with _Array.reduce_. Also, at the time of this writing, I don't think NodeJS nor Deno support tail recursive calls at all so there's that.
 
-## example 1 - summing an array of numbers
+## summing an array of numbers
 
 Here's an implementation of a recursive function that calculates the sum of an array of numbers.
 
@@ -34,7 +34,7 @@ sum([3, 4, 5], 0);
 12;
 ```
 
-A pyramind shape forms as the actual addition isn't completed until the recursion has ended. Now imagine that the triangle becomes so big that it can't all fit on the stack. This is what's known as a **stack overflow**. Contrast that with a tail recursive version of the same function.
+A triangle shape forms as the actual addition isn't completed until the recursion has ended. Now imagine that the triangle becomes so big that it can't all fit on the stack. This is what's known as a **stack overflow**. Contrast that with a tail recursive version.
 
 ```typescript
 const sum = (numbers: number[], index = 0, total = 0): number => {
@@ -57,15 +57,16 @@ sum([3, 4, 5], 3, 12);
 
 No triangle and the addition happens before the recursive call. Notice how the running total is carried along to the next call of `sum`. This is pretty characteristic of tail recursive functions.
 
-## example 2 - count occurences in an array
+## count occurences in an array
 
-To do this you just loop through the array and check if the current element is equal to the target. If there's a match, add 1 to the tally otherwise add 0.
+To do this you just loop over the array and check if the current element is equal to the target. If there's a match, add 1 to the tally otherwise add 0.
 
 ```typescript
-const count = <T>(item: T, items: T[], index = 0): number => {
-	if (index < items.length) {
-		const equal = +(items[index] === item); // false -> 0, true -> 1
-		return equal + count(item, items, index + 1);
+const count = <E>(elements: E[], element: E, index = 0): number => {
+	if (index < elements.length) {
+		const equal = elements[index] === element;
+		// false -> 0, true -> 1
+		return +equal + count(elements, element, index + 1);
 	}
 	return 0;
 };
@@ -74,11 +75,11 @@ const count = <T>(item: T, items: T[], index = 0): number => {
 The calculation is delayed until the recursion is done.
 
 ```typescript
-count('a', ['a', 'b', '', 'a']);
-1 + count('a', ['a', 'b', '', 'a'], 1);
-1 + 0 + count('a', ['a', 'b', '', 'a'], 2);
-1 + 0 + 0 + count('a', ['a', 'b', '', 'a'], 3);
-1 + 0 + 0 + 1 + count('a', ['a', 'b', '', 'a'], 4);
+count(['a', 'b', '', 'a'], 'a');
+1 + count(['a', 'b', '', 'a'], 'a', 1);
+1 + 0 + count(['a', 'b', '', 'a'], 'a', 2);
+1 + 0 + 0 + count(['a', 'b', '', 'a'], 'a', 3);
+1 + 0 + 0 + 1 + count(['a', 'b', '', 'a'], 'a', 4);
 1 + 0 + 0 + 1 + 0;
 1 + 0 + 0 + 1;
 1 + 0 + 1;
@@ -89,10 +90,11 @@ count('a', ['a', 'b', '', 'a']);
 Here's the tail-recursive version.
 
 ```typescript
-const count = <T>(item: T, items: T[], index = 0, tally = 0): number => {
-	if (index < items.length) {
-		const equal = +(items[index] === item); // false -> 0, true -> 1
-		return count(item, items, index + 1, tally + equal);
+const count = <E>(elements: E[], element: E, index = 0, tally = 0): number => {
+	if (index < elements.length) {
+		const equal = elements[index] === element;
+		// false -> 0, true -> 1
+		return count(elements, element, index + 1, +equal + tally);
 	}
 	return tally;
 };
@@ -101,16 +103,16 @@ const count = <T>(item: T, items: T[], index = 0, tally = 0): number => {
 With a call stack similar to this.
 
 ```typescript
-count('a', ['a', 'b', '', 'a']);
-count('a', ['a', 'b', '', 'a'], 1, 1);
-count('a', ['a', 'b', '', 'a'], 2, 1);
-count('a', ['a', 'b', '', 'a'], 3, 1);
-count('a', ['a', 'b', '', 'a'], 4, 2);
+count(['a', 'b', '', 'a'], 'a');
+count(['a', 'b', '', 'a'], 'a', 1, 1);
+count(['a', 'b', '', 'a'], 'a', 2, 1);
+count(['a', 'b', '', 'a'], 'a', 3, 1);
+count(['a', 'b', '', 'a'], 'a', 4, 2);
 2;
 ```
 
-Just like the second version of the **sum** function above, the calculation is performed before the recursion and the result gets passed along.
+Just like the tail-recursive version of the *sum* function above, the calculation is performed before the recursion and the result gets passed along.
 
 ## summary
 
-While writing this post I realized that this style of recursion is a lot like performing a **while** loop. In a **while** loop all the work is done in the body of the loop and when you're done, you jump back to the top of the loop to do it all again. Check out the [tail recursion wikipedia article](https://en.wikipedia.org/wiki/Recursion_%28computer_science%29) for more details about the similarities between recursion and looping structures.
+While writing this post I realized that this style of recursion is a lot like performing a while loop. In a while loop all the work is done in the body of the loop and when you're done, you jump back to the top of the loop to do it all again. Check out the [tail recursion wikipedia article](https://en.wikipedia.org/wiki/Recursion_%28computer_science%29) for more details about the similarities between recursion and looping structures.
