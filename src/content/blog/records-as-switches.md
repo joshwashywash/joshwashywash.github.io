@@ -32,7 +32,7 @@ There's nothing wrong with this code but if you're like me you'll start to see a
 
 ## switching to a record
 
-We know we want to map some state to a procedure or function and immediately call it. Let's set up the record first and then we'll see how we can use it like a switch.
+We know we want to map some state to a procedure or function and immediately call it.
 
 ```typescript
 const replyRecord: Record<Kind, string> = {
@@ -49,7 +49,7 @@ Here we're mapping the value of a _Kind_ to a string.
 const reply = replyRecord['flying'];
 ```
 
-You might be wondering why we're using a record and not a JavaScript **Map**. Firstly while Maps can be used as lookup tables, they really are more useful if you don't know what you'll be putting into them. Since we're using TypeScript, we know exactly what should be in the record Secondly, because the keys of the record are constant, we don't have to worry about the case where a `Kind` may not be in the record. All `Kind`s are guaranteed to be in there. If we used the `.get` method on a **Map** we'd have to cast with an `as` clause or, because `.get`'s return type is `T | undefined` we'd have to check for `undefined`. This is a source of ambiguity if `undefined` is a valid value in the map.
+You might be wondering why we're using a record and not a JavaScript **Map**. Firstly while Maps can be used as lookup tables, they really are more useful if you don't know what you'll be putting into them. Since we're using TypeScript, we know exactly what should be in the record. Secondly, because the keys of the record are constant, we don't have to worry about the case where a `Kind` may not be in the record. All `Kind`s are guaranteed to be there. If we used the `.get` method on a **Map** we'd have to cast it with an `as` or, because `.get`'s return type is `T | undefined` we'd have to check for `undefined`. This is a source of ambiguity if `undefined` is a valid value in the map.
 
 ```typescript
 const replyMap = new Map(/* ... */);
@@ -60,7 +60,7 @@ if (reply !== undefined) {
 }
 ```
 
-So are there any benefits to using a record over a switch? Objects have constant lookup time whereas a switch has to check each case one by one. In small cases I don't think you'll notice any difference. I've heard that in some languages the compiler is smart enough to convert a switch into a lookup table but I'm not sure if the same optimization can be done with interpreted languages like JavaScript or Python.
+There are benefits to using a record over a switch. Objects have constant lookup time whereas a switch may have to check each case one by one. There won't be any noticeable difference in performance until the size of the switch gets very large. I've heard that in some languages the compiler is smart enough to convert a switch into a lookup table but I'm not sure if the same optimization can be done with interpreted languages like JavaScript or Python.
 
 ## example: keyboard event handling
 
@@ -90,9 +90,9 @@ window.addEventListener('keydown', onKeydown);
 window.removeEventListener('keydown', onKeydown);
 ```
 
-Seems pretty straightforward - check the key and run the code under the corresponding case clause.
+Seems pretty straightforward - chcek the key and run the code under the corresponding case clause.
 
-What does it look like if we use a record?
+What does it look like if a record is used?
 
 ```typescript
 type Positionable = {
@@ -129,7 +129,7 @@ const moveRecord: Record<Key, Move> = {
 } as const;
 ```
 
-Seems a lot like the first example. Next, we'll need to create the listener function. I think it might be handy to create a higher order function to do this so that we can create a listener from any record of this shape.
+Seems a lot like the first example. Next, we'll need to create the listener function. It might be handy to create a higher order function to do this so that the listener can be created from any record of this shape.
 
 ```typescript
 const character = new Chracter(); // character implements Positionable
@@ -145,7 +145,7 @@ const createKeyListener = (moveRecord: Record<Key, Move>) => {
 };
 ```
 
-Then you can create the listener and add / remove it like so.
+Then the listener can br created and added / removed like so.
 
 ```typescript
 const listener = createKeyboardListener(moveRecord);
@@ -154,9 +154,9 @@ window.addEventListener('keydown', listener);
 window.removeEventListener('keydown', listener);
 ```
 
-I don't want to admit it but this might be a little more complex for no apparent gain BUT nevertheless I think it is pretty handy to separate things out.
+I don't want to admit it but this might be a little more complex for no apparent gain BUT nevertheless it can sometimes be handy to separate things out.
 
-This might be a case where a **Map** is preferred especially if you want to dynamically add and remove "key handlers".
+This may be a case where a **Map** is preferred especially if you want to dynamically add and remove "key handlers".
 
 ```typescript
 const createKeyListener = (moveMap: Map<string, Move>) => {
@@ -173,4 +173,4 @@ The benefit of doing it this way is that you can set up the listener now and add
 
 ## that's that
 
-If you made it this far, thanks for sticking around through this hodge-podgy article. Hopefully it was interesting and to be clear, I'm not really advocating the use of records or maps in place of switches. I think both switches and maps are perfectly fine and just wanted to share something I've been thinking about.
+If you made it this far, thanks for sticking around through this hodge-podgy article. Hopefully it was interesting and to be clear, I'm not really advocating the use of records or maps in place of switches. I think both appeoaches are perfectly fine.
