@@ -4,31 +4,37 @@ description: a demonstration showing how javascript's switch statements and obje
 title: records or maps as switches
 ---
 
+---
+description: a demonstration showing how javascript's switch statements and objects are sometimes interchangable
+publish_at: 2022-08-05
+title: records or maps as switches
+---
+
 Imagine you're programming a game and there's a character in the game that says different things depending on what kind of monsters you show them. You'd probably implement this using a `switch`.
 
 ```typescript
-type Kind = 'bug' | 'fire' | 'flying' | 'water';
+type Kind = "bug" | "fire" | "flying" | "water";
 
 /**
  * return a reply based on the kind
  */
 const getReply = (kind: Kind): string => {
-	switch (kind) {
-		case 'bug':
-			return "Unless you're a Cutiefly, I don't want you.";
-		case 'fire':
-			return 'Fire, fire, light the fire.';
-		case 'flying':
-			return 'Fly away little moth! Fly away!';
-		case 'water':
-			return "I wish Misty we're here.";
-	}
+  switch (kind) {
+    case "bug":
+      return "Unless you're a Cutiefly, I don't want you.";
+    case "fire":
+      return "Fire, fire, light the fire.";
+    case "flying":
+      return "Fly away little moth! Fly away!";
+    case "water":
+      return "I wish Misty we're here.";
+  }
 };
 
-const reply = getReply('flying');
+const reply = getReply("flying");
 ```
 
-There's nothing wrong with this code but if you're like me you'll spot a pattern. Underneath every *case* there is a bit of code that needs to be ran if the case clause matches the evaluated switch expression. It's as if we're matching state to a function or procedure. It seems like the same functionality can be achieved with a lookup table, a map, or in the case of TypeScript, a record.
+There's nothing wrong with this code but if you're like me you'll spot a pattern. Underneath every _case_ there is a bit of code that needs to be ran if the case clause matches the evaluated switch expression. It's as if we're matching state to a function or procedure. It seems like the same functionality can be achieved with a lookup table, a map, or in the case of TypeScript, a record.
 
 ## switching to a record
 
@@ -36,13 +42,13 @@ We know we want to map state to the desired output.
 
 ```typescript
 const replyRecord: Record<Kind, string> = {
-	bug: "Unless you're a Cutiefly, I don't want you.",
-	flying: 'Fly away little moth! Fly away!',
-	fire: 'Fire, fire, light the fire.',
-	water: "I wish Misty we're here.",
+  bug: "Unless you're a Cutiefly, I don't want you.",
+  flying: "Fly away little moth! Fly away!",
+  fire: "Fire, fire, light the fire.",
+  water: "I wish Misty we're here.",
 } as const;
 
-const reply = replyRecord['flying'];
+const reply = replyRecord["flying"];
 ```
 
 Here we're mapping the value of a _Kind_ to a string.
@@ -56,7 +62,7 @@ const reply = replyMap.get(kind);
 // typeof reply === Kind | undefined;
 
 if (reply !== undefined) {
-	// ...
+  // ...
 }
 ```
 
@@ -68,42 +74,39 @@ Imagine that you're developing a game and you want to use key presses to move a 
 
 ```typescript
 type Position = {
-	x: number;
-	y: number;
+  x: number;
+  y: number;
 };
 
 const createMoveKeyListener = (position: Position) => {
-	return (event: KeyboardEvent) => {
-		switch (event.key) {
-			case 'ArrowDown':
-				position.y += 1;
-				break;
-			case 'ArrowLeft':
-				position.x -= 1;
-				break;
-			case 'ArrowRight':
-				position.y += 1;
-				break;
-			case 'ArrowUp':
-				position.x -= 1;
-				break;
-		}
-	}
-}
+  return (event: KeyboardEvent) => {
+    switch (event.key) {
+      case "ArrowDown":
+        position.y += 1;
+        break;
+      case "ArrowLeft":
+        position.x -= 1;
+        break;
+      case "ArrowRight":
+        position.y += 1;
+        break;
+      case "ArrowUp":
+        position.x -= 1;
+        break;
+    }
+  };
+};
 
-class Character {
-	constructor(public position: Position = { x: 0, y: 0 }) {}
-}
+const position: Position = { x: 0, y: 0 };
 
-const character = new Character(); // Character has a position
-const onKeyDown = createMoveKeyListener(character.position);
+const onKeyDown = createMoveKeyListener(position);
 
-window.addEventListener('keydown', onKeyDown);
+window.addEventListener("keydown", onKeyDown);
 
 // ... game stuff
 
 // don't forget to clean up later on
-window.removeEventListener('keydown', onKeyDown);
+window.removeEventListener("keydown", onKeyDown);
 ```
 
 Seems pretty straightforward - check the key and run the code under the corresponding case.
@@ -111,45 +114,44 @@ Seems pretty straightforward - check the key and run the code under the correspo
 Here's what a 'record' implementation might look like.
 
 ```typescript
-type ArrowKey = 'ArrowDown' | 'ArrowLeft' | 'ArrowRight' | 'ArrowUp';
+type ArrowKey = "ArrowDown" | "ArrowLeft" | "ArrowRight" | "ArrowUp";
 
 type Move = (position: Position) => void;
 const moveRecord: Record<ArrowKey, Move> = {
-	ArrowDown(p) {
-		p.y += 1;
-	},
-	ArrowLeft(p) {
-		p.x -= 1;
-	},
-	ArrowRight(p) {
-		p.x += 1;
-	},
-	ArrowUp(p) {
-		p.y -= 1;
-	},
+  ArrowDown(p) {
+    p.y += 1;
+  },
+  ArrowLeft(p) {
+    p.x -= 1;
+  },
+  ArrowRight(p) {
+    p.x += 1;
+  },
+  ArrowUp(p) {
+    p.y -= 1;
+  },
 } as const;
 
 const isMoveKey = (s: string): s is keyof typeof moveRecord => {
-	return s in moveRecord;
+  return s in moveRecord;
 };
 
 const createMoveKeyListener = (moveRecord: Record<ArrowKey, Move>) => {
-	return (position: Position) => {
-		return ({ key }: KeyboardEvent) => {
-			if (isMoveKey(key))
-      			moveRecord[key](character.position);
-    		}
-	}
+  return (position: Position) => {
+    return ({ key }: KeyboardEvent) => {
+      if (isMoveKey(key)) moveRecord[key](position);
+    };
+  };
 };
 ```
 
 Then the listener can be created and added / removed like so.
 
 ```typescript
-const onKeyDown = createMoveKeyListener(moveRecord)(character.position);
+const onKeyDown = createMoveKeyListener(moveRecord)(position);
 
-window.addEventListener('keydown', onKeyDown);
-window.removeEventListener('keydown', onKeyDown);
+window.addEventListener("keydown", onKeyDown);
+window.removeEventListener("keydown", onKeyDown);
 ```
 
 I don't want to admit it but this might be a little more complex for no apparent gain BUT nevertheless it can sometimes be handy to separate things out.
@@ -158,11 +160,11 @@ This may be a case where a Map is preferred especially if you want to dynamicall
 
 ```typescript
 const createMoveListener = (moveMap: Map<string, Move>) => {
-	return () => {
-		return (event: KeyboardEvent) => {
-			moveMap.get(event.key)?.(character);
-		};
-	};
+  return () => {
+    return (event: KeyboardEvent) => {
+      moveMap.get(event.key)?.(character);
+    };
+  };
 };
 
 const map: Map<string, Move> = new Map();
