@@ -4,12 +4,6 @@ description: a demonstration showing how javascript's switch statements and obje
 title: records or maps as switches
 ---
 
----
-description: a demonstration showing how javascript's switch statements and objects are sometimes interchangable
-publish_at: 2022-08-05
-title: records or maps as switches
----
-
 Imagine you're programming a game and there's a character in the game that says different things depending on what kind of monsters you show them. You'd probably implement this using a `switch`.
 
 ```typescript
