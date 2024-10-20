@@ -18,7 +18,7 @@
 		"@astrojs/svelte": "^5.4.0",
 		"@astrojs/tailwind": "^5.1.0",
 		"astro": "^4.6.4",
-		"svelte": "^4.2.15"
+		"svelte": "^4.2.19"
 	},
 	"devDependencies": {
 		"@tailwindcss/typography": "^0.5.12",
