@@ -49,7 +49,7 @@ Here we're mapping the value of a _Kind_ to a string.
 const reply = replyRecord['flying'];
 ```
 
-You might be wondering why we're using a record and not a JavaScript **Map**. Firstly while Maps can be used as lookup tables, they really are more useful if you don't know what you'll be putting into them. Since we're using TypeScript, we know exactly what should be in the record. Secondly, because the keys of the record are constant, we don't have to worry about the case where a `Kind` may not be in the record. All `Kind`s are guaranteed to be there. If we used the `.get` method on a **Map** we'd have to cast it with an `as` or, because `.get`'s return type is `T | undefined` we'd have to check for `undefined`. This is a source of ambiguity if `undefined` is a valid value in the map.
+You might be wondering why we're using a record and not a JavaScript **Map**. While Maps can be used as lookup tables, they really are more useful if you don't know what you'll be putting into them. Since we're using TypeScript, we know exactly what should be in the record. Secondly, because the keys of the record are constant, we don't have to worry about the case where a `Kind` may not be in the record. All `Kind`s are guaranteed to be there. If we used the `.get` method on a **Map** we'd have to cast it with an `as` or, because `.get`'s return type is `T | undefined` we'd have to check for `undefined`. This is a source of ambiguity if `undefined` is a valid value in the map.
 
 ```typescript
 const replyMap = new Map(/* ... */);
@@ -60,7 +60,7 @@ if (reply !== undefined) {
 }
 ```
 
-There are benefits to using a record over a switch. Objects have constant lookup time whereas a switch may have to check each case one by one. There won't be any noticeable difference in performance until the size of the switch gets very large. I've heard that in some languages the compiler is smart enough to convert a switch into a lookup table but I'm not sure if the same optimization can be done with interpreted languages like JavaScript or Python.
+There are benefits to using a record over a switch. Objects have constant lookup-time whereas a switch may have to check each case one by one, however there won't be any noticeable difference in performance until the size of the switch gets very large. I've heard that in some languages the compiler is smart enough to convert a switch into a lookup table but I'm not sure if the same optimization can be done with interpreted languages like JavaScript or Python.
 
 ## example: keyboard event handling
 
@@ -145,7 +145,7 @@ const createKeyListener = (moveRecord: Record<Key, Move>) => {
 };
 ```
 
-Then the listener can br created and added / removed like so.
+Then the listener can be created and added / removed like so.
 
 ```typescript
 const listener = createKeyboardListener(moveRecord);
@@ -169,7 +169,7 @@ const map: Map<string, Move> = new Map();
 const listener = createKeyListener(map);
 ```
 
-The benefit of doing it this way is that you can set up the listener now and add/remove entries from the map at any time. It's completely dynamic.
+The benefit of doing it this way is that you can add or remove entries from the map at any time before or after the listener is set up. It's completely dynamic.
 
 ## that's that
 
