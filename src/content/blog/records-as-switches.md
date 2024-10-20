@@ -49,7 +49,7 @@ Here we're mapping the value of a _Kind_ to a string.
 const reply = replyRecord['flying'];
 ```
 
-You might be wondering why we're using a record and not a JavaScript **Map**. While Maps can be used as lookup tables, they really are more useful if you don't know what they'll be storing. Since we're using TypeScript, we know exactly what should be stored. Secondly, because the keys of the record are constant, we don't have to worry about any `Kind`s not being present. All `Kind`s are guaranteed to be there. If we used the `.get` method on a Map we'd have to cast it with an `as` or, because `.get`'s return type is `T | undefined`, we'd have to check for `undefined`. This is a source of ambiguity if `undefined` is a valid value in the map.
+You might be wondering why we're using a record and not a JavaScript **Map**. While Maps can be used as lookup tables, they really are more useful if you don't know what they'll be storing. Since we're using TypeScript, we know exactly what should be stored. Secondly, because the keys of the record are constant, we don't have to worry about any `Kind`s not being present. All `Kind`s are guaranteed to be there. If we used the `.get` method of a Map we'd have to cast it with an `as` or, because `.get`'s return type is `T | undefined`, we'd have to check for `undefined`. This is a source of ambiguity if `undefined` is a valid value in the map.
 
 ```typescript
 const replyMap = new Map(/* ... */);
@@ -90,7 +90,7 @@ window.addEventListener('keydown', onKeydown);
 window.removeEventListener('keydown', onKeydown);
 ```
 
-Seems pretty straightforward - chcek the key and run the code under the corresponding case.
+Seems pretty straightforward - check the key and run the code under the corresponding case.
 
 Here's what a 'record' implementation might look like.
 
@@ -129,7 +129,7 @@ const moveRecord: Record<Key, Move> = {
 } as const;
 ```
 
-Seems a lot like the first example. Next, we'll need to create the listener function. It might be handy to create a higher order function to do this so that the listener can be created from any record of this shape.
+Next, we'll need to create the listener function. It might be handy to create a higher order function to do this so that the listener can be created from any record of this shape.
 
 ```typescript
 const character = new Chracter(); // character implements Positionable
