@@ -8,8 +8,6 @@ type Props = {
 	image_url?: string;
 };
 
-const canonicalURL = new URL(Astro.url, Astro.site).pathname;
-
 const { description, image_url = "/me.jpg", title } = Astro.props;
 const meta_image_url = new URL(image_url, Astro.url);
 
@@ -36,7 +34,7 @@ const icon_links: IconLinkProps[] = [
 		<meta name="generator" content={Astro.generator} />
 
 		<!-- Canonical URL -->
-		<link rel="canonical" href={canonicalURL} />
+		<link rel="canonical" href={Astro.url} />
 
 		<!-- Primary Meta Tags -->
 		<title>{title}</title>
