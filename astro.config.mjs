@@ -13,7 +13,10 @@ export default defineConfig({
   },
   markdown: {
     shikiConfig: {
-      theme: "rose-pine",
+      themes: {
+        dark: "rose-pine",
+        light: "rose-pine-moon",
+      },
     },
   },
   site: "https://josho.dev",
