@@ -1,0 +1,117 @@
+---
+description: deriving the math behind mapping one range to another
+published_at: 2024-10-22
+title: deriving the function for mapping from one range to another
+---
+
+This problem comes up in various math and computer science topics. For example,
+let's say you're working with frequency data of a song. Each sample is a value
+that fits into a byte and ranges from 0 to 255. The range in interval notation
+would be written _[0, 255]_. You want to take a sample and map it to the range
+_[-1, 1]_. The _[-1, 1]_ range is actually pretty common and can be find in such
+fields as graphics programming and trigonometry.
+
+This is a bit of a contrived example but nevertheless the goal is to map a
+number in the range _[0, 255]_ to a number in the range _[-1, 1]_. We want the
+mapping to be proportionate such that 0 maps to -1, 255 maps to 1, and
+everything inbetween maps linearly. We're looking for a formula for such a
+transformation from any input range to any output range, in other words, from
+the range _[a, b]_ to the range _[c, d]_.
+
+## translate to the origin
+
+The first step is to slide the input range so that the low end starts at 0. This
+isn't needed in the example above since the low end of input range is already 0
+but it's a step that can't be skipped. It'll become clear in the next steps why
+this translation needs to come first.
+
+The range _[a, b]_ maps to the range _[a - a, b - a]_ equals _[0, b - a]_. From
+the example in the opening, _[0, 255]_ becomes _[0 - 0, 255 - 0]_.
+
+## normalize
+
+The next step is to normalize to the range _[0, 1]_. This can be achieved by
+dividing by the difference between _b_ and _a_. This will map the range _[0, b]_
+to the range _[0 / (b - a), b / (b - a)]_ or _[0, b / (b - a)]_.
+
+A consequence of this is that _a_ and _b_ must not be the same because _b - a_
+would equal 0 and you'd be dividing by 0. If you we're dealing with such a
+range, You'd only be mapping one number to a range and it would be ambiguous
+where in the range that number would fall. The range _[a, b]_ where b = a is the
+same as _[a, a]_ which is just the number _a_. Does _a_ get mapped to the low
+end, the high end, or somewhere inbetween? There's no _b_ to determine where _a_
+should map to.
+
+Following along, the range _[0, 255]_ maps to _[0 / (255 - 0), 255 / (255 - 0)]_
+or _[0, 1]_.
+
+## scale to output range
+
+Normalizing in the previous step got us to the range _[0, 1]_. We kinda do the
+inverse of the first two steps to get to the range _[c, d]_. First we scale by
+_d - c_. Since the range right now is normalized, this operation won't affect
+the lower end of the range. We go from the range _[0, 1]_ to the range _[0 *
+(d - c), 1 * (d - c)]_ or _[0, d - c]_.
+
+Following the example, _[0, 1]_ goes to _[0 * (1 - (-1)), 1 * (1 - (-1))]_
+equals _[0 * 2, 1 * 2]_ equals _[0, 2]_.
+
+## translate to the start of the output range
+
+The final step is to map from _[0, d - c]_ to _[c, d]_. Here all we need to do
+is add _c_. _[0 + c, d - c + c]_ equals _[c, d]_.
+
+From the example, _[0, 2]_ maps to _[0 + (-1), 2 + (-1)]_ equals _[-1, 1]_.
+
+## combining it all into a function
+
+The four steps above can be written as a single function.
+
+```typescript
+const map = (
+	inLow: number,
+	inHigh: number,
+	outLow: number,
+	outHigh: number,
+) => {
+	return (n: number) => {
+		return ((n - a) / (b - a)) * (d - c) + c;
+	};
+};
+```
+
+In practice, solving the problem from the beginning of the post would look like
+the following.
+
+```typescript
+const inLow = 0;
+const inHigh = 255;
+const outLow = -1;
+const outHigh = 1;
+
+const halfway = 0.5 * (inLow + inHigh);
+
+const inputs = [inLow, halfway, inHigh];
+
+const m = map(inLow, inHigh, outLow, outHigh);
+
+const outputs: number[] = [];
+for (const input of inputs) {
+	outputs.push(m(input));
+}
+
+console.log(outputs); // [-1, 0, 1]
+```
+
+## all done
+
+`map` is a really simple function but it's not one that can easily be understood
+unless you think about it geometrically. I first saw this function when I used
+to program on the Arduino way back when. It never really clicked for me until I
+started graphics programming and thought about it visually. Mapping between
+different coordinate systems is a very common activity in graphics. I guess that
+goes to show how ubiquitous `map` is.
+
+## resources
+
+- [arduino's map function](https://docs.arduino.cc/language-reference/en/functions/math/map/)

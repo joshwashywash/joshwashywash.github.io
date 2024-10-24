@@ -1,16 +1,32 @@
 ---
+import Layout from "../layouts/Layout.astro";
+import PostListItem from "../components/PostListItem.astro";
+import { format } from "../util/dates";
+import { getCollection } from "astro:content";
 
+const posts = await getCollection("blog", ({ data }) => !data.draft);
+posts.sort((a, b) => {
+	return b.data.published_at.getTime() - a.data.published_at.getTime();
+});
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout title="josh's blog" description="a list of josh's blog posts">
+	<main>
+		<ul
+			class="prose prose-neutral dark:prose-invert lg:prose-xl prose-h2:mb-0.5"
+		>
+			{
+				posts.map(({ data, slug }) => {
+					return (
+						<PostListItem
+							href={`/${slug}`}
+							title={data.title}
+							description={data.description}
+							time={format(data.published_at)}
+						/>
+					);
+				})
+			}
+		</ul>
+	</main>
+</Layout>

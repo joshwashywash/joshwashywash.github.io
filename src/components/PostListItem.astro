@@ -1,0 +1,24 @@
+---
+type Props = {
+	description: string;
+	href: string;
+	time: string;
+	title: string;
+};
+
+const { description, href, time, title } = Astro.props;
+---
+
+<li>
+	<h2 id={title.replaceAll(" ", "-")}>
+		<a class="not-prose underline hover:text-neutral-500" href={href}>
+			{title}
+		</a>
+	</h2>
+	<time class="text-sm">
+		{time}
+	</time>
+	<p>
+		{description}
+	</p>
+</li>

@@ -1,0 +1,41 @@
+---
+import Layout from "../layouts/Layout.astro";
+import type { CollectionEntry } from "astro:content";
+import { format } from "../util/dates";
+import { getCollection } from "astro:content";
+
+type Props = {
+	post: CollectionEntry<"blog">;
+};
+
+export async function getStaticPaths() {
+	const posts = await getCollection("blog");
+	return posts.map((post) => {
+		return {
+			params: {
+				slug: post.slug,
+			},
+			props: {
+				post,
+			},
+		};
+	});
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+---
+
+<Layout title={post.data.title} description={post.data.description}>
+	<main>
+		<article
+			class="prose prose-neutral dark:prose-invert md:prose-xl target:prose-headings:bg-neutral-200 dark:target:prose-headings:bg-neutral-800 prose-h1:mb-4"
+		>
+			<h1 id={post.data.title.replaceAll(" ", "-")}>{post.data.title}</h1>
+			<time class="text-sm">
+				{format(post.data.published_at)}
+			</time>
+			<Content />
+		</article>
+	</main>
+</Layout>
