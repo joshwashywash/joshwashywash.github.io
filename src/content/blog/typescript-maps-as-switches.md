@@ -31,7 +31,7 @@ const reply = getReply("flying");
 ```
 
 There's nothing wrong with this code but if you're like me you'll spot a
-pattern. Underneath every _case_ there is a bit of code that needs to be ran if
+pattern. Underneath every _case_ there is a bit of code that needs to be run if
 the case clause matches the evaluated switch expression. It's as if we're
 matching state to a function or procedure. It seems like the same functionality
 can be achieved with a lookup table, a map, or in the case of TypeScript, a
@@ -81,7 +81,7 @@ There are benefits to using a record over a switch. All objects have constant
 lookup-time whereas a switch may have to check each of its cases one by one.
 There won't be any noticeable difference in performance until the size of the
 switch gets very large. I've heard that in some languages the compiler is smart
-enough to convert a switch into a lookup table but I'm not sure if the same
+enough to convert a switch into a lookup table, but I'm not sure if the same
 optimization can be done with interpreted languages like JavaScript or Python.
 
 ## example: keyboard event handling

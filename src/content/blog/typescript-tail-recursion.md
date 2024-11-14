@@ -4,14 +4,14 @@ published_at: 2022-06-23
 title: tail recursion in typescript
 ---
 
-I recently rewatched a [computerphile video](#resources) about a simple way to
+I recently re-watched a [computerphile video](#resources) about a simple way to
 avoid stack overflows when using recursive functions. The technique is known as
 tail recursion.
 
 Note that there are more idiomatic ways to solve the following problems in
 JavaScript and TypeScript using _Array.\*_ methods. You can pretty much do
 anything with _Array.reduce_. Also, at the time of this writing, I don't think
-NodeJS nor Deno support tail recursive calls at all so there's that.
+Node.js nor Deno support tail recursive calls at all so there's that.
 
 ## summing an array of numbers
 
@@ -27,8 +27,7 @@ const sum = (numbers: number[], index = 0): number => {
 };
 ```
 
-This version of `sum` is not tail recursive and you can see that by looking at
-the call stack when calling the function.
+You can see by looking at the call stack when calling the function, this version of `sum` is not tail recursive.
 
 ```typescript
 sum([3, 4, 5], 0);
@@ -69,7 +68,7 @@ No triangle and the addition happens before the recursive call. Notice how the
 running total is carried along to the next call of `sum`. This is pretty
 characteristic of tail recursive functions.
 
-## count occurences in an array
+## count occurrences in an array
 
 To do this you just loop over the array and check if the current element is
 equal to the target. If there's a match, add 1 to the tally otherwise add 0.
