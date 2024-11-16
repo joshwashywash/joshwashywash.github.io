@@ -1,6 +1,7 @@
 ---
 import IconLink from "../components/IconLink.astro";
 import type { Props as IconLinkProps } from "../components/IconLink.astro";
+import BlueSky from "../components/icons/BlueSky.astro";
 
 type Props = {
 	title: string;
@@ -65,7 +66,11 @@ const icon_links: IconLinkProps[] = [
 				<ul class="flex gap-2">
 					{
 						icon_links.map((link) => {
-							return <IconLink {...link} />;
+							return (
+								<li>
+									<IconLink {...link} />
+								</li>
+							);
 						})
 					}
 				</ul>
