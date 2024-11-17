@@ -1,7 +1,8 @@
 ---
-import IconLink from "../components/IconLink.astro";
-import type { Props as IconLinkProps } from "../components/IconLink.astro";
 import BlueSky from "../components/icons/BlueSky.astro";
+import GitHub from "../components/icons/GitHub.astro";
+import IconLink from "../components/IconLink.astro";
+import type { ComponentProps } from "astro/types";
 
 type Props = {
 	title: string;
@@ -9,16 +10,29 @@ type Props = {
 	image_url?: string;
 };
 
-const { description, image_url = "/me.jpg", title } = Astro.props;
-const meta_image_url = new URL(image_url, Astro.url);
+const iconMap = {
+	github: GitHub,
+	bluesky: BlueSky,
+} as const;
 
-const icon_links: IconLinkProps[] = [
+type IconLinkProps = ComponentProps<typeof IconLink>;
+type Link = IconLinkProps & { icon: keyof typeof iconMap };
+
+const links: Link[] = [
 	{
+		ariaLabel: "github",
 		href: "https://github.com/joshwashywash",
-		icon_kind: "github",
-		sr_text: "github",
+		icon: "github",
+	},
+	{
+		ariaLabel: "bluesky",
+		href: "https://bsky.app/profile/joshwashywash.bsky.social",
+		icon: "bluesky",
 	},
 ];
+
+const { description, image_url = "/me.jpg", title } = Astro.props;
+const meta_image_url = new URL(image_url, Astro.url);
 ---
 
 <html class="motion-safe:scroll-smooth">
@@ -65,10 +79,13 @@ const icon_links: IconLinkProps[] = [
 			<nav>
 				<ul class="flex gap-2">
 					{
-						icon_links.map((link) => {
+						links.map(({ ariaLabel, href, icon }) => {
+							const Icon = iconMap[icon];
 							return (
 								<li>
-									<IconLink {...link} />
+									<IconLink {ariaLabel} {href}>
+										<Icon />
+									</IconLink>
 								</li>
 							);
 						})

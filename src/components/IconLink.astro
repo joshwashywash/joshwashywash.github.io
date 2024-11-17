@@ -1,17 +1,12 @@
 ---
-import SvgIcon from "./SvgIcon.astro";
-import type { Props as SvgIconProps } from "./SvgIcon.astro";
-
-export type Props = {
+type Props = {
+	ariaLabel: string;
 	href: string;
-	icon_kind: SvgIconProps["kind"];
-	sr_text: string;
 };
 
-const { href, icon_kind, sr_text } = Astro.props;
+const { ariaLabel, href } = Astro.props;
 ---
 
-<a class="hover:text-neutral-500" href={href} rel="noopener noreferrer">
-	<span class="sr-only">{sr_text}</span>
-	<SvgIcon kind={icon_kind} />
+<a aria-label={ariaLabel} {href} class="fill-current w-6 h-6 inline-block">
+	<slot />
 </a>
