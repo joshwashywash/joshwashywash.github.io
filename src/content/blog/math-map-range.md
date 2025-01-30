@@ -75,7 +75,7 @@ const map = (
 	outHigh: number,
 ) => {
 	return (n: number) => {
-		return ((n - a) / (b - a)) * (d - c) + c;
+		return ((n - inLow) / (inHigh - inLow)) * (outHigh - outLow) + outLow;
 	};
 };
 ```
