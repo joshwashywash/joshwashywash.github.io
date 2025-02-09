@@ -1,5 +1,5 @@
 const createFormat = (formatOptions: Intl.DateTimeFormatOptions) => {
-	return (date: Date) => {
+	return (date: Date): string => {
 		return date.toLocaleDateString("en-US", formatOptions);
 	};
 };
