@@ -4,10 +4,14 @@ import PostListItem from "../components/PostListItem.astro";
 import { format } from "../util/dates";
 import { getCollection } from "astro:content";
 
-const posts = await getCollection("blog", ({ data }) => !data.draft);
-posts.sort((a, b) => {
-	return b.data.published_at.getTime() - a.data.published_at.getTime();
-});
+const posts = await getCollection("blog", (post) => !post.data.draft).then(
+	(posts) => {
+		posts.sort((a, b) => {
+			return b.data.published_date.getTime() - a.data.published_date.getTime();
+		});
+		return posts;
+	},
+);
 ---
 
 <Layout title="josh's blog" description="a list of josh's blog posts">
@@ -16,13 +20,13 @@ posts.sort((a, b) => {
 			class="prose prose-neutral dark:prose-invert lg:prose-xl prose-h2:mb-0.5"
 		>
 			{
-				posts.map(({ data, slug }) => {
+				posts.map(({ data, id }) => {
 					return (
 						<PostListItem
-							href={`/${slug}`}
-							title={data.title}
 							description={data.description}
-							time={format(data.published_at)}
+							href={`/${id}`}
+							time={format(data.published_date)}
+							title={data.title}
 						/>
 					);
 				})

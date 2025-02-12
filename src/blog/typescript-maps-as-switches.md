@@ -1,6 +1,6 @@
 ---
 description: a demonstration showing how javascript's switch statements and objects are sometimes interchangeable
-published_at: 2022-08-05
+published_date: 2022-08-05
 title: records or maps as switches
 ---
 
@@ -157,7 +157,9 @@ const isMoveKey = (s: string): s is keyof typeof moveRecord => {
 const createMoveKeyListener = (moveRecord: Record<ArrowKey, Move>) => {
 	return (position: Position) => {
 		return ({ key }: KeyboardEvent) => {
-			if (isMoveKey(key)) moveRecord[key](position);
+			if (isMoveKey(key)) {
+				moveRecord[key](position);
+			}
 		};
 	};
 };
@@ -180,15 +182,13 @@ dynamically add and remove "key press handlers".
 
 ```typescript
 const createMoveListener = (moveMap: Map<string, Move>) => {
-	return () => {
-		return (event: KeyboardEvent) => {
-			moveMap.get(event.key)?.(character);
-		};
+	return ({ key }: KeyboardEvent) => {
+		moveMap.get(key);
 	};
 };
 
 const map: Map<string, Move> = new Map();
-const onKeyDown = createMoveKeyListener(map)(character.position);
+const onKeyDown = createMoveListener(map)(character.position);
 ```
 
 The benefit of doing it this way is that you can add or remove entries from the

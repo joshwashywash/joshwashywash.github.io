@@ -2,7 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 import type { CollectionEntry } from "astro:content";
 import { format } from "../util/dates";
-import { getCollection } from "astro:content";
+import { getCollection, render } from "astro:content";
 
 type Props = {
 	post: CollectionEntry<"blog">;
@@ -13,7 +13,7 @@ export async function getStaticPaths() {
 	return posts.map((post) => {
 		return {
 			params: {
-				slug: post.slug,
+				slug: post.id,
 			},
 			props: {
 				post,
@@ -23,7 +23,7 @@ export async function getStaticPaths() {
 }
 
 const { post } = Astro.props;
-const { Content } = await post.render();
+const { Content } = await render(post);
 ---
 
 <Layout title={post.data.title} description={post.data.description}>
@@ -33,7 +33,7 @@ const { Content } = await post.render();
 		>
 			<h1 id={post.data.title.replaceAll(" ", "-")}>{post.data.title}</h1>
 			<time class="text-sm">
-				{format(post.data.published_at)}
+				{format(post.data.published_date)}
 			</time>
 			<Content />
 		</article>

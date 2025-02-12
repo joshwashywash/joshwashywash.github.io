@@ -1,6 +1,6 @@
 ---
 description: deriving the math behind mapping one range to another
-published_at: 2024-10-22
+published_date: 2024-10-22
 title: deriving the function for mapping from one range to another
 ---
 
