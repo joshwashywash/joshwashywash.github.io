@@ -4,6 +4,17 @@ published_date: 2022-06-23
 title: tail recursion in typescript
 ---
 
+import { Code } from "astro-expressive-code/components";
+
+import count_non_tail_recursive from "./count_non_tail_recursive.ts?raw";
+import count_non_tail_recursive_example from "./count_non_tail_recursive_example.ts?raw";
+import count_tail_recursive from "./count_tail_recursive.ts?raw";
+import count_tail_recursive_example from "./count_tail_recursive_example.ts?raw";
+import sum_non_tail_recursive from "./sum_non_tail_recursive.ts?raw";
+import sum_non_tail_recursive_example from "./sum_non_tail_recursive_example.ts?raw";
+import sum_tail_recursive from "./sum_tail_recursive.ts?raw";
+import sum_tail_recursive_example from "./sum_tail_recursive_example.ts?raw";
+
 I recently re-watched a [computerphile video](#resources) about a simple way to
 avoid stack overflows when using recursive functions. The technique is known as
 tail recursion.
@@ -18,51 +29,22 @@ Node.js nor Deno support tail recursive calls at all so there's that.
 Here's an implementation of a recursive function that calculates the sum of an
 array of numbers.
 
-```typescript
-const sum = (numbers: number[], index = 0): number => {
-	if (index < numbers.length) {
-		return numbers[index] + sum(numbers, index + 1);
-	}
-	return 0;
-};
-```
+<Code code={sum_non_tail_recursive} lang="ts" />
 
 You can see by looking at the call stack when calling the function, this version of `sum` is not tail recursive.
 
-```typescript
-sum([3, 4, 5], 0);
-3 + sum([3, 4, 5], 1);
-3 + 4 + sum([3, 4, 5], 2);
-3 + 4 + 5 + sum([3, 4, 5], 3);
-3 + 4 + 5 + 0;
-3 + 4 + 5;
-3 + 9;
-12;
-```
+<Code code={sum_non_tail_recursive_example} lang="ts" />
 
 A triangle shape forms as the actual addition isn't completed until the
 recursion has ended. Now imagine that the triangle becomes so big that it can't
 all fit on the stack. This is what's known as a **stack overflow**. Contrast
 that with a tail recursive version.
 
-```typescript
-const sum = (numbers: number[], index = 0, total = 0): number => {
-	if (index < numbers.length) {
-		return sum(numbers, index + 1, total + numbers[index]);
-	}
-	return total;
-};
-```
+<Code code={sum_tail_recursive} lang="ts" />
 
 The call stack would look something like this.
 
-```typescript
-sum([3, 4, 5]);
-sum([3, 4, 5], 1, 3);
-sum([3, 4, 5], 2, 7);
-sum([3, 4, 5], 3, 12);
-12;
-```
+<Code code={sum_non_tail_recursive_example} lang="ts" />
 
 No triangle and the addition happens before the recursive call. Notice how the
 running total is carried along to the next call of `sum`. This is pretty
@@ -73,55 +55,15 @@ characteristic of tail recursive functions.
 To do this you just loop over the array and check if the current element is
 equal to the target. If there's a match, add 1 to the tally otherwise add 0.
 
-```typescript
-const count = <E>(elements: E[], element: E, index = 0): number => {
-	if (index < elements.length) {
-		const equal = elements[index] === element;
-		// false -> 0, true -> 1
-		return +equal + count(elements, element, index + 1);
-	}
-	return 0;
-};
-```
+<Code code={count_non_tail_recursive} lang="ts" />
 
 The calculation is delayed until the recursion is done.
 
-```typescript
-count(["a", "b", "", "a"], "a");
-1 + count(["a", "b", "", "a"], "a", 1);
-1 + 0 + count(["a", "b", "", "a"], "a", 2);
-1 + 0 + 0 + count(["a", "b", "", "a"], "a", 3);
-1 + 0 + 0 + 1 + count(["a", "b", "", "a"], "a", 4);
-1 + 0 + 0 + 1 + 0;
-1 + 0 + 0 + 1;
-1 + 0 + 1;
-1 + 1;
-2;
-```
-
 Here's the tail-recursive version.
 
-```typescript
-const count = <E>(elements: E[], element: E, index = 0, tally = 0): number => {
-	if (index < elements.length) {
-		const equal = elements[index] === element;
-		// false -> 0, true -> 1
-		return count(elements, element, index + 1, +equal + tally);
-	}
-	return tally;
-};
-```
+<Code code={count_tail_recursive} lang="ts" />
 
 With a call stack similar to this.
-
-```typescript
-count(["a", "b", "", "a"], "a");
-count(["a", "b", "", "a"], "a", 1, 1);
-count(["a", "b", "", "a"], "a", 2, 1);
-count(["a", "b", "", "a"], "a", 3, 1);
-count(["a", "b", "", "a"], "a", 4, 2);
-2;
-```
 
 Just like the tail-recursive version of the _sum_ function above, the
 calculation is performed before the recursion and the result gets passed along.

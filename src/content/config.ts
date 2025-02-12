@@ -10,7 +10,7 @@ const schema = z.object({
 
 const loader = glob({
 	base: "./src/blog",
-	pattern: "**/*.{md, mdx}",
+	pattern: "**/*.{md,mdx}",
 });
 
 const blog = defineCollection({

@@ -1,0 +1,10 @@
+count_non_tail_recursive(["a", "b", "", "a"], "a");
+1 + count_non_tail_recursive(["a", "b", "", "a"], "a", 1);
+1 + 0 + count_non_tail_recursive(["a", "b", "", "a"], "a", 2);
+1 + 0 + 0 + count_non_tail_recursive(["a", "b", "", "a"], "a", 3);
+1 + 0 + 0 + 1 + count_non_tail_recursive(["a", "b", "", "a"], "a", 4);
+1 + 0 + 0 + 1 + 0;
+1 + 0 + 0 + 1;
+1 + 0 + 1;
+1 + 1;
+2;
