@@ -3,7 +3,11 @@ const inHigh = 255;
 const outLow = -1;
 const outHigh = 1;
 
-const halfway = 0.5 * (inLow + inHigh);
+const midpoint = (a: number, b: number): number => {
+	return 0.5 * (a + b);
+};
+
+const halfway = midpoint(inLow, inHigh);
 
 const inputs = [inLow, halfway, inHigh];
 

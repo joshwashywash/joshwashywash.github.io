@@ -5,7 +5,13 @@ const count_tail_recursive = <E>(
 	tally = 0,
 ): number => {
 	const candidate = elements[index];
+
 	if (candidate === undefined) return tally;
+
+	index += 1;
+
 	const equal = candidate === element;
-	return count_tail_recursive(elements, element, index + 1, +equal + tally);
+	tally += +equal;
+
+	return count_tail_recursive(elements, element, index, tally);
 };
