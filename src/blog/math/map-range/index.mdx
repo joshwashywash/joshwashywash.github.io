@@ -4,6 +4,10 @@ published_date: 2024-10-22
 title: deriving the function for mapping from one range to another
 ---
 
+import { Code } from "astro-expressive-code/components";
+import example from "./example?raw";
+import map from "./map?raw";
+
 This problem comes up in various math and computer science topics. For example,
 let's say you're working with frequency data of a song. Each sample is a value
 that fits into a byte and ranges from 0 to 255. The range in interval notation
@@ -67,41 +71,12 @@ From the example, _[0, 2]_ maps to _[0 + (-1), 2 + (-1)]_ equals _[-1, 1]_.
 
 The four steps above can be written as a single function.
 
-```typescript
-const map = (
-	inLow: number,
-	inHigh: number,
-	outLow: number,
-	outHigh: number,
-) => {
-	return (n: number) => {
-		return ((n - inLow) / (inHigh - inLow)) * (outHigh - outLow) + outLow;
-	};
-};
-```
+<Code code={map} lang="ts" />
 
 In practice, solving the problem from the beginning of the post would look like
 the following.
 
-```typescript
-const inLow = 0;
-const inHigh = 255;
-const outLow = -1;
-const outHigh = 1;
-
-const halfway = 0.5 * (inLow + inHigh);
-
-const inputs = [inLow, halfway, inHigh];
-
-const m = map(inLow, inHigh, outLow, outHigh);
-
-const outputs: number[] = [];
-for (const input of inputs) {
-	outputs.push(m(input));
-}
-
-console.log(outputs); // [-1, 0, 1]
-```
+<Code code={example} lang="ts" />
 
 ## all done
 
