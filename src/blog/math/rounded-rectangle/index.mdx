@@ -4,16 +4,16 @@ published_date: 2025-02-14
 title: deriving the points that define a rounded rectangle
 ---
 
+import AppWrapper from "./app_wrapper.svelte";
 import CircleApp from "./circle_app.svelte";
+import RoundedPlaneGeometry from "./RoundedPlaneGeometry?raw";
 import RoundedRectangleApp from "./rounded_rectangle_app.svelte";
 import TerminologyApp from "./terminology_app.svelte";
 import get_circular_points from "./get_circular_points?raw";
 import get_rounded_rectangle_points from "./get_rounded_rectangle_points?raw";
-import tcg_cards from "./tcg-cards.png";
+import pokemon_cards from "./pokemon_cards.png";
 import { Code } from "astro-expressive-code/components";
-import { Image } from "astro:assets";
-import RoundedPlaneGeometry from "./RoundedPlaneGeometry?raw";
-import AppWrapper from "./app_wrapper.svelte";
+import { Picture } from "astro:assets";
 
 export const corner_radius = 10;
 export const corner_radius_max = 100;
@@ -35,9 +35,10 @@ export const point_radius = 1;
 export const stroke_dash = 5;
 export const text_offset_multiplier = 10;
 
-<Image
+<Picture
 	alt="pokemon cards"
-	src={tcg_cards}
+	formats={["avif", "webp"]}
+	src={pokemon_cards}
 />
 
 Trading Card Game (TCG) cards tend to have a "rounded rectangle" shape to them. Pokemon cards, Yu-Gi-Oh cards, even Magic: the Gathering cards all have rounded edges. I had a need for such a shape in [three.js](https://threejs.org) but came to find that three.js didn't have an out-of-the-box solution.
