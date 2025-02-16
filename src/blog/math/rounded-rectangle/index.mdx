@@ -1,7 +1,7 @@
 ---
-description: deriving the points of rounded rectangle starting from the points that define a circle
+description: a derivation of the points that define a rounded rectangle and a demonstration of how to create a "RoundedPlaneGeometry" in three.js
 published_date: 2025-02-14
-title: how to derive a rounded rectangle shape
+title: deriving the points that define a rounded rectangle
 ---
 
 import CircleApp from "./circle_app.svelte";
@@ -11,11 +11,13 @@ import get_circular_points from "./get_circular_points?raw";
 import get_rounded_rectangle_points from "./get_rounded_rectangle_points?raw";
 import tcg_cards from "./tcg-cards.png";
 import { Code } from "astro-expressive-code/components";
-import { Picture } from "astro:assets";
+import { Image } from "astro:assets";
+import RoundedPlaneGeometry from "./RoundedPlaneGeometry?raw";
+import AppWrapper from "./app_wrapper.svelte";
 
-export const corner_radius = 30;
+export const corner_radius = 10;
 export const corner_radius_max = 100;
-export const corner_radius_min = 0;
+export const corner_radius_min = 1;
 export const corner_radius_step = 1;
 export const inner_height = 90;
 export const inner_height_max = 100;
@@ -33,9 +35,8 @@ export const point_radius = 1;
 export const stroke_dash = 5;
 export const text_offset_multiplier = 10;
 
-<Picture
+<Image
 	alt="pokemon cards"
-	formats={["avif", "webp"]}
 	src={tcg_cards}
 />
 
@@ -52,41 +53,48 @@ Trading Card Game (TCG) cards tend to have a "rounded rectangle" shape to them. 
 
 I wanted to see if I could create a rounded rectangle shape the same way that other geometries such as [CircleGeometry](https://github.com/mrdoob/three.js/blob/master/src/geometries/CircleGeometry.js) are created.
 
-## Terminology
+## terminology
 
-It's always a good idea to define some things before tackling the problem. Here's some things I'll refer to and a picture to go along with it.
+Here's a few terms I'll be using throughout this article:
 
 - `corner radius` :: the radius of the circle that defines a corner of the rounded rectangle
-- `outer width` :: the total width of the rectangle including the `corner radius` at each end
+- `inner height` :: `outer height` minus the `corner radius` at each end
 - `inner width` :: `outer width` minus the `corner radius` at each end
 - `outer height` :: the total height of the rectangle including the `corner radius` at each end
-- `inner height` :: `outer height` minus the `corner radius` at each end
+- `outer width` :: the total width of the rectangle including the `corner radius` at each end.
+- `point count` :: the number of points or that define the shape. a higher `point count` means more detail
 
-<TerminologyApp
-	client:visible
-	corner_radius={corner_radius}
-	inner_width={inner_width}
-	inner_height={inner_height}
-	line_stroke_dash={stroke_dash}
-/>
+In the app below the highlighted path corresponds to the selected term.
 
-## Planning
+<AppWrapper>
+	<TerminologyApp
+		client:visible
+		corner_radius={corner_radius}
+		inner_width={inner_width}
+		inner_height={inner_height}
+		line_stroke_dash={stroke_dash}
+	/>
+</AppWrapper>
+
+## planning
 
 Most problems are solved by breaking the problem up into smaller pieces. I imagined what would a rounded rectangle look like if it had 0 inner width and 0 inner height. In that case all you'd be left with is the corner radius contributing to the total width and total height, in other words, you'd be left with a circle.
 
 ### Getting Points Around a Circle
 
-<CircleApp
-	client:visible
-	point_count={point_count}
-	point_count_max={point_count_max}
-	point_count_min={point_count_min}
-	point_count_step={point_count_step}
-	radius={corner_radius}
-	radius_max={corner_radius_max}
-	radius_min={corner_radius_min}
-	radius_step={corner_radius_step}
-/>
+<AppWrapper>
+	<CircleApp
+		client:visible
+		point_count={point_count}
+		point_count_max={point_count_max}
+		point_count_min={point_count_min}
+		point_count_step={point_count_step}
+		radius={corner_radius}
+		radius_max={corner_radius_max}
+		radius_min={corner_radius_min}
+		radius_step={corner_radius_step}
+	/>
+</AppWrapper>
 
 There's a very simple formula for getting the points around a circle.
 
@@ -98,60 +106,60 @@ There's a very simple formula for getting the points around a circle.
 
 The code above highlights where the point's x and y can be adjusted.
 
-## Applying an Offset
+## applying an offset
 
 Pushing the points is applied as an offset to the x and y. There's two components to the offset.
 
-1. Magnitude :: the "distance" to push
+1. Magnitude :: the _distance_ to push
 2. Direction :: should the push be positive or negative?
 
-Looking at it this way you can see that the push is really a vector offset but that's a topic for another day. With this in mind, code that pushes the points by some amount in some direction would look like the following
+Looking at it this way you can see that the push is really a vector offset but that's a topic for another day. The code that pushes the points by some amount in some direction would be:
 
-```typescript showLineNumbers=false
-const x = directionX * offsetX + radius * Math.cos(a));
-const y = directionY * offsetY + radius * Math.cos(a));
+```ts showLineNumbers=false
+const x = directionX * offsetX + radius * Math.cos(a);
+const y = directionY * offsetY + radius * Math.cos(a);
 ```
 
 So the question now becomes: "what should the offset and direction be such that the end result gives the rounded rectangle?
 
 ## Determining the Offset and the Direction
 
-So we essentially need to figure out two pieces of information.
+We need to figure out two pieces of information:
 
 1. how much should the point be offset by
-2. which direction should the point be pushed?
+2. which direction should the point be offset?
 
 Both these apply separately to the x-axis and y-axis.
 
-### Offset
+### offset
 
-To determine how much to push the point, all we need to do is think about a rounded rectangle that hasn't had its points pushed out at all. In this case, we'd end up with a circle of radius `corner radius`. We know the `outer width` of the rectangle is equal to `inner width + 2 * corner radius`. The circle will contribute `2 * corner radius` to this width leaving `inner_width`. The remaning width needs to be split between each side of the rectangle. This means that the distance to push out the quarter of the circle in the x-direction is half the `inner_width`.
+To determine how much to push the point, all we need to do is think about a rounded rectangle that hasn't had its points pushed out at all. In this case, we'd end up with a circle of radius `corner radius`. Let's consider the x-direction. We know the `outer width` of the rectangle is equal to `inner width + 2 * corner radius`. The circle will contribute `2 * corner radius` to this width leaving `inner_width` to split between each side of the rectangle. Therefore the offset amount is equal to `0.5 * inner width`.
 
 The same argument applies when determining how far to push the point in the y-direction substituting `width` for `height`.
 
-### Direction
-
-The direction is determined by thinking about what quadrant a point lies in.
+### direction
 
 If the point lies in quadrant 1, the point needs to be pushed in the positive-x direction and in the postive-y direction. Here's a table showing which direction and sign correspond to each quadrant.
 
-| quadrant | x-direction | y-direction | sign(point.x) | sign(point.y) |
-| -------- | ----------- | ----------- | ------------- | ------------- |
-| 1        | 1           | 1           | +             | +             |
-| 2        | -1          | 1           | -             | +             |
-| 3        | -1          | -1          | -             | -             |
-| 4        | 1           | -1          | +             | -             |
+| quadrant | x-direction multiplier | y-direction muliplier | sign(point.x) | sign(point.y) |
+| -------- | ---------------------- | --------------------- | ------------- | ------------- |
+| 1        | 1                      | 1                     | +             | +             |
+| 2        | -1                     | 1                     | -             | +             |
+| 3        | -1                     | -1                    | -             | -             |
+| 4        | 1                      | -1                    | +             | -             |
 
-The multiplier or direction to push the point is equal to the sign of its component in that axis. This gives us a really easy way to calculate the direction to push the point
+The direction to push the point is equal to the sign of its component in that axis. This gives us a really easy way to calculate the direction to push the point.
 
-```typescript showLineNumbers=false
+```ts showLineNumbers=false
 const directionX = Math.sign(point.x);
 const directionY = Math.sign(point.y);
 ```
 
-## The Code
+Recall that the direction is a multiplier applied to the point's components.
 
-Now that we know the distance to push and the direction, all we need to do is bring it into our equation from before.
+## the rounded rectangle code
+
+Now that we know the offset amount and the direction, all we need to do is bring it into our equation from before.
 
 <Code
 	code={get_rounded_rectangle_points}
@@ -159,21 +167,129 @@ Now that we know the distance to push and the direction, all we need to do is br
 	lang="ts"
 />
 
-<RoundedRectangleApp
-	client:visible
-	corner_radius={corner_radius}
-	corner_radius_max={corner_radius_max}
-	corner_radius_min={corner_radius_min}
-	corner_radius_step={corner_radius_step}
-	inner_height={inner_height}
-	inner_height_max={inner_height_max}
-	inner_height_min={inner_height_min}
-	inner_height_step={inner_height_step}
-	inner_width={inner_width}
-	inner_width_max={inner_width_max}
-	inner_width_min={inner_width_min}
-	inner_width_step={inner_width_step}
-	point_count={point_count}
-	point_count_max={point_count_max}
-	point_count_min={point_count_min}
+<AppWrapper>
+	<RoundedRectangleApp
+		client:visible
+		corner_radius={corner_radius}
+		corner_radius_max={corner_radius_max}
+		corner_radius_min={corner_radius_min}
+		corner_radius_step={corner_radius_step}
+		inner_height={inner_height}
+		inner_height_max={inner_height_max}
+		inner_height_min={inner_height_min}
+		inner_height_step={inner_height_step}
+		inner_width={inner_width}
+		inner_width_max={inner_width_max}
+		inner_width_min={inner_width_min}
+		inner_width_step={inner_width_step}
+		point_count={point_count}
+		point_count_max={point_count_max}
+		point_count_min={point_count_min}
+	/>
+</AppWrapper>
+
+## creating a RoundedPlaneGeometry in three.js
+
+In three.js this shape would be called a _RoundedPlaneGeometry_ to align with [PlaneGeometry](https://threejs.org/docs/index.html?q=plane#api/en/geometries/PlaneGeometry) so for this section, I'll refer to the rounded rectangle as a _rounded plane_.
+
+I'm going to assume that you know some things upfront namely what buffer attributes are and how they're used on the gpu.
+
+### buffer attributes
+
+If you want your geometry to be compatible with materials in three.js, there's three buffer attributes that need to be defined.
+
+1. position
+2. normal
+3. uv
+
+I won't describe how to attach these attributes but be aware that each of these can be created as we loop over the `point_count`.
+
+```ts
+for (let i = 0; i <= point_count; i += 1) {
+	// push data to each buffer
+}
+```
+
+However, there is one very important bit to cover - each triangle of the geometry must include the center point of the rounded plane. You'll see this in the demos below. For this reason, the first thing in the each buffer array is the vertex attribute for the center. We want the "origin" point to be the center of the rounded plane. This means that its vertex position is `(0, 0, 0)`, its normal is `(0, 0, 1)` (more on this in the next section) and its uv coordinate is `(0.5, 0.5)`. Note that uvs are a 2-dimensional entity.
+
+The first thing to do is to push these values into each respective buffer array.
+
+```ts
+const position: number[] = [0, 0, 0];
+const normal: number[] = [0, 0, 1];
+const uv: number[] = [0.5, 0.5];
+```
+
+Three.js supports indexed access to reduce the amount of data that is sent to the gpu. We'll define an `index` array that will describe in what order to draw the vertices.
+
+```ts
+const index: number[] = [];
+```
+
+Let's start with the simplest attribute - the normal.
+
+#### normal attribute
+
+The normal is constant across the face of the geometry. Our geometry will exist in the xy-plane and is perpendicular to the z-axis so the normal at each vertex is simply `(0, 0, 1)` - a normalized vector pointing in the positive z-direction.
+
+In the loop all we need to do is push this vector into `normal` for each point.
+
+```ts
+for (let i = 0; i <= point_count; i += 1) {
+	normal.push(0, 0, 1);
+}
+```
+
+#### position attribute
+
+The position for each point is simply the `x` and `y` that we get out of the `get_rounded_rectangle_points` function.
+
+```ts
+for (let i = 0; i <= point_count; i += 1) {
+	const x = get_x(/* ... */);
+	const y = get_y(/* ... */);
+	position.push(x, y, 0);
+}
+```
+
+Note that the z is always `0`. `get_x` and `get_y` are just stubs for how the `get_rounded_rectangle_points` gets the xy for the point.
+
+#### uv attribute
+
+The sin and cos values of the rotation around the circle can be used to calculate the uv of the point. The _sin_ and _cos_ functions range from `-1 -> 1` and uvs range from `0 -> 1`. The formula for this mapping is shown below. Its a simplified version of the `map` function which is derived in [this article](/math/map-range).
+
+```ts
+const get_uv = (n: number): number => {
+	return 0.5 * (n + 1);
+};
+
+for (let i = 0; i <= point_count; i += 1) {
+	const c = Math.cos(amount);
+	const s = Math.sin(amount);
+	const uvx = get_uv(c);
+	const uvy = get_uv(s);
+
+	uvs.push(uvx, uvy);
+}
+```
+
+#### index
+
+The last thing to do in the loop is to push to the `index` array. The index follows simple pattern - The triangle's first point is the current index, the next point is the index + 1, and the final point is the origin. We can safely use `index + 1` because the index goes up to and includes `point_count`. Remember that the 0th or first item in the each array corresponds to the origin.
+
+```ts
+for (let i = 0; i <= point_count; i += 1) {
+	index.push(i, i + 1, 0);
+}
+```
+
+### final code
+
+I'm not sure if I want to add three.js as a dependency to the blog yet so I've declared the relevant three.js classes and methods in the code below.
+
+<Code
+	code={RoundedPlaneGeometry}
+	lang="ts"
 />
+
+[Here](https://svelte.dev/playground/8fede36e62d2403fbda1134c06428219?version=5.20.1)'s a link to a svelte playground that uses the [threlte](https://threlte.xyz) library to demonstrate the geometry. It may take a moment to load the first time around.

@@ -1,5 +1,6 @@
 <script lang="ts">
 	import RoundedRectanglePath from "./rounded_rectangle_path.svelte";
+	import { Pane, Slider } from "svelte-tweakpane-ui";
 	import { Tween } from "svelte/motion";
 
 	let {
@@ -25,10 +26,10 @@
 	const tween_inner_height = Tween.of(() => inner_height);
 	const tween_inner_width = Tween.of(() => inner_width);
 
-	const corner_diameter_max = $derived(2 * corner_radius_max);
+	const corner_diameter = $derived(2 * tween_corner_radius.current);
 
-	const view_box_width = $derived(corner_diameter_max + inner_width_max);
-	const view_box_height = $derived(corner_diameter_max + inner_height_max);
+	const view_box_width = $derived(corner_diameter + inner_width_max);
+	const view_box_height = $derived(corner_diameter + inner_height_max);
 
 	const half_viewbox_width = $derived(0.5 * view_box_width);
 	const half_viewbox_height = $derived(0.5 * view_box_height);
@@ -40,52 +41,39 @@
 	);
 </script>
 
-<label>
-	<span>point count</span>
-	<input
+<Pane
+	position="inline"
+	title="rounded rectangle"
+>
+	<Slider
 		bind:value={point_count}
-		name="rounded_rectangle_app_point_count"
-		type="number"
+		label="point count"
 		min={point_count_min}
 		max={point_count_max}
 		step={point_count_step}
 	/>
-</label>
-
-<label>
-	<span>corner radius</span>
-	<input
+	<Slider
 		bind:value={corner_radius}
-		name="rounded_rectangle_app_corner_radius"
-		type="number"
+		label="corner radius"
 		min={corner_radius_min}
 		max={corner_radius_max}
 		step={corner_radius_step}
 	/>
-</label>
-
-<label>
-	<span>inner width</span>
-	<input
+	<Slider
 		bind:value={inner_width}
-		name="rounded_rectangle_app_inner_width"
-		type="number"
+		label="inner width"
 		min={inner_width_min}
 		max={inner_width_max}
 		step={inner_width_step}
 	/>
-</label>
-<label>
-	<span>inner height</span>
-	<input
+	<Slider
 		bind:value={inner_height}
-		name="rounded_rectangle_app_inner_height"
-		type="number"
+		label="inner height"
 		min={inner_height_min}
 		max={inner_height_max}
 		step={inner_height_step}
 	/>
-</label>
+</Pane>
 
 <svg
 	class="fill-current"

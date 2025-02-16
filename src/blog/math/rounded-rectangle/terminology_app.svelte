@@ -2,7 +2,7 @@
 	lang="ts"
 	module
 >
-	const terms = [
+	const terms: ListOptionsArray<string> = [
 		"inner width",
 		"outer width",
 		"inner height",
@@ -14,13 +14,14 @@
 
 <script lang="ts">
 	import type { ClassValue } from "svelte/elements";
+	import type { ListOptionsArray } from "svelte-tweakpane-ui";
+	import { List, Pane } from "svelte-tweakpane-ui";
 
 	let {
 		corner_radius = 10,
 		inner_height = 200,
 		inner_width = 150,
 		line_stroke_dash = 1,
-		view_box_padding = 10,
 		active_stroke_class = "stroke-red-500",
 	} = $props();
 
@@ -30,20 +31,12 @@
 	const outer_width = $derived(inner_width + corner_diameter);
 	const outer_height = $derived(inner_height + corner_diameter);
 
-	const view_box_width = $derived(outer_width + view_box_padding);
-	const view_box_height = $derived(outer_height + view_box_padding);
-
-	const viewBox = $derived(`0 0 ${view_box_width} ${view_box_height}`);
+	const viewBox = $derived(`0 0 ${outer_width} ${outer_height}`);
 
 	const line_stroke_dash_array = $derived(
 		`${line_stroke_dash} ${line_stroke_dash}`,
 	);
 	const line_stroke_dash_offset = $derived(0.5 * line_stroke_dash);
-
-	const half_view_box_padding = $derived(0.5 * view_box_padding);
-	const transform = $derived(
-		`translate(${half_view_box_padding}, ${half_view_box_padding})`,
-	);
 
 	const end_of_inner_height = $derived(corner_radius + inner_height);
 	const end_of_inner_width = $derived(corner_radius + inner_width);
@@ -89,20 +82,21 @@
 	});
 </script>
 
-<select
-	bind:value={term}
-	name="terminology-app-term"
+<Pane
+	title="terminology"
+	position="inline"
 >
-	{#each terms as value}
-		<option>{value}</option>
-	{/each}
-</select>
+	<List
+		bind:value={term}
+		options={terms}
+		label="term"
+	/>
+</Pane>
 
 <svg
 	class="fill-current text-sm"
 	xmlns="http://www.w3.org/2000/svg"
 	{viewBox}
-	{transform}
 >
 	<rect
 		rx={corner_radius}

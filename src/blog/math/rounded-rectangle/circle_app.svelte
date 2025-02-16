@@ -1,6 +1,7 @@
 <script lang="ts">
-	import { Tween } from "svelte/motion";
 	import CirclePath from "./circle_path.svelte";
+	import { Pane, Slider } from "svelte-tweakpane-ui";
+	import { Tween } from "svelte/motion";
 
 	let {
 		point_count = 17,
@@ -20,29 +21,25 @@
 	const viewBox = $derived(`${left_top} ${left_top} ${diameter} ${diameter}`);
 </script>
 
-<label>
-	<span>radius</span>
-	<input
-		name="circle-app-radius"
+<Pane
+	position="inline"
+	title="circle"
+>
+	<Slider
+		label="radius"
 		bind:value={radius}
-		type="number"
 		min={radius_min}
 		max={radius_max}
 		step={radius_step}
 	/>
-</label>
-
-<label>
-	<span>point count</span>
-	<input
-		name="circle-app-point_count"
+	<Slider
+		label="point count"
 		bind:value={point_count}
-		type="number"
 		min={point_count_min}
 		max={point_count_max}
 		step={point_count_step}
 	/>
-</label>
+</Pane>
 
 <svg
 	class="fill-current"
