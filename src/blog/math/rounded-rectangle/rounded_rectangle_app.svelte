@@ -44,6 +44,7 @@
 	<span>point count</span>
 	<input
 		bind:value={point_count}
+		name="rounded_rectangle_app_point_count"
 		type="number"
 		min={point_count_min}
 		max={point_count_max}
@@ -55,6 +56,7 @@
 	<span>corner radius</span>
 	<input
 		bind:value={corner_radius}
+		name="rounded_rectangle_app_corner_radius"
 		type="number"
 		min={corner_radius_min}
 		max={corner_radius_max}
@@ -66,6 +68,7 @@
 	<span>inner width</span>
 	<input
 		bind:value={inner_width}
+		name="rounded_rectangle_app_inner_width"
 		type="number"
 		min={inner_width_min}
 		max={inner_width_max}
@@ -76,6 +79,7 @@
 	<span>inner height</span>
 	<input
 		bind:value={inner_height}
+		name="rounded_rectangle_app_inner_height"
 		type="number"
 		min={inner_height_min}
 		max={inner_height_max}

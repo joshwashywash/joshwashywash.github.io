@@ -13,17 +13,18 @@
 </script>
 
 <script lang="ts">
+	import type { ClassValue } from "svelte/elements";
+
 	let {
 		corner_radius = 10,
 		inner_height = 200,
 		inner_width = 150,
 		line_stroke_dash = 1,
 		view_box_padding = 10,
+		active_stroke_class = "stroke-red-500",
 	} = $props();
 
 	let term = $state<Term>("inner width");
-
-	$inspect(term);
 
 	const corner_diameter = $derived(2 * corner_radius);
 	const outer_width = $derived(inner_width + corner_diameter);
@@ -54,18 +55,38 @@
 	const term_is_inner_width = $derived(term === "inner width");
 	const term_is_outer_height = $derived(term === "outer height");
 	const term_is_outer_width = $derived(term === "outer width");
+
 	const term_is_corner_radius_or_outer_height = $derived(
 		term_is_corner_radius || term_is_outer_height,
 	);
+
+	const class_term_is_corner_radius_or_outer_height = $derived<ClassValue>({
+		[active_stroke_class]: term_is_corner_radius_or_outer_height,
+	});
+
 	const term_is_corner_radius_or_outer_width = $derived(
 		term_is_corner_radius || term_is_outer_width,
 	);
+
+	const class_term_is_corner_radius_or_outer_width = $derived<ClassValue>({
+		[active_stroke_class]: term_is_corner_radius_or_outer_width,
+	});
+
 	const term_is_inner_or_outer_width = $derived(
 		term_is_inner_width || term_is_outer_width,
 	);
+
+	const class_term_is_inner_or_outer_width = $derived<ClassValue>({
+		[active_stroke_class]: term_is_inner_or_outer_width,
+	});
+
 	const term_is_inner_or_outer_height = $derived(
 		term_is_inner_height || term_is_outer_height,
 	);
+
+	const class_term_is_inner_or_outer_height = $derived<ClassValue>({
+		[active_stroke_class]: term_is_inner_or_outer_height,
+	});
 </script>
 
 <select
@@ -98,27 +119,21 @@
 	>
 		<g transform={`translate(${corner_radius}, 0)`}>
 			<line
-				class={{
-					"stroke-red-500": term_is_corner_radius_or_outer_height,
-				}}
+				class={class_term_is_corner_radius_or_outer_height}
 				x1={0}
 				y1={0}
 				x2={0}
 				y2={corner_radius}
 			/>
 			<line
-				class={{
-					"stroke-red-500": term_is_inner_or_outer_height,
-				}}
+				class={class_term_is_inner_or_outer_height}
 				x1={0}
 				y1={corner_radius}
 				x2={0}
 				y2={end_of_inner_height}
 			/>
 			<line
-				class={{
-					"stroke-red-500": term_is_corner_radius_or_outer_height,
-				}}
+				class={class_term_is_corner_radius_or_outer_height}
 				x1={0}
 				y1={end_of_inner_height}
 				x2={0}
@@ -127,27 +142,21 @@
 		</g>
 		<g transform={`translate(${end_of_inner_width}, 0)`}>
 			<line
-				class={{
-					"stroke-red-500": term_is_corner_radius_or_outer_height,
-				}}
+				class={class_term_is_corner_radius_or_outer_height}
 				x1={0}
 				y1={0}
 				x2={0}
 				y2={corner_radius}
 			/>
 			<line
-				class={{
-					"stroke-red-500": term_is_inner_or_outer_height,
-				}}
+				class={class_term_is_inner_or_outer_height}
 				x1={0}
 				y1={corner_radius}
 				x2={0}
 				y2={end_of_inner_height}
 			/>
 			<line
-				class={{
-					"stroke-red-500": term_is_corner_radius_or_outer_height,
-				}}
+				class={class_term_is_corner_radius_or_outer_height}
 				x1={0}
 				y1={end_of_inner_height}
 				x2={0}
@@ -156,25 +165,21 @@
 		</g>
 		<g transform={`translate(0, ${corner_radius})`}>
 			<line
-				class:stroke-red-500={term_is_corner_radius_or_outer_width}
+				class={class_term_is_corner_radius_or_outer_width}
 				x1={0}
 				y1={0}
 				x2={corner_radius}
 				y2={0}
 			/>
 			<line
-				class={{
-					"stroke-red-500": term_is_inner_or_outer_width,
-				}}
+				class={class_term_is_inner_or_outer_width}
 				x1={corner_radius}
 				y1={0}
 				x2={end_of_inner_width}
 				y2={0}
 			/>
 			<line
-				class={{
-					"stroke-red-500": term_is_corner_radius_or_outer_width,
-				}}
+				class={class_term_is_corner_radius_or_outer_width}
 				x1={end_of_inner_width}
 				y1={0}
 				x2={end_of_outer_width}
@@ -183,27 +188,21 @@
 		</g>
 		<g transform={`translate(0, ${end_of_inner_height})`}>
 			<line
-				class={{
-					"stroke-red-500": term_is_corner_radius_or_outer_width,
-				}}
+				class={class_term_is_corner_radius_or_outer_width}
 				x1={0}
 				y1={0}
 				x2={corner_radius}
 				y2={0}
 			/>
 			<line
-				class={{
-					"stroke-red-500": term_is_inner_or_outer_width,
-				}}
+				class={class_term_is_inner_or_outer_width}
 				x1={corner_radius}
 				y1={0}
 				x2={end_of_inner_width}
 				y2={0}
 			/>
 			<line
-				class={{
-					"stroke-red-500": term_is_corner_radius_or_outer_width,
-				}}
+				class={class_term_is_corner_radius_or_outer_width}
 				x1={end_of_inner_width}
 				y1={0}
 				x2={end_of_outer_width}
