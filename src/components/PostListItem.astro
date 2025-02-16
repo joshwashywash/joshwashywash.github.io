@@ -11,7 +11,10 @@ const { description, href, time, title } = Astro.props;
 
 <li>
 	<h2 id={title.replaceAll(" ", "-")}>
-		<a class="not-prose underline hover:text-neutral-500" href={href}>
+		<a
+			class="not-prose underline hover:text-neutral-500"
+			href={href}
+		>
 			{title}
 		</a>
 	</h2>

@@ -4,8 +4,6 @@ published_date: 2022-06-23
 title: tail recursion in typescript
 ---
 
-import { Code } from "astro-expressive-code/components";
-
 import count_non_tail_recursive from "./count_non_tail_recursive.ts?raw";
 import count_non_tail_recursive_example from "./count_non_tail_recursive_example.ts?raw";
 import count_tail_recursive from "./count_tail_recursive.ts?raw";
@@ -14,6 +12,7 @@ import sum_non_tail_recursive from "./sum_non_tail_recursive.ts?raw";
 import sum_non_tail_recursive_example from "./sum_non_tail_recursive_example.ts?raw";
 import sum_tail_recursive from "./sum_tail_recursive.ts?raw";
 import sum_tail_recursive_example from "./sum_tail_recursive_example.ts?raw";
+import { Code } from "astro-expressive-code/components";
 
 I recently re-watched a [computerphile video](#resources) about a simple way to
 avoid stack overflows when using recursive functions. The technique is known as
@@ -29,22 +28,34 @@ Node.js nor Deno support tail recursive calls at all so there's that.
 Here's an implementation of a recursive function that calculates the sum of an
 array of numbers.
 
-<Code code={sum_non_tail_recursive} lang="ts" />
+<Code
+	code={sum_non_tail_recursive}
+	lang="ts"
+/>
 
 You can see by looking at the call stack when calling the function, this version of `sum` is not tail recursive.
 
-<Code code={sum_non_tail_recursive_example} lang="ts" />
+<Code
+	code={sum_non_tail_recursive_example}
+	lang="ts"
+/>
 
 A triangle shape forms as the actual addition isn't completed until the
 recursion has ended. Now imagine that the triangle becomes so big that it can't
 all fit on the stack. This is what's known as a **stack overflow**. Contrast
 that with a tail recursive version.
 
-<Code code={sum_tail_recursive} lang="ts" />
+<Code
+	code={sum_tail_recursive}
+	lang="ts"
+/>
 
 The call stack would look something like this.
 
-<Code code={sum_non_tail_recursive_example} lang="ts" />
+<Code
+	code={sum_non_tail_recursive_example}
+	lang="ts"
+/>
 
 No triangle and the addition happens before the recursive call. Notice how the
 running total is carried along to the next call of `sum`. This is pretty
@@ -55,13 +66,19 @@ characteristic of tail recursive functions.
 To do this you just loop over the array and check if the current element is
 equal to the target. If there's a match, add 1 to the tally otherwise add 0.
 
-<Code code={count_non_tail_recursive} lang="ts" />
+<Code
+	code={count_non_tail_recursive}
+	lang="ts"
+/>
 
 The calculation is delayed until the recursion is done.
 
 Here's the tail-recursive version.
 
-<Code code={count_tail_recursive} lang="ts" />
+<Code
+	code={count_tail_recursive}
+	lang="ts"
+/>
 
 With a call stack similar to this.
 

@@ -1,9 +1,9 @@
 ---
-import BlueSky from "../components/icons/BlueSky.astro";
-import GitHub from "../components/icons/GitHub.astro";
-import IconLink from "../components/IconLink.astro";
-import type { ComponentProps } from "astro/types";
 import "../styles/global.css";
+import BlueSky from "@components/icons/BlueSky.astro";
+import GitHub from "@components/icons/GitHub.astro";
+import IconLink from "@components/IconLink.astro";
+import type { ComponentProps } from "astro/types";
 
 type Props = {
 	title: string;
@@ -17,7 +17,9 @@ const iconMap = {
 } as const;
 
 type IconLinkProps = ComponentProps<typeof IconLink>;
-type Link = IconLinkProps & { icon: keyof typeof iconMap };
+type Link = {
+	icon: keyof typeof iconMap;
+} & IconLinkProps;
 
 const links: Link[] = [
 	{
@@ -40,34 +42,84 @@ const meta_image_url = new URL(image_url, Astro.url);
 	<head>
 		<!-- Global Metadata -->
 		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width,initial-scale=1" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
+		<meta
+			name="viewport"
+			content="width=device-width,initial-scale=1"
+		/>
+		<link
+			rel="icon"
+			type="image/svg+xml"
+			href="/favicon.svg"
+		/>
+		<meta
+			name="generator"
+			content={Astro.generator}
+		/>
 
 		<!-- Canonical URL -->
-		<link rel="canonical" href={Astro.url} />
+		<link
+			rel="canonical"
+			href={Astro.url}
+		/>
 
 		<!-- Primary Meta Tags -->
 		<title>{title}</title>
-		<meta name="title" content={title} />
-		<meta name="description" content={description} />
+		<meta
+			name="title"
+			content={title}
+		/>
+		<meta
+			name="description"
+			content={description}
+		/>
 
 		<!-- Open Graph / Facebook -->
-		<meta property="og:description" content={description} />
-		<meta property="og:image" content={meta_image_url} />
-		<meta property="og:title" content={title} />
-		<meta property="og:type" content="website" />
-		<meta property="og:url" content={Astro.url} />
+		<meta
+			property="og:description"
+			content={description}
+		/>
+		<meta
+			property="og:image"
+			content={meta_image_url}
+		/>
+		<meta
+			property="og:title"
+			content={title}
+		/>
+		<meta
+			property="og:type"
+			content="website"
+		/>
+		<meta
+			property="og:url"
+			content={Astro.url}
+		/>
 
 		<!-- Twitter -->
-		<meta property="twitter:card" content="summary_large_image" />
-		<meta property="twitter:description" content={description} />
-		<meta property="twitter:image" content={meta_image_url} />
-		<meta property="twitter:title" content={title} />
-		<meta property="twitter:url" content={Astro.url} />
+		<meta
+			property="twitter:card"
+			content="summary_large_image"
+		/>
+		<meta
+			property="twitter:description"
+			content={description}
+		/>
+		<meta
+			property="twitter:image"
+			content={meta_image_url}
+		/>
+		<meta
+			property="twitter:title"
+			content={title}
+		/>
+		<meta
+			property="twitter:url"
+			content={Astro.url}
+		/>
 	</head>
+
 	<body
-		class="bg-neutral-100 text-neutral-900 dark:text-neutral-100 dark:bg-neutral-900 flex flex-col md:grid md:flex-none gap-10 p-8 justify-center"
+		class="flex flex-col justify-center gap-10 bg-neutral-100 p-8 text-neutral-900 md:grid md:flex-none dark:bg-neutral-900 dark:text-neutral-100"
 	>
 		<div class="flex justify-between">
 			<a
@@ -84,7 +136,10 @@ const meta_image_url = new URL(image_url, Astro.url);
 							const Icon = iconMap[icon];
 							return (
 								<li>
-									<IconLink {ariaLabel} {href}>
+									<IconLink
+										{ariaLabel}
+										{href}
+									>
 										<Icon />
 									</IconLink>
 								</li>

@@ -3,7 +3,7 @@ import { glob } from "astro/loaders";
 
 const schema = z.object({
 	description: z.string(),
-	draft: z.boolean().default(false),
+	is_draft: z.boolean().default(false),
 	published_date: z.date().transform((s) => new Date(s)),
 	title: z.string(),
 });

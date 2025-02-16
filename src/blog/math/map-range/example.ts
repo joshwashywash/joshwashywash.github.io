@@ -1,11 +1,9 @@
+import { midpoint } from "@util/math";
+
 const inLow = 0;
 const inHigh = 255;
 const outLow = -1;
 const outHigh = 1;
-
-const midpoint = (a: number, b: number): number => {
-	return 0.5 * (a + b);
-};
 
 const halfway = midpoint(inLow, inHigh);
 
@@ -18,4 +16,4 @@ for (const input of inputs) {
 	outputs.push(m(input));
 }
 
-console.log(outputs); // [-1, 0, 1]
+// outputs === [-1, 0, 1]

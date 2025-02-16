@@ -4,6 +4,8 @@ import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "astro/config";
 import expressiveCode from "astro-expressive-code";
 
+import svelte from "@astrojs/svelte";
+
 // https://astro.build/config
 export default defineConfig({
 	integrations: [
@@ -12,6 +14,7 @@ export default defineConfig({
 		}),
 		mdx(),
 		sitemap(),
+		svelte(),
 	],
 	site: "https://josho.dev",
 	vite: {

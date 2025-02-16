@@ -1,10 +1,10 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import PostListItem from "../components/PostListItem.astro";
-import { format } from "../util/dates";
+import PostListItem from "@components/PostListItem.astro";
+import { format } from "@util/dates";
 import { getCollection } from "astro:content";
 
-const posts = await getCollection("blog", (post) => !post.data.draft).then(
+const posts = await getCollection("blog", (post) => !post.data.is_draft).then(
 	(posts) => {
 		posts.sort((a, b) => {
 			return b.data.published_date.getTime() - a.data.published_date.getTime();
@@ -14,7 +14,10 @@ const posts = await getCollection("blog", (post) => !post.data.draft).then(
 );
 ---
 
-<Layout title="josh's blog" description="a list of josh's blog posts">
+<Layout
+	title="josh's blog"
+	description="a list of josh's blog posts"
+>
 	<main>
 		<ul
 			class="prose prose-neutral dark:prose-invert lg:prose-xl prose-h2:mb-0.5"
