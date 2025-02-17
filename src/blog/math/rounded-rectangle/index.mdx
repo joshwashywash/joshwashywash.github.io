@@ -211,7 +211,7 @@ for (let i = 0; i <= point_count; i += 1) {
 }
 ```
 
-However, there is one very important bit to cover - each triangle of the geometry must include the center point of the rounded plane. You'll see this in the demos below. For this reason, the first thing in the each buffer array is the vertex attribute for the center. We want the "origin" point to be the center of the rounded plane. This means that its vertex position is `(0, 0, 0)`, its normal is `(0, 0, 1)` (more on this in the next section) and its uv coordinate is `(0.5, 0.5)`. Note that uvs are a 2-dimensional entity.
+However, there is one very important bit to cover - each triangle of the geometry must include the center point of the rounded plane. You'll see this in the final demo at the [end](#final-code) below. For this reason, the first thing in the each buffer array is the vertex attribute for the center. We want the "origin" point to be the center of the rounded plane. This means that its vertex position is `(0, 0, 0)`, its normal is `(0, 0, 1)` (more on this in the next section) and its uv coordinate is `(0.5, 0.5)`. Note that uvs are a 2-dimensional entity.
 
 The first thing to do is to push these values into each respective buffer array.
 
@@ -221,7 +221,7 @@ const normal: number[] = [0, 0, 1];
 const uv: number[] = [0.5, 0.5];
 ```
 
-Three.js supports indexed access to reduce the amount of data that is sent to the gpu. We'll define an `index` array that will describe in what order to draw the vertices.
+We'll also initialize an index array to utilize buffer indexing. Buffer indexing is used to reduce the amount of data that is sent to the gpu and tells the gpu what order to draw the vertices.
 
 ```ts
 const index: number[] = [];
@@ -260,6 +260,7 @@ Note that the z is always `0`. `get_x` and `get_y` are just stubs for how the `g
 The sin and cos values of the rotation around the circle can be used to calculate the uv of the point. The _sin_ and _cos_ functions range from `-1 -> 1` and uvs range from `0 -> 1`. The formula for this mapping is shown below. Its a simplified version of the `map` function which is derived in [this article](/math/map-range).
 
 ```ts
+// take an `n` in the range -1 -> 1 and map it to a number in the range 0 -> 1
 const get_uv = (n: number): number => {
 	return 0.5 * (n + 1);
 };
@@ -276,7 +277,7 @@ for (let i = 0; i <= point_count; i += 1) {
 
 #### index
 
-The last thing to do in the loop is to push to the `index` array. The index follows simple pattern - The triangle's first point is the current index, the next point is the index + 1, and the final point is the origin. We can safely use `index + 1` because the index goes up to and includes `point_count`. Remember that the 0th or first item in the each array corresponds to the origin.
+The last thing to do in the loop is to push to the `index` array. - The current triangle's first point is lines up with the current `index`, the next point with `index + 1`, and the final point is the origin. We can safely use `index + 1` because the index goes up to and includes `point_count`. Remember that the 0th or first item in the each array corresponds to the origin.
 
 ```ts
 for (let i = 0; i <= point_count; i += 1) {
@@ -286,11 +287,11 @@ for (let i = 0; i <= point_count; i += 1) {
 
 ### final code
 
+[Here](https://svelte.dev/playground/8fede36e62d2403fbda1134c06428219?version=5.20.1)'s a link to a svelte playground that uses the [threlte](https://threlte.xyz) library to demonstrate the geometry. It may take a moment to load the first time around.
+
 I'm not sure if I want to add three.js as a dependency to the blog yet so I've declared the relevant three.js classes and methods in the code below.
 
 <Code
 	code={RoundedPlaneGeometry}
 	lang="ts"
 />
-
-[Here](https://svelte.dev/playground/8fede36e62d2403fbda1134c06428219?version=5.20.1)'s a link to a svelte playground that uses the [threlte](https://threlte.xyz) library to demonstrate the geometry. It may take a moment to load the first time around.
