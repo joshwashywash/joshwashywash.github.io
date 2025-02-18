@@ -22,7 +22,7 @@
 		inner_height = 200,
 		inner_width = 150,
 		line_stroke_dash = 1,
-		active_stroke_class = "stroke-red-500",
+		active_stroke_class = "stroke-yellow-500",
 	} = $props();
 
 	let term = $state<Term>("inner width");

@@ -14,7 +14,8 @@
 		radius_step = 1,
 	} = $props();
 
-	const tween = Tween.of(() => radius);
+	const tween_radius = Tween.of(() => radius);
+	const tween_point_count = Tween.of(() => point_count);
 
 	const diameter = $derived(2 * radius_max);
 	const left_top = $derived(-1 * radius_max);
@@ -47,7 +48,7 @@
 	{viewBox}
 >
 	<CirclePath
-		{point_count}
-		radius={tween.current}
+		point_count={tween_point_count.current}
+		radius={tween_radius.current}
 	/>
 </svg>
