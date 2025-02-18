@@ -130,7 +130,10 @@ const meta_image_url = new URL(image_url, Astro.url);
 				josh oertel
 			</a>
 			<nav>
-				<ul class="flex gap-2">
+				<ul
+					role="list"
+					class="flex gap-2"
+				>
 					{
 						links.map(({ ariaLabel, href, icon }) => {
 							const Icon = iconMap[icon];
