@@ -13,7 +13,7 @@ export async function getStaticPaths() {
 	return posts.map((post) => {
 		return {
 			params: {
-				slug: post.id,
+				id: post.id,
 			},
 			props: {
 				post,
@@ -24,19 +24,36 @@ export async function getStaticPaths() {
 
 const { post } = Astro.props;
 const { Content } = await render(post);
+console.log(post.data.published_date);
 ---
 
 <Layout
 	title={post.data.title}
 	description={post.data.description}
 >
+	<button popovertarget="popover">toggle</button>
+	<div
+		id="popover"
+		popover
+	>
+		content
+	</div>
 	<main>
 		<article
 			class="prose prose-neutral dark:prose-invert md:prose-xl target:prose-headings:bg-neutral-200 dark:target:prose-headings:bg-neutral-800 prose-h1:mb-4"
 		>
-			<h1 id={post.data.title.replaceAll(" ", "-")}>{post.data.title}</h1>
-			<time class="text-sm">
-				{format(post.data.published_date)}
+			<h1>{post.data.title}</h1>
+			<time
+				class="text-sm"
+				datetime={post.data.published_date.toLocaleDateString()}
+			>
+				{
+					post.data.published_date.toLocaleDateString("en-US", {
+						day: "numeric",
+						month: "long",
+						year: "numeric",
+					})
+				}
 			</time>
 			<Content />
 		</article>
