@@ -1,6 +1,5 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import PostListItem from "@components/PostListItem.astro";
 import { getCollection } from "astro:content";
 
 const posts = await getCollection("blog", (post) => !post.data.is_draft).then(
@@ -24,11 +23,17 @@ const posts = await getCollection("blog", (post) => !post.data.is_draft).then(
 			{
 				posts.map(({ data, id }) => {
 					return (
-						<PostListItem
-							description={data.description}
-							href={`/${id}`}
-							title={data.title}
-						/>
+						<li>
+							<h2>
+								<a
+									class="hover:text-neutral-500"
+									href={`/${id}`}
+								>
+									{data.title}
+								</a>
+							</h2>
+							<p>{data.description}</p>
+						</li>
 					);
 				})
 			}
