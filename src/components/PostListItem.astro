@@ -2,11 +2,10 @@
 type Props = {
 	description: string;
 	href: string;
-	time: string;
 	title: string;
 };
 
-const { description, href, time, title } = Astro.props;
+const { description, href, title } = Astro.props;
 ---
 
 <li>
@@ -18,9 +17,6 @@ const { description, href, time, title } = Astro.props;
 			{title}
 		</a>
 	</h2>
-	<time class="text-sm">
-		{time}
-	</time>
 	<p>
 		{description}
 	</p>

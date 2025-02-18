@@ -1,7 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import PostListItem from "@components/PostListItem.astro";
-import { format } from "@util/dates";
 import { getCollection } from "astro:content";
 
 const posts = await getCollection("blog", (post) => !post.data.is_draft).then(
@@ -28,7 +27,6 @@ const posts = await getCollection("blog", (post) => !post.data.is_draft).then(
 						<PostListItem
 							description={data.description}
 							href={`/${id}`}
-							time={format(data.published_date)}
 							title={data.title}
 						/>
 					);
