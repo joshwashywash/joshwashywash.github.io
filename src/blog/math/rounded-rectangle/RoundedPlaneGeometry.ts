@@ -22,6 +22,10 @@ class RoundedPlaneGeometry extends BufferGeometry {
 		const normal: number[] = [0, 0, 1];
 
 		const segment = (2 * Math.PI) / point_count;
+
+		const half_inner_width = 0.5 * inner_width;
+		const half_inner_height = 0.5 * inner_height;
+
 		for (let i = 0; i <= point_count; i += 1) {
 			const amount = segment * (i + 1);
 
@@ -33,9 +37,11 @@ class RoundedPlaneGeometry extends BufferGeometry {
 			uv.push(uvx, uvy);
 
 			let x = corner_radius * c;
+			x += Math.sign(x) * half_inner_width;
+
 			let y = corner_radius * s;
-			x += Math.sign(x) * inner_width;
-			y += Math.sign(y) * inner_height;
+			y += Math.sign(y) * half_inner_height;
+
 			position.push(x, y, 0);
 
 			normal.push(0, 0, 1);
