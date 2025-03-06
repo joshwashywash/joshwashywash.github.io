@@ -23,15 +23,18 @@ JavaScript and TypeScript using _Array.\*_ methods. You can pretty much do
 anything with _Array.reduce_. Also, at the time of this writing, I don't think
 Node.js nor Deno support tail recursive calls at all so there's that.
 
-## summing an array of numbers
+## summing a list of numbers
 
-Here's an implementation of a recursive function that calculates the sum of an
-array of numbers.
+To sum a list of numbers, you'd loop over the list and add the number to the running total.
+
+### sum non-tail-recursive
+
+A non-tail-recursive function that sums a list of numbers could look like the following:
 
 <Code
 	code={sum_non_tail_recursive}
 	lang="ts"
-	title="sum_tail_recursive.ts"
+	title="sum_non_tail_recursive.ts"
 />
 
 You can see by looking at the call stack when calling the function, this version of `sum` is not tail recursive.
@@ -42,10 +45,13 @@ You can see by looking at the call stack when calling the function, this version
 	title="sum_non_tail_recursive_example.ts"
 />
 
-A triangle shape forms as the actual addition isn't completed until the
-recursion has ended. Now imagine that the triangle becomes so big that it can't
-all fit on the stack. This is what's known as a **stack overflow**. Contrast
-that with a tail recursive version.
+A triangular shape forms because the "work" isn't completed until the
+recursion has ended. Sometimes the triangle becomes so big that it can't
+all fit on the stack. This is what's known as a [stack overflow](https://en.wikipedia.org/wiki/Stack_overflow).
+
+### sum tail-recursive
+
+A tail-recursive implementation of `sum` might look like this:
 
 <Code
 	code={sum_tail_recursive}
@@ -53,22 +59,19 @@ that with a tail recursive version.
 	title="sum_tail_recursive.ts"
 />
 
-The call stack would look something like this.
+When looking at the call stack, notice how the running total is carried along to the next call of `sum`. This is pretty characteristic of tail recursive functions.
 
 <Code
-	code={sum_non_tail_recursive_example}
+	code={sum_tail_recursive_example}
 	lang="ts"
-	title="sum_non_tail_recursive_example.ts"
+	title="sum_tail_recursive_example.ts"
 />
 
-No triangle and the addition happens before the recursive call. Notice how the
-running total is carried along to the next call of `sum`. This is pretty
-characteristic of tail recursive functions.
+## count occurrences in a list
 
-## count occurrences in an array
+To count the number of times an element appears in a list, loop over the list and check if the current element is equal to the target element. If they are equal, add 1 to the tally otherwise add 0.
 
-To do this you just loop over the array and check if the current element is
-equal to the target. If there's a match, add 1 to the tally otherwise add 0.
+### count non-tail-recursive
 
 <Code
 	code={count_non_tail_recursive}
@@ -76,9 +79,17 @@ equal to the target. If there's a match, add 1 to the tally otherwise add 0.
 	title="count_non_tail_recursive.ts"
 />
 
-The calculation is delayed until the recursion is done.
+Again, the "work" is delayed until the recursion is done.
 
-Here's the tail-recursive version.
+<Code
+	code={count_non_tail_recursive_example}
+	lang="ts"
+	title="count_non_tail_recursive_example.ts"
+/>
+
+### count tail-recursive
+
+In the tail-recursive version, the count is passed along to each recursive call.
 
 <Code
 	code={count_tail_recursive}
@@ -87,7 +98,13 @@ Here's the tail-recursive version.
 />
 
 Just like the tail-recursive version of the _sum_ function above, the
-calculation is performed before the recursion and the result gets passed along.
+calculation is performed before the recursion and the accumulated result gets passed along.
+
+<Code
+	code={count_tail_recursive_example}
+	lang="ts"
+	title="count_tail_recursive_example.ts"
+/>
 
 ## summary
 
