@@ -13,7 +13,8 @@ const m = map(inLow, inHigh, outLow, outHigh);
 
 const outputs: number[] = [];
 for (const input of inputs) {
-	outputs.push(m(input));
+	const output = m(input);
+	outputs.push(output);
 }
 
 // outputs === [-1, 0, 1]

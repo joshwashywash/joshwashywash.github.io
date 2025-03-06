@@ -31,6 +31,7 @@ array of numbers.
 <Code
 	code={sum_non_tail_recursive}
 	lang="ts"
+	title="sum_tail_recursive.ts"
 />
 
 You can see by looking at the call stack when calling the function, this version of `sum` is not tail recursive.
@@ -38,6 +39,7 @@ You can see by looking at the call stack when calling the function, this version
 <Code
 	code={sum_non_tail_recursive_example}
 	lang="ts"
+	title="sum_non_tail_recursive_example.ts"
 />
 
 A triangle shape forms as the actual addition isn't completed until the
@@ -48,6 +50,7 @@ that with a tail recursive version.
 <Code
 	code={sum_tail_recursive}
 	lang="ts"
+	title="sum_tail_recursive.ts"
 />
 
 The call stack would look something like this.
@@ -55,6 +58,7 @@ The call stack would look something like this.
 <Code
 	code={sum_non_tail_recursive_example}
 	lang="ts"
+	title="sum_non_tail_recursive_example.ts"
 />
 
 No triangle and the addition happens before the recursive call. Notice how the
@@ -69,6 +73,7 @@ equal to the target. If there's a match, add 1 to the tally otherwise add 0.
 <Code
 	code={count_non_tail_recursive}
 	lang="ts"
+	title="count_non_tail_recursive.ts"
 />
 
 The calculation is delayed until the recursion is done.
@@ -78,6 +83,7 @@ Here's the tail-recursive version.
 <Code
 	code={count_tail_recursive}
 	lang="ts"
+	title="count_tail_recursive.ts"
 />
 
 With a call stack similar to this.
