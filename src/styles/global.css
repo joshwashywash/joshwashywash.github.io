@@ -1,10 +1,10 @@
 @import "tailwindcss";
 @plugin '@tailwindcss/typography';
 
-@import '@fontsource-variable/space-grotesk';
+@import "@fontsource-variable/noto-serif";
 
 @config "../../tailwind.config.js";
 
 @theme {
-	--font-sans: 'Space Grotesk Variable', sans-serif;
+	--font-noto-serif: 'Noto Serif Variable', serif;
 }
