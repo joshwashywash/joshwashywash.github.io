@@ -1,6 +1,5 @@
 <script lang="ts">
 	import type { SVGAttributes } from "svelte/elements";
-	import type { Snippet } from "svelte";
 	import { create_line_path } from "./create_line_path";
 	import { get_rounded_rectangle_points } from "./get_rounded_rectangle_points";
 
@@ -12,7 +11,6 @@
 		point_count = 32,
 		...rest_props
 	}: {
-		children?: Snippet;
 		point_count?: number;
 		corner_radius?: number;
 		inner_width?: number;
