@@ -5,12 +5,12 @@ title: deriving the points that define a rounded rectangle
 ---
 
 import AppWrapper from "./app_wrapper.svelte";
-import CircleApp from "./circle_app.svelte";
-import RoundedPlaneGeometry from "./RoundedPlaneGeometry?raw";
-import RoundedRectangleApp from "./rounded_rectangle_app.svelte";
+import CircleApp from "./circle/app.svelte";
+import rounded_plane_geometry_code from "./rounded_rectangle/RoundedPlaneGeometry?raw";
+import RoundedRectangleApp from "./rounded_rectangle/app.svelte";
 import TerminologyApp from "./terminology_app.svelte";
-import get_circular_points from "./get_circular_points?raw";
-import get_rounded_rectangle_points from "./get_rounded_rectangle_points?raw";
+import get_circular_points_code from "./circle/get_points?raw";
+import get_rounded_rectangle_points_code from "./rounded_rectangle/get_points?raw";
 import pokemon_cards from "./pokemon_cards.png";
 import { Code } from "astro-expressive-code/components";
 import { Picture } from "astro:assets";
@@ -102,9 +102,11 @@ Most problems are solved by breaking the problem up into smaller pieces. I imagi
 There's a very simple formula for getting the points around a circle.
 
 <Code
-	code={get_circular_points}
+	code={get_circular_points_code}
 	lang="ts"
-	mark={{ range: "14-15" }}
+	mark={{
+		range: "14-15",
+	}}
 	title="get_circular_points.ts"
 />
 
@@ -119,7 +121,7 @@ Pushing the points is applied as an offset to the x and y. There's two component
 
 Looking at it this way you can see that the push is really a vector offset but that's a topic for another day. The code that pushes the points by some amount in some direction would be:
 
-```ts showLineNumbers=false
+```ts
 const x = directionX * offsetX + radius * Math.cos(a);
 const y = directionY * offsetY + radius * Math.cos(a);
 ```
@@ -154,7 +156,7 @@ If the point lies in quadrant 1, the point needs to be pushed in the positive-x 
 
 The direction to push the point is equal to the sign of its component in that axis. This gives us a really easy way to calculate the direction to push the point.
 
-```ts showLineNumbers=false
+```ts
 const directionX = Math.sign(point.x);
 const directionY = Math.sign(point.y);
 ```
@@ -166,7 +168,7 @@ Recall that the direction is a multiplier applied to the point's components.
 Now that we know the offset amount and the direction, all we need to do is bring it into our equation from before.
 
 <Code
-	code={get_rounded_rectangle_points}
+	code={get_rounded_rectangle_points_code}
 	mark={{ range: "19-20, 22-23" }}
 	lang="ts"
 	title="get_rounded_rectangle_points.ts"
@@ -299,7 +301,7 @@ for (let i = 0; i <= point_count; i += 1) {
 I'm not sure if I want to add three.js as a dependency to the blog yet so I've declared the relevant three.js classes and methods in the code below.
 
 <Code
-	code={RoundedPlaneGeometry}
+	code={rounded_plane_geometry_code}
 	lang="ts"
 	title="RoundedPlaneGeometry.ts"
 />

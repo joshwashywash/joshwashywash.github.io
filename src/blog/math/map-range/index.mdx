@@ -4,8 +4,8 @@ published_date: 2024-10-22
 title: deriving the function for mapping from one range to another
 ---
 
-import example from "./example?raw";
-import map from "./map?raw";
+import example_code from "./example?raw";
+import map_code from "./map?raw";
 import { Code } from "astro-expressive-code/components";
 
 This problem comes up in various math and computer science topics. For example,
@@ -72,7 +72,7 @@ From the example, _[0, 2]_ maps to _[0 + (-1), 2 + (-1)]_ equals _[-1, 1]_.
 The four steps above can be written as a single function.
 
 <Code
-	code={map}
+	code={map_code}
 	lang="ts"
 	title="map.ts"
 />
@@ -81,7 +81,7 @@ In practice, solving the problem from the beginning of the post would look like
 the following.
 
 <Code
-	code={example}
+	code={example_code}
 	lang="ts"
 	title="example.ts"
 />

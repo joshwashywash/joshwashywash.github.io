@@ -1,6 +1,6 @@
-import type { Point } from "./types";
+import type { Point } from "../types";
 
-export const get_rounded_rectangle_points = ({
+export default ({
 	point_count = 32,
 	inner_width = 1,
 	inner_height = 1,

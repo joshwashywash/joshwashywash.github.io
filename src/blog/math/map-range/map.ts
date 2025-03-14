@@ -1,4 +1,4 @@
-const map = (
+export default (
 	inLow: number,
 	inHigh: number,
 	outLow: number,

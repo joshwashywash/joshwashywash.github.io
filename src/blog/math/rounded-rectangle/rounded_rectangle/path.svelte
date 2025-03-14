@@ -1,22 +1,28 @@
 <script lang="ts">
+	import create_line_path from "../create_line_path";
+	import get_points from "./get_points";
 	import type { SVGAttributes } from "svelte/elements";
-	import { create_line_path } from "./create_line_path";
-	import { get_circular_points } from "./get_circular_points";
 
 	let {
 		children,
+		corner_radius = 50,
+		inner_height = 100,
+		inner_width = 100,
 		point_count = 32,
-		radius = 0.5,
 		...rest_props
 	}: {
 		point_count?: number;
-		radius?: number;
+		corner_radius?: number;
+		inner_width?: number;
+		inner_height?: number;
 	} & Omit<SVGAttributes<SVGPathElement>, "d"> = $props();
 
 	const points = $derived(
-		get_circular_points({
+		get_points({
+			inner_height,
+			inner_width,
 			point_count,
-			radius,
+			corner_radius,
 		}),
 	);
 

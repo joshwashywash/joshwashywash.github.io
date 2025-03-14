@@ -1,4 +1,4 @@
-const count_tail_recursive = <E>(
+export const count_tail_recursive = <E>(
 	elements: E[],
 	element: E,
 	index = 0,

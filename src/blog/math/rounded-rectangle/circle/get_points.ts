@@ -1,9 +1,6 @@
-import type { Point } from "./types";
+import type { Point } from "../types";
 
-export const get_circular_points = ({
-	point_count = 32,
-	radius = 1,
-} = {}): Point[] => {
+export default ({ point_count = 32, radius = 1 } = {}): Point[] => {
 	const division = (2 * Math.PI) / point_count;
 
 	const points: Point[] = [];

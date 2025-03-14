@@ -1,5 +1,5 @@
 <script lang="ts">
-	import RoundedRectanglePath from "./rounded_rectangle_path.svelte";
+	import Path from "./path.svelte";
 	import { Pane, Slider } from "svelte-tweakpane-ui";
 	import { Tween } from "svelte/motion";
 
@@ -81,7 +81,7 @@
 	{viewBox}
 >
 	<g {transform}>
-		<RoundedRectanglePath
+		<Path
 			corner_radius={tween_corner_radius.current}
 			inner_height={tween_inner_height.current}
 			inner_width={tween_inner_width.current}

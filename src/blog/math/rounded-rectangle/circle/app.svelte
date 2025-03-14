@@ -1,5 +1,5 @@
 <script lang="ts">
-	import CirclePath from "./circle_path.svelte";
+	import Path from "./path.svelte";
 	import { Pane, Slider } from "svelte-tweakpane-ui";
 	import { Tween } from "svelte/motion";
 
@@ -47,7 +47,7 @@
 	xmlns="http://www.w3.org/2000/svg"
 	{viewBox}
 >
-	<CirclePath
+	<Path
 		point_count={tween_point_count.current}
 		radius={tween_radius.current}
 	/>
