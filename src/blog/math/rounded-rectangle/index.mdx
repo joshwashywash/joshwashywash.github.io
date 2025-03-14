@@ -286,7 +286,7 @@ for (let i = 0; i <= point_count; i += 1) {
 
 #### index
 
-The last thing to do in the loop is to push to the `index` array. - The current triangle's first point lines up with the current `index`, the next point with `index + 1`, and the final point with the origin. We can safely use `index + 1` because the index goes up to and includes `point_count`. Remember that the 0th or first item in the each array corresponds to the origin.
+The last thing to do in the loop is to push to the `index` array. The current triangle's first point lines up with the current `index`, the next point with `index + 1`, and the final point with the origin. We can safely use `index + 1` because the index goes up to and includes `point_count`. Remember that the 0th or first item in the each array corresponds to the origin.
 
 ```ts
 for (let i = 0; i <= point_count; i += 1) {
