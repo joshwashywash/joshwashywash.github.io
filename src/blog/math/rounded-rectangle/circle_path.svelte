@@ -11,7 +11,7 @@
 	}: {
 		point_count?: number;
 		radius?: number;
-	} & SVGAttributes<SVGPathElement> = $props();
+	} & Omit<SVGAttributes<SVGPathElement>, "d"> = $props();
 
 	const points = $derived(
 		get_circular_points({

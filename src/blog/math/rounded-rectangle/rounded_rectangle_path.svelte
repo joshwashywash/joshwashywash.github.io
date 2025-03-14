@@ -15,7 +15,7 @@
 		corner_radius?: number;
 		inner_width?: number;
 		inner_height?: number;
-	} & SVGAttributes<SVGPathElement> = $props();
+	} & Omit<SVGAttributes<SVGPathElement>, "d"> = $props();
 
 	const points = $derived(
 		get_rounded_rectangle_points({
