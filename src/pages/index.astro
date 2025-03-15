@@ -1,15 +1,15 @@
 ---
+import "../styles/global.css";
 import Layout from "../layouts/Layout.astro";
 import { getCollection } from "astro:content";
 
-const posts = await getCollection("blog", (post) => !post.data.is_draft).then(
-	(posts) => {
-		posts.sort((a, b) => {
-			return b.data.published_date.getTime() - a.data.published_date.getTime();
-		});
-		return posts;
-	},
-);
+const posts = await getCollection("blog", (post) => {
+	return !post.data.is_draft;
+}).then((posts) => {
+	return posts.sort((a, b) => {
+		return b.data.published_date.getTime() - a.data.published_date.getTime();
+	});
+});
 ---
 
 <Layout
@@ -27,7 +27,7 @@ const posts = await getCollection("blog", (post) => !post.data.is_draft).then(
 							<h2>
 								<a
 									class="hover:text-neutral-500"
-									href={`/${id}`}
+									href={id}
 								>
 									{data.title}
 								</a>
