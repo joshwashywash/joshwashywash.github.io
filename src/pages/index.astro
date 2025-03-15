@@ -1,5 +1,4 @@
 ---
-import "../styles/global.css";
 import Layout from "../layouts/Layout.astro";
 import { getCollection } from "astro:content";
 
@@ -16,10 +15,8 @@ const posts = await getCollection("blog", (post) => {
 	title="josh's blog"
 	description="a list of josh's blog posts"
 >
-	<main>
-		<ul
-			class="prose prose-neutral dark:prose-invert lg:prose-xl prose-h2:mb-0.5"
-		>
+	<main class="prose prose-neutral dark:prose-invert lg:prose-xl">
+		<ul>
 			{
 				posts.map(({ data, id }) => {
 					return (
