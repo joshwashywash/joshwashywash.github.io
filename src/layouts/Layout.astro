@@ -11,14 +11,14 @@ type Props = {
 	image_url?: string;
 };
 
-const iconMap = {
+const iconRecord = {
 	github: GitHub,
 	bluesky: BlueSky,
 } as const;
 
 type IconLinkProps = ComponentProps<typeof IconLink>;
 type Link = {
-	icon: keyof typeof iconMap;
+	icon: keyof typeof iconRecord;
 } & IconLinkProps;
 
 const links: Link[] = [
@@ -129,27 +129,20 @@ const meta_image_url = new URL(image_url, Astro.url);
 			>
 				josh oertel
 			</a>
-			<nav>
-				<ul
-					role="list"
-					class="flex gap-2"
-				>
-					{
-						links.map(({ ariaLabel, href, icon }) => {
-							const Icon = iconMap[icon];
-							return (
-								<li>
-									<IconLink
-										{ariaLabel}
-										{href}
-									>
-										<Icon />
-									</IconLink>
-								</li>
-							);
-						})
-					}
-				</ul>
+			<nav class="flex gap-4">
+				{
+					links.map(({ ariaLabel, href, icon }) => {
+						const Icon = iconRecord[icon];
+						return (
+							<IconLink
+								{ariaLabel}
+								{href}
+							>
+								<Icon />
+							</IconLink>
+						);
+					})
+				}
 			</nav>
 		</div>
 		<slot />

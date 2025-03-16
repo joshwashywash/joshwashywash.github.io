@@ -22,12 +22,7 @@ const posts = await getCollection("blog", (post) => {
 					return (
 						<li>
 							<h2>
-								<a
-									class="hover:text-neutral-500"
-									href={id}
-								>
-									{data.title}
-								</a>
+								<a href={id}>{data.title}</a>
 							</h2>
 							<p>{data.description}</p>
 						</li>
