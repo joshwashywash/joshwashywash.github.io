@@ -37,18 +37,14 @@ const { Content } = await render(post);
 	title={post.data.title}
 	description={post.data.description}
 >
-	<main>
-		<article
-			class="prose lg:prose-xl prose-neutral dark:prose-invert target:prose-headings:bg-neutral-200 dark:target:prose-headings:bg-neutral-800"
+	<article>
+		<h1>{post.data.title}</h1>
+		<time
+			class="text-sm"
+			datetime={datetime}
 		>
-			<h1>{post.data.title}</h1>
-			<time
-				class="text-sm"
-				datetime={datetime}
-			>
-				{time}
-			</time>
-			<Content />
-		</article>
-	</main>
+			{time}
+		</time>
+		<Content />
+	</article>
 </Layout>

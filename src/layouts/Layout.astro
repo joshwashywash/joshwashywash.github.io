@@ -145,6 +145,10 @@ const meta_image_url = new URL(image_url, Astro.url);
 				}
 			</nav>
 		</div>
-		<slot />
+		<main
+			class="prose lg:prose-xl prose-neutral dark:prose-invert target:prose-headings:bg-neutral-200 dark:target:prose-headings:bg-neutral-800"
+		>
+			<slot />
+		</main>
 	</body>
 </html>

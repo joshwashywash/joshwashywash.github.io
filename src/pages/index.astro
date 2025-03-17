@@ -15,20 +15,18 @@ const posts = await getCollection("blog", (post) => {
 	title="josh's blog"
 	description="a list of josh's blog posts"
 >
-	<main class="prose prose-neutral dark:prose-invert lg:prose-xl">
-		<ul>
-			{
-				posts.map(({ data, id }) => {
-					return (
-						<li>
-							<h2>
-								<a href={id}>{data.title}</a>
-							</h2>
-							<p>{data.description}</p>
-						</li>
-					);
-				})
-			}
-		</ul>
-	</main>
+	<ul>
+		{
+			posts.map(({ data, id }) => {
+				return (
+					<li>
+						<h2>
+							<a href={id}>{data.title}</a>
+						</h2>
+						<p>{data.description}</p>
+					</li>
+				);
+			})
+		}
+	</ul>
 </Layout>
