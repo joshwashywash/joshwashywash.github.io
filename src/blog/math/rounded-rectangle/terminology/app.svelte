@@ -2,14 +2,20 @@
 	lang="ts"
 	module
 >
-	const terms: ListOptionsArray<string> = [
+	type Term =
+		| "inner width"
+		| "outer width"
+		| "inner height"
+		| "outer height"
+		| "corner radius";
+
+	const terms: ListOptionsArray<Term> = [
 		"inner width",
 		"outer width",
 		"inner height",
 		"outer height",
 		"corner radius",
 	] as const;
-	type Term = (typeof terms)[number];
 </script>
 
 <script lang="ts">
