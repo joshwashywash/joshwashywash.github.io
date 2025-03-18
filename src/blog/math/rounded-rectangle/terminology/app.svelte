@@ -33,9 +33,11 @@
 
 	let term = $state<Term>("inner width");
 
-	const corner_diameter = $derived(2 * corner_radius);
-	const outer_width = $derived(inner_width + corner_diameter);
-	const outer_height = $derived(inner_height + corner_diameter);
+	const end_of_inner_height = $derived(corner_radius + inner_height);
+	const end_of_inner_width = $derived(corner_radius + inner_width);
+
+	const outer_width = $derived(end_of_inner_width + corner_radius);
+	const outer_height = $derived(end_of_inner_height + corner_radius);
 
 	const viewBox = $derived(`0 0 ${outer_width} ${outer_height}`);
 
@@ -43,11 +45,6 @@
 		`${line_stroke_dash} ${line_stroke_dash}`,
 	);
 	const line_stroke_dash_offset = $derived(0.5 * line_stroke_dash);
-
-	const end_of_inner_height = $derived(corner_radius + inner_height);
-	const end_of_inner_width = $derived(corner_radius + inner_width);
-	const end_of_outer_height = $derived(corner_diameter + inner_height);
-	const end_of_outer_width = $derived(corner_diameter + inner_width);
 
 	const term_is_corner_radius = $derived(term === "corner radius");
 	const term_is_inner_height = $derived(term === "inner height");
@@ -137,7 +134,7 @@
 				x1={0}
 				y1={end_of_inner_height}
 				x2={0}
-				y2={end_of_outer_height}
+				y2={outer_height}
 			/>
 		</g>
 		<g transform={`translate(${end_of_inner_width}, 0)`}>
@@ -160,7 +157,7 @@
 				x1={0}
 				y1={end_of_inner_height}
 				x2={0}
-				y2={end_of_outer_height}
+				y2={outer_height}
 			/>
 		</g>
 		<g transform={`translate(0, ${corner_radius})`}>
@@ -182,7 +179,7 @@
 				class={class_term_is_corner_radius_or_outer_width}
 				x1={end_of_inner_width}
 				y1={0}
-				x2={end_of_outer_width}
+				x2={outer_width}
 				y2={0}
 			/>
 		</g>
@@ -205,7 +202,7 @@
 				class={class_term_is_corner_radius_or_outer_width}
 				x1={end_of_inner_width}
 				y1={0}
-				x2={end_of_outer_width}
+				x2={outer_width}
 				y2={0}
 			/>
 		</g>
