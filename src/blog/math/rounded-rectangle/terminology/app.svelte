@@ -115,36 +115,43 @@
 		stroke-dashoffset={line_stroke_dash_offset}
 	>
 		<g transform={`translate(${corner_radius}, 0)`}>
-			<line
-				class={class_term_is_corner_radius_or_outer_height}
-				x1={0}
-				y1={0}
-				x2={0}
-				y2={corner_radius}
-			/>
+			<g class={class_term_is_corner_radius_or_outer_height}>
+				<line
+					x1={0}
+					y1={0}
+					x2={0}
+					y2={corner_radius}
+				/>
+				<line
+					x1={0}
+					y1={end_of_inner_height}
+					x2={0}
+					y2={outer_height}
+				/>
+			</g>
 			<line
 				class={class_term_is_inner_or_outer_height}
 				x1={0}
 				y1={corner_radius}
 				x2={0}
 				y2={end_of_inner_height}
-			/>
-			<line
-				class={class_term_is_corner_radius_or_outer_height}
-				x1={0}
-				y1={end_of_inner_height}
-				x2={0}
-				y2={outer_height}
 			/>
 		</g>
 		<g transform={`translate(${end_of_inner_width}, 0)`}>
-			<line
-				class={class_term_is_corner_radius_or_outer_height}
-				x1={0}
-				y1={0}
-				x2={0}
-				y2={corner_radius}
-			/>
+			<g class={class_term_is_corner_radius_or_outer_height}>
+				<line
+					x1={0}
+					y1={0}
+					x2={0}
+					y2={corner_radius}
+				/>
+				<line
+					x1={0}
+					y1={end_of_inner_height}
+					x2={0}
+					y2={outer_height}
+				/>
+			</g>
 			<line
 				class={class_term_is_inner_or_outer_height}
 				x1={0}
@@ -152,57 +159,50 @@
 				x2={0}
 				y2={end_of_inner_height}
 			/>
-			<line
-				class={class_term_is_corner_radius_or_outer_height}
-				x1={0}
-				y1={end_of_inner_height}
-				x2={0}
-				y2={outer_height}
-			/>
 		</g>
 		<g transform={`translate(0, ${corner_radius})`}>
-			<line
-				class={class_term_is_corner_radius_or_outer_width}
-				x1={0}
-				y1={0}
-				x2={corner_radius}
-				y2={0}
-			/>
-			<line
-				class={class_term_is_inner_or_outer_width}
-				x1={corner_radius}
-				y1={0}
-				x2={end_of_inner_width}
-				y2={0}
-			/>
-			<line
-				class={class_term_is_corner_radius_or_outer_width}
-				x1={end_of_inner_width}
-				y1={0}
-				x2={outer_width}
-				y2={0}
-			/>
+			<g class={class_term_is_corner_radius_or_outer_width}>
+				<line
+					x1={0}
+					y1={0}
+					x2={corner_radius}
+					y2={0}
+				/>
+				<line
+					x1={end_of_inner_width}
+					y1={0}
+					x2={outer_width}
+					y2={0}
+				/>
+				<line
+					class={class_term_is_inner_or_outer_width}
+					x1={corner_radius}
+					y1={0}
+					x2={end_of_inner_width}
+					y2={0}
+				/>
+			</g>
 		</g>
 		<g transform={`translate(0, ${end_of_inner_height})`}>
-			<line
-				class={class_term_is_corner_radius_or_outer_width}
-				x1={0}
-				y1={0}
-				x2={corner_radius}
-				y2={0}
-			/>
+			<g class={class_term_is_corner_radius_or_outer_width}>
+				<line
+					x1={0}
+					y1={0}
+					x2={corner_radius}
+					y2={0}
+				/>
+				<line
+					x1={end_of_inner_width}
+					y1={0}
+					x2={outer_width}
+					y2={0}
+				/>
+			</g>
 			<line
 				class={class_term_is_inner_or_outer_width}
 				x1={corner_radius}
 				y1={0}
 				x2={end_of_inner_width}
-				y2={0}
-			/>
-			<line
-				class={class_term_is_corner_radius_or_outer_width}
-				x1={end_of_inner_width}
-				y1={0}
-				x2={outer_width}
 				y2={0}
 			/>
 		</g>

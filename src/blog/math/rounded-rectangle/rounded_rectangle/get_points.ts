@@ -1,11 +1,11 @@
 import type { Point } from "../types";
 
-export default ({
-	point_count = 32,
-	inner_width = 1,
-	inner_height = 1,
+export default (
 	corner_radius = 1,
-} = {}): Point[] => {
+	inner_height = 1,
+	inner_width = 1,
+	point_count = 32,
+): Point[] => {
 	const division = (2 * Math.PI) / point_count;
 
 	const half_inner_width = 0.5 * inner_width;

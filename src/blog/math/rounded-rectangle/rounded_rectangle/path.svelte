@@ -18,12 +18,7 @@
 	} & Omit<SVGAttributes<SVGPathElement>, "d"> = $props();
 
 	const points = $derived(
-		get_points({
-			inner_height,
-			inner_width,
-			point_count,
-			corner_radius,
-		}),
+		get_points(corner_radius, inner_height, inner_width, point_count),
 	);
 
 	const d = $derived(create_line_path(points));

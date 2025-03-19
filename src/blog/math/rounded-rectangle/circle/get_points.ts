@@ -1,6 +1,6 @@
 import type { Point } from "../types";
 
-export default ({ point_count = 32, radius = 1 } = {}): Point[] => {
+export default (point_count = 32, radius = 1): Point[] => {
 	const division = (2 * Math.PI) / point_count;
 
 	const points: Point[] = [];

@@ -13,12 +13,7 @@
 		radius?: number;
 	} & Omit<SVGAttributes<SVGPathElement>, "d"> = $props();
 
-	const points = $derived(
-		get_points({
-			point_count,
-			radius,
-		}),
-	);
+	const points = $derived(get_points(point_count, radius));
 
 	const d = $derived(create_line_path(points));
 </script>
