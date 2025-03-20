@@ -4,7 +4,6 @@ published_date: 2025-02-14
 title: deriving the points that define a rounded rectangle
 ---
 
-import AppWrapper from "./app_wrapper.svelte";
 import CircleApp from "./circle/app.svelte";
 import RoundedRectangleApp from "./rounded_rectangle/app.svelte";
 import TerminologyApp from "./terminology/app.svelte";
@@ -68,15 +67,13 @@ Here's a few terms I'll be using throughout this article:
 
 In the app below the highlighted path corresponds to the selected term.
 
-<AppWrapper>
-	<TerminologyApp
-		client:visible
-		corner_radius={corner_radius}
-		inner_width={inner_width}
-		inner_height={inner_height}
-		line_stroke_dash={stroke_dash}
-	/>
-</AppWrapper>
+<TerminologyApp
+	client:visible
+	corner_radius={corner_radius}
+	inner_width={inner_width}
+	inner_height={inner_height}
+	line_stroke_dash={stroke_dash}
+/>
 
 ## planning
 
@@ -84,21 +81,19 @@ Most problems are solved by breaking the problem up into smaller pieces. I imagi
 
 ### getting points around a circle
 
-<AppWrapper>
-	<CircleApp
-		client:visible
-		point_count={point_count}
-		point_count_max={point_count_max}
-		point_count_min={point_count_min}
-		point_count_step={point_count_step}
-		radius={corner_radius}
-		radius_max={corner_radius_max}
-		radius_min={corner_radius_min}
-		radius_step={corner_radius_step}
-	/>
-</AppWrapper>
+<CircleApp
+	client:visible
+	point_count={point_count}
+	point_count_max={point_count_max}
+	point_count_min={point_count_min}
+	point_count_step={point_count_step}
+	radius={corner_radius}
+	radius_max={corner_radius_max}
+	radius_min={corner_radius_min}
+	radius_step={corner_radius_step}
+/>
 
-There's a very simple formula for getting the points around a circle.
+There's a very simple formula for getting the points around a circle's circumference.
 
 <Code
 	code={get_circular_points_code}
@@ -173,26 +168,24 @@ Now that we know the offset amount and the direction, all we need to do is bring
 	title="get_rounded_rectangle_points.ts"
 />
 
-<AppWrapper>
-	<RoundedRectangleApp
-		client:visible
-		corner_radius={corner_radius}
-		corner_radius_max={corner_radius_max}
-		corner_radius_min={corner_radius_min}
-		corner_radius_step={corner_radius_step}
-		inner_height={inner_height}
-		inner_height_max={inner_height_max}
-		inner_height_min={inner_height_min}
-		inner_height_step={inner_height_step}
-		inner_width={inner_width}
-		inner_width_max={inner_width_max}
-		inner_width_min={inner_width_min}
-		inner_width_step={inner_width_step}
-		point_count={point_count}
-		point_count_max={point_count_max}
-		point_count_min={point_count_min}
-	/>
-</AppWrapper>
+<RoundedRectangleApp
+	client:visible
+	corner_radius={corner_radius}
+	corner_radius_max={corner_radius_max}
+	corner_radius_min={corner_radius_min}
+	corner_radius_step={corner_radius_step}
+	inner_height={inner_height}
+	inner_height_max={inner_height_max}
+	inner_height_min={inner_height_min}
+	inner_height_step={inner_height_step}
+	inner_width={inner_width}
+	inner_width_max={inner_width_max}
+	inner_width_min={inner_width_min}
+	inner_width_step={inner_width_step}
+	point_count={point_count}
+	point_count_max={point_count_max}
+	point_count_min={point_count_min}
+/>
 
 ## creating a RoundedPlaneGeometry in three.js
 

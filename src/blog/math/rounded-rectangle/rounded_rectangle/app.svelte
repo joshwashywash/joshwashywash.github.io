@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Path from "./path.svelte";
-	import { Pane, Slider } from "svelte-tweakpane-ui";
+	import { Element, Pane, Slider, ThemeUtils } from "svelte-tweakpane-ui";
 	import { Tween } from "svelte/motion";
 
 	let {
@@ -28,21 +28,20 @@
 
 	const corner_diameter = $derived(2 * tween_corner_radius.current);
 
-	const view_box_width = $derived(corner_diameter + inner_width_max);
-	const view_box_height = $derived(corner_diameter + inner_height_max);
+	const viewbox_width = $derived(corner_diameter + inner_width_max);
+	const viewbox_height = $derived(corner_diameter + inner_height_max);
 
-	const half_viewbox_width = $derived(0.5 * view_box_width);
-	const half_viewbox_height = $derived(0.5 * view_box_height);
+	const viewbox_min_x = $derived(-1 * 0.5 * viewbox_width);
+	const viewbox_min_y = $derived(-1 * 0.5 * viewbox_height);
 
-	const viewBox = $derived(`0 0 ${view_box_width} ${view_box_height}`);
-
-	const transform = $derived(
-		`translate(${half_viewbox_width}, ${half_viewbox_height})`,
+	const viewBox = $derived(
+		`${viewbox_min_x} ${viewbox_min_y} ${viewbox_width} ${viewbox_height}`,
 	);
 </script>
 
 <Pane
 	position="inline"
+	theme={ThemeUtils.presets.iceberg}
 	title="rounded rectangle"
 >
 	<Slider
@@ -73,19 +72,18 @@
 		max={inner_height_max}
 		step={inner_height_step}
 	/>
+	<Element>
+		<svg
+			class="dark-bg-neutral-900 fill-neutral-100 text-neutral-900 dark:text-neutral-100"
+			xmlns="http://www.w3.org/2000/svg"
+			{viewBox}
+		>
+			<Path
+				corner_radius={tween_corner_radius.current}
+				inner_height={tween_inner_height.current}
+				inner_width={tween_inner_width.current}
+				{point_count}
+			/>
+		</svg>
+	</Element>
 </Pane>
-
-<svg
-	class="fill-current"
-	xmlns="http://www.w3.org/2000/svg"
-	{viewBox}
->
-	<g {transform}>
-		<Path
-			corner_radius={tween_corner_radius.current}
-			inner_height={tween_inner_height.current}
-			inner_width={tween_inner_width.current}
-			{point_count}
-		/>
-	</g>
-</svg>

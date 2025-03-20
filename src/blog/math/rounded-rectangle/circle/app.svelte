@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Path from "./path.svelte";
-	import { Pane, Slider } from "svelte-tweakpane-ui";
+	import { Element, Pane, Slider, ThemeUtils } from "svelte-tweakpane-ui";
 	import { Tween } from "svelte/motion";
 
 	let {
@@ -18,12 +18,15 @@
 	const tween_point_count = Tween.of(() => point_count);
 
 	const diameter = $derived(2 * radius_max);
-	const left_top = $derived(-1 * radius_max);
-	const viewBox = $derived(`${left_top} ${left_top} ${diameter} ${diameter}`);
+	const viewbox_min = $derived(-1 * radius_max);
+	const viewBox = $derived(
+		`${viewbox_min} ${viewbox_min} ${diameter} ${diameter}`,
+	);
 </script>
 
 <Pane
 	position="inline"
+	theme={ThemeUtils.presets.iceberg}
 	title="circle"
 >
 	<Slider
@@ -40,15 +43,16 @@
 		max={point_count_max}
 		step={point_count_step}
 	/>
+	<Element>
+		<svg
+			class="dark-bg-neutral-900 fill-neutral-100 text-neutral-900 dark:text-neutral-100"
+			xmlns="http://www.w3.org/2000/svg"
+			{viewBox}
+		>
+			<Path
+				point_count={tween_point_count.current}
+				radius={tween_radius.current}
+			/>
+		</svg>
+	</Element>
 </Pane>
-
-<svg
-	class="fill-current"
-	xmlns="http://www.w3.org/2000/svg"
-	{viewBox}
->
-	<Path
-		point_count={tween_point_count.current}
-		radius={tween_radius.current}
-	/>
-</svg>
