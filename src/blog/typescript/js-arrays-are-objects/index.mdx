@@ -102,8 +102,9 @@ Now the Array's prototype can be used with the object.
 
 ```js
 Array.prototype.map.call(names, (name) => name.substring(0, 1)); // ['S', 'P', 'S']
-Array.prototype.reverse.call(names); // { 0: 'Squidward', 1: 'Plankton', 2: 'Spongebob', length: 3 }
 Array.prototype.toReverse.call(names); // [ 'Squidward', 'Plankton', 'Spongebob' ]
+
+Array.prototype.reverse.call(names); // { 0: 'Squidward', 1: 'Plankton', 2: 'Spongebob', length: 3 }
 ```
 
 I don't know why you'd ever need to do this but it is possible.
@@ -112,4 +113,4 @@ Interestly, methods that modify the "array" keep the look and feel of the origin
 
 ## Conclusion
 
-I don't think knowing that arrays are really just objects probably won't provide much in the way of understanding but it might be useful for very obscure and unconventional things.
+Knowing that arrays are really just objects probably won't provide much in the way of understanding but it might be useful for very obscure and unconventional things.
