@@ -1,0 +1,110 @@
+---
+description: revealing the true identity of JavaScript arrays
+published_date: 2025-05-22
+title: arrays are objects
+---
+
+There's nothing special about arrays in JavaScript. They're really just objects and all objects support _bracket notation_.
+
+Take the object below:
+
+```js
+const character = {
+	age: 38,
+	name: "Spongebob",
+};
+```
+
+We all know you can access properties of this object through _dot notation_.
+
+```js
+character.age; // 38
+character.name; // 'Spongebob'
+```
+
+You can also access the properties through _bracket notation_.
+
+```js
+character["age"]; // 38
+character["name"]; // 'Spongebob'
+```
+
+Using _bracket notation_ looks a lot like how you access elements in an array.
+
+```js
+const names = ["Spongebob", "Plankton", "Squidward"];
+names[0]; // 'Spongebob'
+names[1]; // 'Plankton'
+names[2]; // 'Squidward'
+```
+
+You might think, _"Hey this isn't the same thing. Arrays use bracket notation with numbers not strings."_ But have you ever tried bracket notation using strings on arrays?
+
+```js
+names["0"]; // 'Spongebob'
+names["1"]; // 'Plankton'
+names["2"]; // 'Squidward'
+```
+
+Maybe surprisingly you get the same results as before. Believe it or not, the value put inbetween the brackets is actually stringified before the property access is carried out. Most Javascript objects have a `.toString` method. In the case of numbers, `toString` returns a string of the number.
+
+```js
+const zero = 0;
+zero.toString(); // "0"
+`${zero}`; // '0'
+```
+
+this is true even for immediate values
+
+```js
+(0).toString() // "0"
+`${0}`; // "0"
+```
+
+When accessing elements in an array, the index is _stringfied_ before the property access happens.
+
+```js
+names[0] === names["0"]; // true
+```
+
+This implies that arrays are really just objects with keys that look like numbers.
+
+The next question would be, _"Can you make an object that behaves like an array?"_ The answer is yes.
+
+```js
+const names = {
+	0: "Spongebob",
+	1: "Plankton",
+	2: "Squidward",
+};
+
+names[0]; // "Spongebob"
+names[1]; // "Plankton"
+names[2]; // "Squidward"
+```
+
+Can you use array methods on this object? The answer is _kinda_.
+
+Arrays have methods on their prototype. Methods like **map**, **reduce**, and even properties like **length** are not available on the object unless it _extends_ from array, however these methods can still be called on something that is _array-like_ if the prototype is used directly.
+
+In this case, to be _array-like_ requires the object to have a **length** property.
+
+```js
+names.length = 3;
+```
+
+Now the Array's prototype can be used with the object.
+
+```js
+Array.prototype.map.call(names, (name) => name.substring(0, 1)); // ['S', 'P', 'S']
+Array.prototype.reverse.call(names); // { 0: 'Squidward', 1: 'Plankton', 2: 'Spongebob', length: 3 }
+Array.prototype.toReverse.call(names); // [ 'Squidward', 'Plankton', 'Spongebob' ]
+```
+
+I don't know why you'd ever need to do this but it is possible.
+
+Interestly, methods that modify the "array" keep the look and feel of the original object, whereas methods that don't return a new array instance instead of something that resembles an array and the original object is left untouched.
+
+## Conclusion
+
+I don't think knowing that arrays are really just objects probably won't provide much in the way of understanding but it might be useful for very obscure and unconventional things.
