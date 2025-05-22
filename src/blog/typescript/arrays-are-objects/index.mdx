@@ -1,7 +1,7 @@
 ---
 description: revealing the true identity of JavaScript arrays
 published_date: 2025-05-22
-title: arrays are objects
+title: javascript arrays are objects
 ---
 
 There's nothing special about arrays in JavaScript. They're really just objects and all objects support _bracket notation_.
@@ -33,20 +33,25 @@ Using _bracket notation_ looks a lot like how you access elements in an array.
 
 ```js
 const names = ["Spongebob", "Plankton", "Squidward"];
+
 names[0]; // 'Spongebob'
 names[1]; // 'Plankton'
 names[2]; // 'Squidward'
 ```
 
-You might think, _"Hey this isn't the same thing. Arrays use bracket notation with numbers not strings."_ But have you ever tried bracket notation using strings on arrays?
+You might think, _"Hey this isn't the same. Arrays use bracket notation with numbers not strings."_ But have you ever tried bracket notation with strings on arrays?
 
 ```js
 names["0"]; // 'Spongebob'
 names["1"]; // 'Plankton'
 names["2"]; // 'Squidward'
+
+names["length"]; // undefined
 ```
 
-Maybe surprisingly you get the same results as before. Believe it or not, the value put inbetween the brackets is actually stringified before the property access is carried out. Most Javascript objects have a `.toString` method. In the case of numbers, `toString` returns a string of the number.
+Maybe surprisingly, it's the same results as before. Believe it or not, the value put inbetween the brackets is actually stringified before the property access is carried out.
+
+Most Javascript objects have a **.toString** method. As expected, **toString** when called on a number, returns a string representation of that number.
 
 ```js
 const zero = 0;
