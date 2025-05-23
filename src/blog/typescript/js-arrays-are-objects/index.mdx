@@ -19,14 +19,14 @@ We all know you can access properties of this object through _dot notation_.
 
 ```js
 character.age; // 38
-character.name; // 'Spongebob'
+character.name; // "Spongebob"
 ```
 
 You can also access the properties through _bracket notation_.
 
 ```js
 character["age"]; // 38
-character["name"]; // 'Spongebob'
+character["name"]; // "Spongebob"
 ```
 
 Using _bracket notation_ looks a lot like how you access elements in an array.
@@ -34,17 +34,17 @@ Using _bracket notation_ looks a lot like how you access elements in an array.
 ```js
 const names = ["Spongebob", "Plankton", "Squidward"];
 
-names[0]; // 'Spongebob'
-names[1]; // 'Plankton'
-names[2]; // 'Squidward'
+names[0]; // "Spongebob"
+names[1]; // "Plankton"
+names[2]; // "Squidward"
 ```
 
 You might think, _"Hey this isn't the same. Arrays use bracket notation with numbers not strings."_ But have you ever tried bracket notation with strings on arrays?
 
 ```js
-names["0"]; // 'Spongebob'
-names["1"]; // 'Plankton'
-names["2"]; // 'Squidward'
+names["0"]; // "Spongebob"
+names["1"]; // "Plankton"
+names["2"]; // "Squidward"
 
 names["length"]; // undefined
 ```
@@ -56,7 +56,7 @@ Most things in JS have a **.toString** method. As expected, **toString** when ca
 ```js
 const zero = 0;
 zero.toString(); // "0"
-`${zero}`; // '0'
+`${zero}`; // "0"
 ```
 
 this is true even for immediate values
@@ -88,7 +88,7 @@ names[1]; // "Plankton"
 names[2]; // "Squidward"
 ```
 
-Can you use array methods on this object? The answer is _kinda_.
+Can you use Array's methods on this object? The answer is _kinda_.
 
 Arrays have methods on their prototype. Methods like **map**, **reduce**, and even properties like **length** are not available on the object unless it _extends_ from array. However, these methods can still be called on something that is _array-like_ if the prototype is used directly.
 
@@ -101,10 +101,10 @@ names.length = 3;
 Now the Array's prototype can be used with the object.
 
 ```js
-Array.prototype.map.call(names, (name) => name.substring(0, 1)); // ['S', 'P', 'S']
-Array.prototype.toReversed.call(names); // [ 'Squidward', 'Plankton', 'Spongebob' ]
+Array.prototype.map.call(names, (name) => name.substring(0, 1)); // ["S", "P", "S"]
+Array.prototype.toReversed.call(names); // [ "Squidward", "Plankton", "Spongebob" ]
 
-Array.prototype.reverse.call(names); // { 0: 'Squidward', 1: 'Plankton', 2: 'Spongebob', length: 3 }
+Array.prototype.reverse.call(names); // { 0: "Squidward", 1: "Plankton", 2: "Spongebob", length: 3 }
 ```
 
 Interestly, methods that modify the instance such as **reverse** and **sort** keep the look and feel of the original object.
