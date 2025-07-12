@@ -117,7 +117,7 @@ Looking at it this way you can see that the push is really a vector offset but t
 
 ```ts
 const x = directionX * offsetX + radius * Math.cos(a);
-const y = directionY * offsetY + radius * Math.cos(a);
+const y = directionY * offsetY + radius * Math.sin(a);
 ```
 
 So the question now becomes: "what should the offset and direction be such that the end result gives the rounded rectangle?
