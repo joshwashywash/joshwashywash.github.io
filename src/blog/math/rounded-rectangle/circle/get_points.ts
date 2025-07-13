@@ -11,12 +11,10 @@ export default (point_count = 32, radius = 1): Point[] => {
 		const x = radius * Math.cos(a);
 		const y = radius * Math.sin(a);
 
-		const point: Point = {
+		points.push({
 			x,
 			y,
-		};
-
-		points.push(point);
+		});
 	}
 
 	return points;

@@ -2,8 +2,8 @@ import type { Point } from "../types";
 
 export default (
 	corner_radius = 1,
-	inner_height = 1,
 	inner_width = 1,
+	inner_height = 1,
 	point_count = 32,
 ): Point[] => {
 	const division = (2 * Math.PI) / point_count;
@@ -22,12 +22,10 @@ export default (
 		let y = corner_radius * Math.sin(a);
 		y += Math.sign(y) * half_inner_height;
 
-		const point: Point = {
+		points.push({
 			x,
 			y,
-		};
-
-		points.push(point);
+		});
 	}
 
 	return points;

@@ -1,7 +1,8 @@
 <script lang="ts">
-	import Path from "./path.svelte";
 	import { Element, Pane, Slider, ThemeUtils } from "svelte-tweakpane-ui";
 	import { Tween } from "svelte/motion";
+	import get_points from "./get_points";
+	import create_line_path from "../create_line_path";
 
 	let {
 		point_count = 17,
@@ -22,6 +23,12 @@
 	const viewBox = $derived(
 		`${viewbox_min} ${viewbox_min} ${diameter} ${diameter}`,
 	);
+
+	const points = $derived(
+		get_points(tween_point_count.current, tween_radius.current),
+	);
+
+	const d = $derived(create_line_path(points));
 </script>
 
 <Pane
@@ -49,10 +56,7 @@
 			xmlns="http://www.w3.org/2000/svg"
 			{viewBox}
 		>
-			<Path
-				point_count={tween_point_count.current}
-				radius={tween_radius.current}
-			/>
+			<path {d} />
 		</svg>
 	</Element>
 </Pane>
