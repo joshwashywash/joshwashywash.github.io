@@ -36,16 +36,14 @@ A non-tail-recursive function that sums a list of numbers could look like the fo
 You can see by looking at the call stack when calling the function, this version of `sum` is not tail recursive.
 
 ```ts
-count_non_tail_recursive(["a", "b", "", "a"], "a");
-1 + count_non_tail_recursive(["a", "b", "", "a"], "a", 1);
-1 + 0 + count_non_tail_recursive(["a", "b", "", "a"], "a", 2);
-1 + 0 + 0 + count_non_tail_recursive(["a", "b", "", "a"], "a", 3);
-1 + 0 + 0 + 1 + count_non_tail_recursive(["a", "b", "", "a"], "a", 4);
-1 + 0 + 0 + 1 + 0;
-1 + 0 + 1 + 0;
-1 + 1 + 0;
-2 + 0;
-2;
+sum_non_tail_recursive([3, 4, 5], { index: 0 });
+3 + sum_non_tail_recursive([3, 4, 5], { index: 1 });
+3 + 4 + sum_non_tail_recursive([3, 4, 5], { index: 2 });
+3 + 4 + 5 + sum_non_tail_recursive([3, 4, 5], { index: 3 });
+3 + 4 + 5 + 0;
+7 + 5 + 0;
+12 + 0;
+12;
 ```
 
 A triangular shape forms because the "work" isn't completed until the
@@ -65,12 +63,11 @@ A tail-recursive implementation of `sum` might look like this:
 When looking at the call stack, notice how the running total is carried along to the next call of `sum`. This is pretty characteristic of tail recursive functions.
 
 ```ts
-count_tail_recursive(["a", "b", "c", "a"], "a");
-count_tail_recursive(["a", "b", "c", "a"], "a", 1, 1);
-count_tail_recursive(["a", "b", "c", "a"], "a", 2, 1);
-count_tail_recursive(["a", "b", "c", "a"], "a", 3, 1);
-count_tail_recursive(["a", "b", "c", "a"], "a", 4, 2);
-2;
+sum_tail_recursive([3, 4, 5], { index: 0, sum: 0 });
+sum_tail_recursive([3, 4, 5], { index: 1, sum: 3 });
+sum_tail_recursive([3, 4, 5], { index: 2, sum: 7 });
+sum_tail_recursive([3, 4, 5], { index: 3, sum: 12 });
+12;
 ```
 
 ## count occurrences in a list
@@ -88,14 +85,15 @@ To count the number of times an element appears in a list, loop over the list an
 Again, the "work" is delayed until the recursion is done.
 
 ```ts
-sum_non_tail_recursive([3, 4, 5]);
-3 + sum_non_tail_recursive([3, 4, 5], 1);
-3 + 4 + sum_non_tail_recursive([3, 4, 5], 2);
-3 + 4 + 5 + sum_non_tail_recursive([3, 4, 5], 3);
-3 + 4 + 5 + 0;
-7 + 5 + 0;
-12 + 0;
-12;
+count_non_tail_recursive(["a", "b", "a"], "a", { index: 0 });
+1 + count_non_tail_recursive(["a", "b", "a"], "a", { index: 1 });
+1 + 0 + count_non_tail_recursive(["a", "b", "a"], "a", { index: 2 });
+1 + 0 + 1 + count_non_tail_recursive(["a", "b", "a"], "a", { index: 4 });
+1 + 0 + 1 + 0;
+1 + 0 + 1 + 0;
+1 + 1 + 0;
+2 + 0;
+2;
 ```
 
 ### count tail-recursive
@@ -112,11 +110,11 @@ Just like the tail-recursive version of the _sum_ function above, the
 calculation is performed before the recursion and the accumulated result gets passed along.
 
 ```ts
-sum_tail_recursive([3, 4, 5]);
-sum_tail_recursive([3, 4, 5], 1, 3);
-sum_tail_recursive([3, 4, 5], 2, 7);
-sum_tail_recursive([3, 4, 5], 3, 12);
-12;
+count_tail_recursive(["a", "b", "a"], "a", { index: 0, count: 0 });
+count_tail_recursive(["a", "b", "a"], "a", { index: 1, count: 1 });
+count_tail_recursive(["a", "b", "a"], "a", { index: 2, count: 1 });
+count_tail_recursive(["a", "b", "a"], "a", { index: 3, count: 2 });
+2;
 ```
 
 ## summary

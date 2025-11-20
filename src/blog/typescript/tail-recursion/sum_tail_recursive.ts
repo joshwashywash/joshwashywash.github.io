@@ -1,14 +1,13 @@
 export const sum_tail_recursive = (
 	ns: number[],
-	index = 0,
-	total = 0,
+	context: { index: 0; sum: 0 },
 ): number => {
-	const n = ns[index];
+	const n = ns[context.index];
 
-	if (n === undefined) return total;
+	if (n === undefined) return context.sum;
 
-	index += 1;
-	total += n;
+	context.index += 1;
+	context.sum += n;
 
-	return sum_tail_recursive(ns, index, total);
+	return sum_tail_recursive(ns, context);
 };
