@@ -1,16 +1,19 @@
+type Context = {
+	count: number;
+	index: number;
+};
+
 export const count_tail_recursive = <E>(
 	elements: E[],
 	element: E,
-	context: { index: 0; count: 0 },
+	{ count = 0, index = 0 }: Partial<Context> = {},
 ): number => {
-	const candidate = elements[context.index];
+	if (index >= elements.length) return count;
 
-	if (candidate === undefined) return context.count;
+	const equal = elements[index] === element;
 
-	const equal = candidate === element;
+	index += 1;
+	count += +equal;
 
-	context.index += 1;
-	context.count += +equal;
-
-	return count_tail_recursive(elements, element, context);
+	return count_tail_recursive(elements, element, { index, count });
 };

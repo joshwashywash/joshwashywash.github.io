@@ -1,15 +1,17 @@
+type Context = {
+	index: number;
+};
+
 export const count_non_tail_recursive = <E>(
 	elements: E[],
 	element: E,
-	context = { index: 0 },
+	{ index = 0 }: Partial<Context> = {},
 ): number => {
-	const candidate = elements[context.index];
+	if (index >= elements.length) return 0;
 
-	if (candidate === undefined) return 0;
+	const equal = elements[index] === element;
 
-	const equal = candidate === element;
+	index += 1;
 
-	context.index += 1;
-
-	return +equal + count_non_tail_recursive(elements, element, context);
+	return +equal + count_non_tail_recursive(elements, element, { index });
 };

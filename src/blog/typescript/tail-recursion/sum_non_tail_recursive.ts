@@ -1,12 +1,13 @@
+type Context = {
+	index: number;
+};
+
 export const sum_non_tail_recursive = (
 	ns: number[],
-	context = { index: 0 },
+	{ index = 0 }: Partial<Context> = {},
 ): number => {
-	const n = ns[context.index];
+	if (index >= ns.length) return 0;
+	index += 1;
 
-	if (n === undefined) return 0;
-
-	context.index += 1;
-
-	return n + sum_non_tail_recursive(ns, context);
+	return ns[index] + sum_non_tail_recursive(ns, { index });
 };

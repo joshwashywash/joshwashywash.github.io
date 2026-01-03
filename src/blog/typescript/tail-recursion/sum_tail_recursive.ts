@@ -1,13 +1,16 @@
+type Context = {
+	index: number;
+	sum: number;
+};
+
 export const sum_tail_recursive = (
 	ns: number[],
-	context: { index: 0; sum: 0 },
+	{ index = 0, sum = 0 }: Partial<Context> = {},
 ): number => {
-	const n = ns[context.index];
+	if (index >= ns.length) return sum;
 
-	if (n === undefined) return context.sum;
+	index += 1;
+	sum += ns[index];
 
-	context.index += 1;
-	context.sum += n;
-
-	return sum_tail_recursive(ns, context);
+	return sum_tail_recursive(ns, { index, sum });
 };
