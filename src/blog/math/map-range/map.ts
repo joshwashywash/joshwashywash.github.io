@@ -4,7 +4,7 @@ export default (
 	outLow: number,
 	outHigh: number,
 ) => {
-	return (n: number) => {
+	return (n: number): number => {
 		return ((n - inLow) / (inHigh - inLow)) * (outHigh - outLow) + outLow;
 	};
 };

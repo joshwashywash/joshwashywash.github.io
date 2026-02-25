@@ -1,5 +1,5 @@
 import map from "./map";
-import midpoint from "$lib/utils/math/midpoint";
+import { midpoint } from "$lib/utils/math";
 
 const inLow = 0;
 const inHigh = 255;

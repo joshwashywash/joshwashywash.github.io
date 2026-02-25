@@ -2,25 +2,19 @@
 	lang="ts"
 	module
 >
-	type Term =
-		| "inner width"
-		| "outer width"
-		| "inner height"
-		| "outer height"
-		| "corner radius";
-
-	const terms: ListOptionsArray<Term> = [
-		"inner width",
-		"outer width",
-		"inner height",
-		"outer height",
+	const terms = [
 		"corner radius",
+		"inner height",
+		"inner width",
+		"outer height",
+		"outer width",
 	] as const;
+
+	type Term = (typeof terms)[number];
 </script>
 
 <script lang="ts">
-	import { Element, type ListOptionsArray } from "svelte-tweakpane-ui";
-	import { List, Pane, ThemeUtils } from "svelte-tweakpane-ui";
+	import { Element, List, Pane, ThemeUtils } from "svelte-tweakpane-ui";
 
 	let {
 		corner_radius = 10,
