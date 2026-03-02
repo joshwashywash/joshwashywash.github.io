@@ -16,23 +16,14 @@ import { Picture } from "astro:assets";
 
 export const corner_radius = 30;
 export const corner_radius_max = 100;
-export const corner_radius_min = 1;
-export const corner_radius_step = 1;
 
 export const inner_height = 90;
 export const inner_height_max = 100;
-export const inner_height_min = 0;
-export const inner_height_step = 1;
 
 export const inner_width = 70;
 export const inner_width_max = 100;
-export const inner_width_min = 0;
-export const inner_width_step = 1;
 
 export const point_count = 25;
-export const point_count_max = 50;
-export const point_count_min = 3;
-export const point_count_step = 1;
 
 export const stroke_dash = 5;
 
@@ -84,13 +75,8 @@ Most problems are solved by breaking the problem up into smaller pieces. I imagi
 <CircleApp
 	client:visible
 	point_count={point_count}
-	point_count_max={point_count_max}
-	point_count_min={point_count_min}
-	point_count_step={point_count_step}
 	radius={corner_radius}
 	radius_max={corner_radius_max}
-	radius_min={corner_radius_min}
-	radius_step={corner_radius_step}
 />
 
 There's a very simple formula for getting the points around a circle's circumference.
@@ -171,20 +157,11 @@ Now that we know the offset amount and the direction, all we need to do is bring
 <RoundedRectangleApp
 	client:visible
 	corner_radius={corner_radius}
-	corner_radius_max={corner_radius_max}
-	corner_radius_min={corner_radius_min}
-	corner_radius_step={corner_radius_step}
 	inner_height={inner_height}
 	inner_height_max={inner_height_max}
-	inner_height_min={inner_height_min}
-	inner_height_step={inner_height_step}
 	inner_width={inner_width}
 	inner_width_max={inner_width_max}
-	inner_width_min={inner_width_min}
-	inner_width_step={inner_width_step}
 	point_count={point_count}
-	point_count_max={point_count_max}
-	point_count_min={point_count_min}
 />
 
 ## creating a RoundedPlaneGeometry in three.js

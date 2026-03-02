@@ -22,7 +22,6 @@
 		"astro-expressive-code": "^0.41.3",
 		"sharp": "^0.34.5",
 		"svelte": "^5.43.12",
-		"svelte-tweakpane-ui": "^1.5.11",
 		"tailwindcss": "^4.1.17",
 		"typescript": "^5.9.3"
 	},

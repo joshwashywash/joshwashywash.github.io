@@ -14,8 +14,6 @@
 </script>
 
 <script lang="ts">
-	import { Element, List, Pane, ThemeUtils } from "svelte-tweakpane-ui";
-
 	let {
 		corner_radius = 10,
 		inner_height = 200,
@@ -67,144 +65,142 @@
 	);
 </script>
 
-<Pane
-	position="inline"
-	theme={ThemeUtils.presets.iceberg}
-	title="terminology"
+<fieldset>
+	<label>
+		term
+		<select bind:value={term}>
+			{#each terms as term}
+				<option>{term}</option>
+			{/each}
+		</select>
+	</label>
+</fieldset>
+
+<svg
+	class="dark-bg-neutral-900 fill-neutral-100 text-neutral-900 dark:text-neutral-100"
+	xmlns="http://www.w3.org/2000/svg"
+	{viewBox}
 >
-	<List
-		bind:value={term}
-		options={terms}
-		label="term"
+	<rect
+		rx={corner_radius}
+		ry={corner_radius}
+		x={0}
+		y={0}
+		width={outer_width}
+		height={outer_height}
 	/>
-	<Element>
-		<svg
-			class="dark-bg-neutral-900 fill-neutral-100 text-neutral-900 dark:text-neutral-100"
-			xmlns="http://www.w3.org/2000/svg"
-			{viewBox}
-		>
-			<rect
-				rx={corner_radius}
-				ry={corner_radius}
-				x={0}
-				y={0}
-				width={outer_width}
-				height={outer_height}
-			/>
+	<g
+		class="stroke-neutral-100 dark:stroke-neutral-900"
+		stroke-dasharray={line_stroke_dash_array}
+		stroke-dashoffset={line_stroke_dash_offset}
+	>
+		<g transform={`translate(${corner_radius}, 0)`}>
 			<g
-				class="stroke-neutral-100 dark:stroke-neutral-900"
-				stroke-dasharray={line_stroke_dash_array}
-				stroke-dashoffset={line_stroke_dash_offset}
+				data-active={term_is_corner_radius_or_outer_height || null}
+				class="data-active:stroke-rose-pine-gold"
 			>
-				<g transform={`translate(${corner_radius}, 0)`}>
-					<g
-						data-active={term_is_corner_radius_or_outer_height || null}
-						class="data-active:stroke-rose-pine-gold"
-					>
-						<line
-							x1={0}
-							y1={0}
-							x2={0}
-							y2={corner_radius}
-						/>
-						<line
-							x1={0}
-							y1={end_of_inner_height}
-							x2={0}
-							y2={outer_height}
-						/>
-					</g>
-					<line
-						data-active={term_is_inner_or_outer_height || null}
-						class="data-active:stroke-rose-pine-gold"
-						x1={0}
-						y1={corner_radius}
-						x2={0}
-						y2={end_of_inner_height}
-					/>
-				</g>
-				<g transform={`translate(${end_of_inner_width}, 0)`}>
-					<g
-						data-active={term_is_corner_radius_or_outer_height || null}
-						class="data-active:stroke-rose-pine-gold"
-					>
-						<line
-							x1={0}
-							y1={0}
-							x2={0}
-							y2={corner_radius}
-						/>
-						<line
-							x1={0}
-							y1={end_of_inner_height}
-							x2={0}
-							y2={outer_height}
-						/>
-					</g>
-					<line
-						data-active={term_is_inner_or_outer_height || null}
-						class="data-active:stroke-rose-pine-gold"
-						x1={0}
-						y1={corner_radius}
-						x2={0}
-						y2={end_of_inner_height}
-					/>
-				</g>
-				<g transform={`translate(0, ${corner_radius})`}>
-					<g
-						data-active={term_is_corner_radius_or_outer_width || null}
-						class="data-active:stroke-rose-pine-gold"
-					>
-						<line
-							x1={0}
-							y1={0}
-							x2={corner_radius}
-							y2={0}
-						/>
-						<line
-							x1={end_of_inner_width}
-							y1={0}
-							x2={outer_width}
-							y2={0}
-						/>
-					</g>
-					<line
-						data-active={term_is_inner_or_outer_width || null}
-						class="data-active:stroke-rose-pine-gold"
-						x1={corner_radius}
-						y1={0}
-						x2={end_of_inner_width}
-						y2={0}
-					/>
-				</g>
-				<g transform={`translate(0, ${end_of_inner_height})`}>
-					<g
-						data-active={term_is_corner_radius_or_outer_width || null}
-						class="data-active:stroke-rose-pine-gold"
-					>
-						<line
-							x1={0}
-							y1={0}
-							x2={corner_radius}
-							y2={0}
-						/>
-						<line
-							x1={end_of_inner_width}
-							y1={0}
-							x2={outer_width}
-							y2={0}
-						/>
-					</g>
-					<line
-						data-active={term_is_inner_or_outer_width || null}
-						class="data-active:stroke-rose-pine-gold"
-						x1={corner_radius}
-						y1={0}
-						x2={end_of_inner_width}
-						y2={0}
-					/>
-				</g>
+				<line
+					x1={0}
+					y1={0}
+					x2={0}
+					y2={corner_radius}
+				/>
+				<line
+					x1={0}
+					y1={end_of_inner_height}
+					x2={0}
+					y2={outer_height}
+				/>
 			</g>
-		</svg>
-	</Element>
-</Pane>
+			<line
+				data-active={term_is_inner_or_outer_height || null}
+				class="data-active:stroke-rose-pine-gold"
+				x1={0}
+				y1={corner_radius}
+				x2={0}
+				y2={end_of_inner_height}
+			/>
+		</g>
+		<g transform={`translate(${end_of_inner_width}, 0)`}>
+			<g
+				data-active={term_is_corner_radius_or_outer_height || null}
+				class="data-active:stroke-rose-pine-gold"
+			>
+				<line
+					x1={0}
+					y1={0}
+					x2={0}
+					y2={corner_radius}
+				/>
+				<line
+					x1={0}
+					y1={end_of_inner_height}
+					x2={0}
+					y2={outer_height}
+				/>
+			</g>
+			<line
+				data-active={term_is_inner_or_outer_height || null}
+				class="data-active:stroke-rose-pine-gold"
+				x1={0}
+				y1={corner_radius}
+				x2={0}
+				y2={end_of_inner_height}
+			/>
+		</g>
+		<g transform={`translate(0, ${corner_radius})`}>
+			<g
+				data-active={term_is_corner_radius_or_outer_width || null}
+				class="data-active:stroke-rose-pine-gold"
+			>
+				<line
+					x1={0}
+					y1={0}
+					x2={corner_radius}
+					y2={0}
+				/>
+				<line
+					x1={end_of_inner_width}
+					y1={0}
+					x2={outer_width}
+					y2={0}
+				/>
+			</g>
+			<line
+				data-active={term_is_inner_or_outer_width || null}
+				class="data-active:stroke-rose-pine-gold"
+				x1={corner_radius}
+				y1={0}
+				x2={end_of_inner_width}
+				y2={0}
+			/>
+		</g>
+		<g transform={`translate(0, ${end_of_inner_height})`}>
+			<g
+				data-active={term_is_corner_radius_or_outer_width || null}
+				class="data-active:stroke-rose-pine-gold"
+			>
+				<line
+					x1={0}
+					y1={0}
+					x2={corner_radius}
+					y2={0}
+				/>
+				<line
+					x1={end_of_inner_width}
+					y1={0}
+					x2={outer_width}
+					y2={0}
+				/>
+			</g>
+			<line
+				data-active={term_is_inner_or_outer_width || null}
+				class="data-active:stroke-rose-pine-gold"
+				x1={corner_radius}
+				y1={0}
+				x2={end_of_inner_width}
+				y2={0}
+			/>
+		</g>
+	</g>
+</svg>
