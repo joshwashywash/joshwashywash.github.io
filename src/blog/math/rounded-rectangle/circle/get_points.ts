@@ -1,4 +1,4 @@
-export default (point_count = 32, radius = 1): number[] => {
+export default ({ point_count = 32, radius = 1 }): number[] => {
 	const division = (2 * Math.PI) / point_count;
 
 	const points: number[] = [];

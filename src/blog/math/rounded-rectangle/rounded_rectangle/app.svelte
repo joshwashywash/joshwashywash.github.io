@@ -1,6 +1,15 @@
 <script lang="ts">
 	import get_points from "./get_points";
 
+	type Props = {
+		corner_radius: number;
+		inner_height: number;
+		inner_height_max: number;
+		inner_width: number;
+		inner_width_max: number;
+		point_count: number;
+	};
+
 	let {
 		corner_radius = 25,
 		inner_height = 50,
@@ -8,7 +17,7 @@
 		inner_width = 50,
 		inner_width_max = 100,
 		point_count = 32,
-	} = $props();
+	}: Partial<Props> = $props();
 
 	const corner_diameter = $derived(2 * corner_radius);
 
@@ -23,10 +32,10 @@
 	);
 
 	const points = $derived(
-		get_points(corner_radius, inner_width, inner_height, point_count),
+		get_points({ corner_radius, inner_width, inner_height, point_count }),
 	);
 
-	const d = $derived("M" + points.map((xy) => `${xy}`).join(" "));
+	const d = $derived("M" + points.join(" "));
 </script>
 
 <fieldset class="grid">

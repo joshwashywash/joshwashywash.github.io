@@ -1,9 +1,9 @@
-export default (
+export default ({
 	corner_radius = 1,
 	inner_width = 1,
 	inner_height = 1,
 	point_count = 32,
-): number[] => {
+}): number[] => {
 	const division = (2 * Math.PI) / point_count;
 
 	const half_inner_width = 0.5 * inner_width;

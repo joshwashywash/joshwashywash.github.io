@@ -1,7 +1,17 @@
 <script lang="ts">
 	import get_points from "./get_points";
 
-	let { point_count = 17, radius = 50, radius_max = 100 } = $props();
+	type Props = {
+		point_count: number;
+		radius: number;
+		radius_max: number;
+	};
+
+	let {
+		point_count = 17,
+		radius = 50,
+		radius_max = 100,
+	}: Partial<Props> = $props();
 
 	const diameter = $derived(2 * radius_max);
 	const viewbox_min = $derived(-1 * radius_max);
@@ -9,9 +19,9 @@
 		`${viewbox_min} ${viewbox_min} ${diameter} ${diameter}`,
 	);
 
-	const points = $derived(get_points(point_count, radius));
+	const points = $derived(get_points({ point_count, radius }));
 
-	const d = $derived("M" + points.map((xy) => `${xy}`).join(" "));
+	const d = $derived("M" + points.join(" "));
 </script>
 
 <fieldset class="grid">
