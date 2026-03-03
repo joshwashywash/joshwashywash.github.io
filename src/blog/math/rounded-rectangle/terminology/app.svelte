@@ -14,12 +14,18 @@
 </script>
 
 <script lang="ts">
+	type Props = {
+		corner_radius: number;
+		inner_height: number;
+		inner_width: number;
+		line_stroke_dash: number;
+	};
 	let {
 		corner_radius = 10,
 		inner_height = 200,
 		inner_width = 150,
 		line_stroke_dash = 1,
-	} = $props();
+	}: Partial<Props> = $props();
 
 	let term = $state<Term>("inner width");
 
