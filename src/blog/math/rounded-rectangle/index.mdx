@@ -72,12 +72,7 @@ Most problems are solved by breaking the problem up into smaller pieces. I imagi
 
 ### getting points around a circle
 
-<CircleApp
-	client:visible
-	point_count={point_count}
-	radius={corner_radius}
-	radius_max={corner_radius_max}
-/>
+<CircleApp client:visible />
 
 There's a very simple formula for getting the points around a circle's circumference.
 
@@ -154,15 +149,7 @@ Now that we know the offset amount and the direction, all we need to do is bring
 	title="get_rounded_rectangle_points.ts"
 />
 
-<RoundedRectangleApp
-	client:visible
-	corner_radius={corner_radius}
-	inner_height={inner_height}
-	inner_height_max={inner_height_max}
-	inner_width={inner_width}
-	inner_width_max={inner_width_max}
-	point_count={point_count}
-/>
+<RoundedRectangleApp client:visible />
 
 ## creating a RoundedPlaneGeometry in three.js
 
