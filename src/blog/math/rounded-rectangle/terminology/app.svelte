@@ -1,5 +1,8 @@
 <script lang="ts">
-	import PaneParameters from "$lib/classes/PaneParameters.svelte";
+	import {
+		PaneParameters,
+		createPane,
+	} from "$lib/classes/PaneParameters.svelte";
 	import PaneContainer from "$lib/components/PaneContainer.svelte";
 
 	type Props = {
@@ -80,7 +83,10 @@
 	<PaneContainer
 		class="absolute top-2 right-2"
 		{@attach (container) => {
-			return params.createPane({ container, title: "terminology" });
+			return createPane(params, {
+				container,
+				title: "terminology",
+			});
 		}}
 	/>
 

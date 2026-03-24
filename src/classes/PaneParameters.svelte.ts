@@ -3,16 +3,16 @@ import { createSubscriber } from "svelte/reactivity";
 import { Pane } from "tweakpane";
 import type { PaneConfig } from "tweakpane/dist/types/pane/pane-config";
 
-export default class<Params extends Bindable> {
-	#params;
+export class PaneParameters<O extends Bindable> {
+	#object;
 	#subscribe;
 	#update: (() => void) | null = null;
 	#options;
 	constructor(
-		params: Params,
-		options: Partial<Record<keyof Params, BindingParams>> = {},
+		object: O,
+		options: Partial<Record<keyof O, BindingParams>> = {},
 	) {
-		this.#params = params;
+		this.#object = object;
 		this.#options = options;
 
 		this.#subscribe = createSubscriber((update) => {
@@ -22,20 +22,40 @@ export default class<Params extends Bindable> {
 			};
 		});
 	}
-	createPane(config: PaneConfig) {
-		const pane = new Pane(config);
-		for (const prop in this.#params) {
-			pane.addBinding(this.#params, prop, this.#options[prop]);
-		}
-		pane.on("change", () => {
-			this.#update?.();
-		});
-		return () => {
-			pane.dispose();
-		};
+
+	get options() {
+		return this.#options;
 	}
+
+	get object() {
+		return this.#object;
+	}
+
 	get current() {
 		this.#subscribe();
-		return this.#params;
+		return this.#object;
+	}
+
+	update() {
+		this.#update?.();
 	}
 }
+
+export const createPane = <T extends Bindable>(
+	paneParameters: PaneParameters<T>,
+	config: PaneConfig = {},
+) => {
+	const pane = new Pane(config);
+
+	for (const prop in paneParameters.object) {
+		pane.addBinding(paneParameters.object, prop, paneParameters.options[prop]);
+	}
+
+	pane.on("change", () => {
+		paneParameters.update();
+	});
+
+	return () => {
+		pane.dispose();
+	};
+};

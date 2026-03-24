@@ -1,5 +1,8 @@
 <script lang="ts">
-	import PaneParameters from "$lib/classes/PaneParameters.svelte";
+	import {
+		PaneParameters,
+		createPane,
+	} from "$lib/classes/PaneParameters.svelte";
 	import get_points from "./get_points";
 	import PaneContainer from "$lib/components/PaneContainer.svelte";
 
@@ -35,7 +38,7 @@
 	<PaneContainer
 		class="absolute top-2 right-2"
 		{@attach (container) => {
-			return params.createPane({
+			return createPane(params, {
 				container,
 				title: "circle",
 			});
