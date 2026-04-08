@@ -6,14 +6,14 @@ type Context = {
 export const count_tail_recursive = <E>(
 	elements: E[],
 	element: E,
-	{ count = 0, index = 0 }: Partial<Context> = {},
+	context: Context = { count: 0, index: 0 },
 ): number => {
-	if (index >= elements.length) return count;
+	if (context.index >= elements.length) return context.count;
 
-	const equal = elements[index] === element;
+	const equal = elements[context.index] === element;
 
-	index += 1;
-	count += +equal;
+	context.index += 1;
+	context.count += +equal;
 
-	return count_tail_recursive(elements, element, { index, count });
+	return count_tail_recursive(elements, element, context);
 };

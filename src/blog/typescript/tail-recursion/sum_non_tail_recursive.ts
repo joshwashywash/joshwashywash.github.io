@@ -4,10 +4,10 @@ type Context = {
 
 export const sum_non_tail_recursive = (
 	ns: number[],
-	{ index = 0 }: Partial<Context> = {},
+	context: Context = { index: 0 },
 ): number => {
-	if (index >= ns.length) return 0;
-	index += 1;
+	if (context.index >= ns.length) return 0;
+	context.index += 1;
 
-	return ns[index] + sum_non_tail_recursive(ns, { index });
+	return ns[context.index] + sum_non_tail_recursive(ns, context);
 };

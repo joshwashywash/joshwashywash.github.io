@@ -5,13 +5,13 @@ type Context = {
 export const count_non_tail_recursive = <E>(
 	elements: E[],
 	element: E,
-	{ index = 0 }: Partial<Context> = {},
+	context: Context = { index: 0 },
 ): number => {
-	if (index >= elements.length) return 0;
+	if (context.index >= elements.length) return 0;
 
-	const equal = elements[index] === element;
+	const equal = elements[context.index] === element;
 
-	index += 1;
+	context.index += 1;
 
-	return +equal + count_non_tail_recursive(elements, element, { index });
+	return +equal + count_non_tail_recursive(elements, element, context);
 };

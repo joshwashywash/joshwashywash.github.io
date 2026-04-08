@@ -5,12 +5,12 @@ type Context = {
 
 export const sum_tail_recursive = (
 	ns: number[],
-	{ index = 0, sum = 0 }: Partial<Context> = {},
+	context: Context = { index: 0, sum: 0 },
 ): number => {
-	if (index >= ns.length) return sum;
+	if (context.index >= ns.length) return context.sum;
 
-	index += 1;
-	sum += ns[index];
+	context.index += 1;
+	context.sum += ns[context.index];
 
-	return sum_tail_recursive(ns, { index, sum });
+	return sum_tail_recursive(ns, context);
 };
