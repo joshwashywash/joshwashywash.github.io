@@ -29,7 +29,7 @@ character["age"]; // 38
 character["name"]; // "Spongebob"
 ```
 
-Using _bracket notation_ looks a lot like how you access elements in an array.
+Using _bracket notation_ looks a lot like how you'd access elements in an array.
 
 ```js
 const names = ["Spongebob", "Plankton", "Squidward"];
@@ -51,10 +51,11 @@ names["length"]; // undefined
 
 Maybe surprisingly, it's the same results as before. Believe it or not, the value put inbetween the brackets is actually stringified before the property access is carried out.
 
-Most things in JS have a **.toString** method. As expected, **toString** when called on a number, returns a string representation of that number.
+Most things in JS have a [toString](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/toString) method. As expected, **toString** when called on a number, returns a string representation of that number.
 
 ```js
 const zero = 0;
+
 zero.toString(); // "0"
 `${zero}`; // "0"
 ```
@@ -88,7 +89,7 @@ names[1]; // "Plankton"
 names[2]; // "Squidward"
 ```
 
-Can you use Array's methods on this object? The answer is _kinda_.
+Can you use [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)'s methods on this object? The answer is _kinda_.
 
 Arrays have methods on their prototype. Methods like **map**, **reduce**, and even properties like **length** are not available on the object unless it _extends_ from array. However, these methods can still be called on something that is _array-like_ if the prototype is used directly.
 
@@ -98,7 +99,7 @@ In this case, to be _array-like_ requires the object to have a **length** proper
 names.length = 3;
 ```
 
-Now the Array's prototype can be used with the object.
+Now Array's prototype can be used with the object.
 
 ```js
 Array.prototype.map.call(names, (name) => name.substring(0, 1)); // ["S", "P", "S"]
