@@ -1,7 +1,7 @@
 ---
 description: revealing the true identity of JavaScript arrays
 published_date: 2025-05-22
-title: javascript arrays are objects with numeric keys
+title: javascript arrays are really just objects with numeric keys
 ---
 
 There's nothing special about arrays in JavaScript. They're really just objects and all objects support _bracket notation_.
@@ -45,13 +45,11 @@ You might think, _"Hey this isn't the same. Arrays use bracket notation with num
 names["0"]; // "Spongebob"
 names["1"]; // "Plankton"
 names["2"]; // "Squidward"
-
-names["length"]; // undefined
 ```
 
 Maybe surprisingly, it's the same results as before. Believe it or not, the value put inbetween the brackets is actually stringified before the property access is carried out.
 
-Most things in JS have a [toString](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/toString) method. As expected, **toString** when called on a number, returns a string representation of that number.
+Most things in JS have a [toString](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/toString) method that is called when the object is to be converted to a primitive. As expected, **toString** when called on a number, returns a string representation of that number.
 
 ```js
 const zero = 0;
@@ -67,7 +65,7 @@ this is true even for immediate values
 `${0}`; // "0"
 ```
 
-When accessing elements in an array, the index is _stringfied_ before the access occurs.
+When accessing elements in an array, the index is _toString_ed before the access occurs.
 
 ```js
 names[0] === names["0"]; // true
@@ -93,22 +91,22 @@ Can you use [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Refe
 
 Arrays have methods on their prototype. Methods like **map**, **reduce**, and even properties like **length** are not available on the object unless it _extends_ from array. However, these methods can still be called on something that is _array-like_ if the prototype is used directly.
 
-In this case, to be _array-like_ requires the object to have a **length** property.
+In this case, to be _array-like_ requires the object to have a **length** property so let's give it one:
 
 ```js
-names.length = 3;
+names.length = 3; // three values in `names`
 ```
 
 Now Array's prototype can be used with the object.
 
 ```js
-Array.prototype.map.call(names, (name) => name.substring(0, 1)); // ["S", "P", "S"]
+Array.prototype.map.call(names, (name) => name.toUpperCase()); // ["SPONGEBOB", "PLANKTON", "SQUIDWARD"]
 Array.prototype.toReversed.call(names); // [ "Squidward", "Plankton", "Spongebob" ]
 
 Array.prototype.reverse.call(names); // { 0: "Squidward", 1: "Plankton", 2: "Spongebob", length: 3 }
 ```
 
-Interestly, methods that modify the instance such as **reverse** and **sort** keep the look and feel of the original object.
+Interestingly, methods return new objects return a new array instance and methods that modify the instance such as **reverse** and **sort** return the original object.
 
 ## Conclusion
 
