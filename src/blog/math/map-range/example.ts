@@ -1,16 +1,16 @@
 import map from "./map";
 import { midpoint } from "$lib/utils/math";
 
-const inLow = 0;
-const inHigh = 255;
-const outLow = -1;
-const outHigh = 1;
+const a = 0;
+const b = 255;
+const c = -1;
+const d = 1;
 
-const halfway = midpoint(inLow, inHigh);
+const halfway = midpoint(a, b);
 
-const inputs = [inLow, halfway, inHigh];
+const inputs = [a, halfway, b];
 
-const m = map(inLow, inHigh, outLow, outHigh);
+const m = map(a, b, c, d);
 
 const outputs: number[] = [];
 for (const input of inputs) {
