@@ -34,7 +34,7 @@ next steps why this translation needs to come first.
 
 $$
 \begin{align*}
-[a, b] - [a, a] &= [a-a, b-a]\\
+[a, b] - a &= [a-a, b-a]\\
 &= [0, b-a]
 \end{align*}
 $$
@@ -47,8 +47,7 @@ dividing by the difference between _b_ and _a_.
 
 $$
 \begin{align*}
-[0, b - a] / [b-a, b-a] &= \left[0, \frac{b-a}{b-a}\right]\\
-&= \left[0, \frac{1}{1}\right] \\
+\frac{[0, b - a]}{(b-a)} &= \left[\frac{0}{b-a}, \frac{b-a}{b-a}\right]\\
 &= [0, 1]
 \end{align*}
 $$
@@ -71,7 +70,7 @@ the lower end of the range.
 
 $$
 \begin{align*}
-[0, 1] * [d-c, d-c] &= [0 * (d-c), 1 * (d-c)]\\
+[0, 1] * (d-c) &= [0 * (d-c), 1 * (d-c)]\\
 &= [0, d-c]
 \end{align*}
 $$
@@ -86,7 +85,7 @@ Here all we need to do is add _c_.
 
 $$
 \begin{align*}
-[0, d-c] + [c, c] &= [0 + c, d-c+c]\\
+[0, d-c] + c &= [0+c, d-c+c]\\
 &= [c, d]
 \end{align*}
 $$
