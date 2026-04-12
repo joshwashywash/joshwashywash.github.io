@@ -34,8 +34,10 @@ const { Content } = await render(post);
 ---
 
 <Layout
-	title={post.data.title}
 	description={post.data.description}
+	title={post.data.title}
+	uses_katex={post.data.uses_katex}
+	image_url={post.data.image_url}
 >
 	<article>
 		<h1>{post.data.title}</h1>

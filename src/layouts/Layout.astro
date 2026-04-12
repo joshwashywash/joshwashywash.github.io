@@ -4,12 +4,14 @@ import BlueSky from "$lib/components/icons/BlueSky.astro";
 import GitHub from "$lib/components/icons/GitHub.astro";
 import IconLink from "$lib/components/IconLink.astro";
 import type { ComponentProps } from "astro/types";
+import type { CollectionEntry } from "astro:content";
 
-type Props = {
-	title: string;
-	description: string;
-	image_url?: string;
-};
+type Props = Partial<
+	Pick<
+		CollectionEntry<"blog">["data"],
+		"description" | "image_url" | "uses_katex" | "title"
+	>
+>;
 
 const iconRecord = {
 	github: GitHub,
@@ -32,9 +34,15 @@ const links: Link[] = [
 		href: "https://bsky.app/profile/let_josh.bsky.social",
 		icon: "bluesky",
 	},
-];
+] as const;
 
-const { description, image_url = "/me.jpg", title } = Astro.props;
+const {
+	description = "",
+	image_url = "/me.jpg",
+	title = "",
+	uses_katex = false,
+} = Astro.props;
+
 const meta_image_url = new URL(image_url, Astro.url);
 ---
 
@@ -116,6 +124,14 @@ const meta_image_url = new URL(image_url, Astro.url);
 			property="twitter:url"
 			content={Astro.url}
 		/>
+		{
+			uses_katex && (
+				<link
+					rel="stylesheet"
+					href="https://cdn.jsdelivr.net/npm/katex@0.16.45/dist/katex.min.css"
+				/>
+			)
+		}
 	</head>
 
 	<body
