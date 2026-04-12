@@ -1,10 +1,8 @@
-type Context = {
-	index: number;
-};
-
 export const sum_non_tail_recursive = (
 	ns: number[],
-	context: Context = { index: 0 },
+	context = {
+		index: 0,
+	},
 ): number => {
 	if (context.index >= ns.length) return 0;
 

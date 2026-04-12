@@ -1,11 +1,9 @@
-type Context = {
-	index: number;
-};
-
 export const count_non_tail_recursive = <E>(
 	elements: E[],
 	element: E,
-	context: Context = { index: 0 },
+	context = {
+		index: 0,
+	},
 ): number => {
 	if (context.index >= elements.length) return 0;
 
