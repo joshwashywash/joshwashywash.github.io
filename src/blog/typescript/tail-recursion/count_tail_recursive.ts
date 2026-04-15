@@ -9,8 +9,8 @@ export const count_tail_recursive = <E>(
 	if (context.index >= elements.length) return context.count;
 
 	const equal = elements[context.index] === element;
-	context.count += +equal;
 
+	context.count += +equal; // +true = 1, +false = 0
 	context.index += 1;
 
 	return count_tail_recursive(elements, element, context);
